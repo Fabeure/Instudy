@@ -16,15 +16,9 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <!-- Additional CSS Files -->
-    <link rel="stylesheet" href="assets/css/fontawesome.css" />
-    <link rel="stylesheet" href="assets/css/sitecomponents.css" />
-    <link rel="stylesheet" href="assets/css/owl.css" />
-    <link rel="stylesheet" href="assets/css/lightbox.css" />
-    <link rel="stylesheet" href="assets/css/img.css" />
-
-
-
-
+    
+    <link rel="stylesheet" href="./assets/css/sitecomponents.css" />
+    <link rel="stylesheet" href="./assets/css/img.css" />
 
 </head>
 
@@ -32,20 +26,27 @@
     <!--header-->
     <header class="main-header clearfix" role="header">
         <div class="logo">
-            <img class="imgv2" src="\assets\images\download.png" alt="INSAT 2.0" />
+            <img class="imgv2" src="./assets/images/download.png" alt="INSAT 2.0" />
         </div>
         <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
         <nav id="menu" class="main-nav" role="navigation">
             <ul class="main-menu">
                 <li><a href="#section1">Home</a></li>
+                <li><a href="#section4">Courses</a></li>
                 <li class="has-submenu">
                     <a href="#section2">About Us</a>
                     <ul class="sub-menu">
-                        <li><a href="#section2">Who we are?</a></li>
-                        <li><a href="#section3">What we do?</a></li>
+                        <li><a href="#section1">Who we are?</a></li>
+                        <li><a href="#section2">What we do?</a></li>
                         <li><a href="#section3">How it works?</a></li>
                     </ul>
                 </li>
+<<<<<<< HEAD
+                <li><a href="#section5">Sign in</a></li>
+            </ul>
+        </nav>
+    </header>
+=======
                 <li><a href="#section4">Courses</a></li>
                 <li><button id="signin-btn">Sign In</button>
                 </li>
@@ -61,11 +62,11 @@
         <button type="submit">Sign In</button>
     </form>
 
+>>>>>>> 0c26748be39e91ae3ca07e19e59b4bc6fbe24897
 
     <!-- ***** Main Banner Area Start ***** -->
     <section class="section main-banner" id="top" data-section="section1">
-        <img class="imgv3" src="\assets\images\background.jpg" alt="INSAT 2.0" />
-
+        <img class="imgv3" src="./assets/images/background.jpg" alt="INSAT 2.0" />
         <div class="card-img-overlay">
             <div class="caption">
                 <h2><em>Your</em> Guide</h2>
@@ -187,7 +188,7 @@
                         <div class="col-md-12">
                             <fieldset>
                                 <button type="submit" id="form-submit" class="button">
-                                    Sign in now
+                                    Sign up 
                                 </button>
                             </fieldset>
                         </div>
@@ -207,16 +208,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="assets/js/isotope.min.js"></script>
-    <script src="assets/js/owl-carousel.js"></script>
-    <script src="assets/js/lightbox.js"></script>
-    <script src="assets/js/tabs.js"></script>
-    <script src="assets/js/slick-slider.js"></script>
-    <script src="assets/js/custom.js"></script>
+    
 
 
 
+<<<<<<< HEAD
+        if (isAnimate) {
+            $("body, html").animate({
+                    scrollTop: reqSectionPos,
+                },
+                800
+            );
+        } else {
+            $("body, html").scrollTop(reqSectionPos);
+        }
+    };
+
+    var checkSection = function checkSection() {
+        $(".section").each(function() {
+            var $this = $(this),
+                topEdge = $this.offset().top - 80,
+                bottomEdge = topEdge + $this.height(),
+                wScroll = $(window).scrollTop();
+            if (topEdge < wScroll && bottomEdge > wScroll) {
+                var currentId = $this.data("section"),
+                    reqLink = $("a").filter("[href*=\\#" + currentId + "]");
+                reqLink
+                    .closest("li")
+                    .siblings()
+                    .removeClass("active");
+            }
+        });
+    };
+
+    $(".main-menu, .scroll-to-section").on("click", "a", function(e) {
+        if ($(e.target).hasClass("external")) {
+            return;
+        }
+        e.preventDefault();
+        $("#menu").removeClass("active");
+        showSection($(this).attr("href"), true);
+    });
+
+    $(window).scroll(function() {
+        checkSection();
+    });
+    </script>
+=======
+>>>>>>> 0c26748be39e91ae3ca07e19e59b4bc6fbe24897
 
 </body>
 
