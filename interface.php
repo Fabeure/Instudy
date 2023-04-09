@@ -41,30 +41,11 @@
                         <li><a href="#section3">How it works?</a></li>
                     </ul>
                 </li>
-<<<<<<< HEAD
                 <li><a href="#section5">Sign in</a></li>
             </ul>
         </nav>
     </header>
-=======
-                <li><a href="#section4">Courses</a></li>
-                <li><button id="signin-btn">Sign In</button>
-                </li>
-            </ul>
-        </nav>
-    </header>
 
-    <form id="signin-form">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password">
-        <button type="submit">Sign In</button>
-    </form>
-
->>>>>>> 0c26748be39e91ae3ca07e19e59b4bc6fbe24897
-
-    <!-- ***** Main Banner Area Start ***** -->
     <section class="section main-banner" id="top" data-section="section1">
         <img class="imgv3" src="./assets/images/background.jpg" alt="INSAT 2.0" />
         <div class="card-img-overlay">
@@ -78,8 +59,7 @@
             </div>
         </div>
     </section>
-    <!-- ***** Main Banner Area End ***** -->
-
+    
     <section class="features">
         <div class="container">
             <div class="row">
@@ -210,9 +190,16 @@
     </script>
     
 
+    <script>
+    $(".nav li:first").addClass("active");
 
+    var showSection = function showSection(section, isAnimate) {
+        var direction = section.replace(/#/, ""),
+            reqSection = $(".section").filter(
+                '[data-section="' + direction + '"]'
+            ),
+            reqSectionPos = reqSection.offset().top - 0;
 
-<<<<<<< HEAD
         if (isAnimate) {
             $("body, html").animate({
                     scrollTop: reqSectionPos,
@@ -254,8 +241,6 @@
         checkSection();
     });
     </script>
-=======
->>>>>>> 0c26748be39e91ae3ca07e19e59b4bc6fbe24897
 
 </body>
 
