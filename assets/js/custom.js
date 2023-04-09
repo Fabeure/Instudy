@@ -1,3 +1,14 @@
+const signinBtn = document.getElementById("signin-btn");
+const signinForm = document.getElementById("signin-form");
+
+signinBtn.addEventListener("click", function () {
+  if (signinForm.style.display === "none") {
+    signinForm.style.display = "inline";
+  } else {
+    signinForm.style.display = "none";
+  }
+});
+
 (function ($) {
   $(document).ready(function () {
     $("body").addClass("js");

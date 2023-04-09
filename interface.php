@@ -44,69 +44,23 @@
                         <li><a href="#section2">Who we are?</a></li>
                         <li><a href="#section3">What we do?</a></li>
                         <li><a href="#section3">How it works?</a></li>
-
                     </ul>
                 </li>
                 <li><a href="#section4">Courses</a></li>
-                <li class="has-submenu"><a href="#section5">Sign in</a>
-                    <ul class="dropdown-menu" aria-labelledby="signin-btn">
-                        <form class="px-4 py-3">
-                            <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="Username">
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Password">
-                            </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="remember">
-                                <label class="form-check-label" for="remember">Remember me</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Sign In</button>
-                        </form>
-                    </ul>
-
-
-
-
+                <li><button id="signin-btn">Sign In</button>
                 </li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </ul>
         </nav>
     </header>
-    <div class="dropdown-menu" aria-labelledby="signin-btn">
-        <form class="px-4 py-3">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Password">
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="remember">
-                <label class="form-check-label" for="remember">Remember me</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Sign In</button>
-        </form>
-    </div>
+
+    <form id="signin-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <button type="submit">Sign In</button>
+    </form>
+
 
     <!-- ***** Main Banner Area Start ***** -->
     <section class="section main-banner" id="top" data-section="section1">
@@ -261,58 +215,8 @@
     <script src="assets/js/slick-slider.js"></script>
     <script src="assets/js/custom.js"></script>
 
-    <script>
-    $(".nav li:first").addClass("active");
 
-    var showSection = function showSection(section, isAnimate) {
-        var direction = section.replace(/#/, ""),
-            reqSection = $(".section").filter(
-                '[data-section="' + direction + '"]'
-            ),
-            reqSectionPos = reqSection.offset().top - 0;
 
-        if (isAnimate) {
-            $("body, html").animate({
-                    scrollTop: reqSectionPos,
-                },
-                800
-            );
-        } else {
-            $("body, html").scrollTop(reqSectionPos);
-        }
-    };
-
-    var checkSection = function checkSection() {
-        $(".section").each(function() {
-            var $this = $(this),
-                topEdge = $this.offset().top - 80,
-                bottomEdge = topEdge + $this.height(),
-                wScroll = $(window).scrollTop();
-            if (topEdge < wScroll && bottomEdge > wScroll) {
-                var currentId = $this.data("section"),
-                    reqLink = $("a").filter("[href*=\\#" + currentId + "]");
-                reqLink
-                    .closest("li")
-                    .addClass("active")
-                    .siblings()
-                    .removeClass("active");
-            }
-        });
-    };
-
-    $(".main-menu, .scroll-to-section").on("click", "a", function(e) {
-        if ($(e.target).hasClass("external")) {
-            return;
-        }
-        e.preventDefault();
-        $("#menu").removeClass("active");
-        showSection($(this).attr("href"), true);
-    });
-
-    $(window).scroll(function() {
-        checkSection();
-    });
-    </script>
 
 </body>
 
