@@ -1,11 +1,3 @@
-/*
-    
-TemplateMo 557 Grad School
-
-https://templatemo.com/tm-557-grad-school
-
-*/
-
 @import url(fontawesome.css);
 @import url(
   "<link href="https://fonts.googleapis.com/css?family=Montserrat:100,
@@ -23,21 +15,360 @@ body {
 }
 
 /* Basic */
-#signin-form {
-  display: inline-table;
-  z-index: 999;
+/*sign in button*/
+.signin-form {
+  position: absolute;
+  display: none;
+  top: 400%;
+  right: -150%;
+  width: 400px;
+  padding: 40px;
+  margin: 10px auto;
+  transform: translate(-50%, -55%);
+  background: rgba(29, 21, 66, 0.9);
+  box-sizing: border-box;
+  box-shadow: 0 15px 25px rgba(28, 23, 39, 0.6);
+  border-radius: 10px;
 }
 
-.dropdown-menu {
-  width: 900px;
+.signin-form p:first-child {
+  margin: 0 0 30px;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-.form-group {
-  margin-bottom: 1rem;
+.signin-form .user-box {
+  position: relative;
 }
 
-.form-check {
-  margin-bottom: 1rem;
+.signin-form .user-box input {
+  width: 80%;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.signin-form .user-box label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+  transition: 0.5s;
+}
+
+.signin-form .user-box input:focus ~ label,
+.signin-form .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #fff;
+  font-size: 12px;
+}
+
+.signin-form form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: 0.5s;
+  margin-top: 40px;
+  letter-spacing: 3px;
+}
+
+.signin-form a:hover {
+  background: #fff;
+  color: #272727;
+  border-radius: 5px;
+}
+
+.signin-form a span {
+  position: absolute;
+  display: block;
+}
+
+.signin-form a span:nth-child(1) {
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #fff);
+  animation: btn-anim1 1.5s linear infinite;
+}
+
+@keyframes btn-anim1 {
+  0% {
+    left: -100%;
+  }
+
+  50%,
+  100% {
+    left: 100%;
+  }
+}
+
+.signin-form a span:nth-child(2) {
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #fff);
+  animation: btn-anim2 1.5s linear infinite;
+  animation-delay: 0.375s;
+}
+
+@keyframes btn-anim2 {
+  0% {
+    top: -100%;
+  }
+
+  50%,
+  100% {
+    top: 100%;
+  }
+}
+
+.signin-form a span:nth-child(3) {
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #fff);
+  animation: btn-anim3 1.5s linear infinite;
+  animation-delay: 0.75s;
+}
+
+@keyframes btn-anim3 {
+  0% {
+    right: -100%;
+  }
+
+  50%,
+  100% {
+    right: 100%;
+  }
+}
+
+.signin-form a span:nth-child(4) {
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg, transparent, #fff);
+  animation: btn-anim4 1.5s linear infinite;
+  animation-delay: 1.125s;
+}
+
+@keyframes btn-anim4 {
+  0% {
+    bottom: -100%;
+  }
+
+  50%,
+  100% {
+    bottom: 100%;
+  }
+}
+
+.signin-form p:last-child {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.signin-form a.a2 {
+  color: #fff;
+  text-decoration: none;
+}
+
+.signin-form a.a2:hover {
+  background: transparent;
+  color: #aaa;
+  border-radius: 5px;
+}
+
+.signin-button:hover + .signin-form,
+.signin-form:hover {
+  display: block;
+}
+
+/*cards*/
+.card1 {
+  width: 190px;
+  height: 254px;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 20px;
+  position: absolute;
+  left: 10%;
+  top: 10%;
+}
+
+.card1:hover {
+  width: 250px;
+  height: 350px;
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(200, 200, 200);
+  border-radius: 20px;
+  background-color: #dfdfdf;
+  transition: all 0.5s;
+}
+.card2 {
+  width: 190px;
+  height: 254px;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 20px;
+  position: absolute;
+  left: 40%;
+  top: 10%;
+}
+
+.card2:hover {
+  width: 250px;
+  height: 350px;
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(200, 200, 200);
+  border-radius: 20px;
+  background-color: #dfdfdf;
+  transition: all 0.5s;
+}
+
+.card3 {
+  width: 190px;
+  height: 254px;
+  background: transparent;
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 20px;
+  position: absolute;
+  left: 70%;
+  top: 10%;
+}
+
+.card3:hover {
+  width: 250px;
+  height: 350px;
+  background: rgb(255, 255, 255);
+  border: 2px solid rgb(200, 200, 200);
+  border-radius: 20px;
+  background-color: #dfdfdf;
+  transition: all 0.5s;
+}
+
+.secondAnimation {
+  --hoverContorno: #959595;
+}
+
+.secondAnimation:hover,
+.secondAnimation:focus {
+  -webkit-animation: cardAnimacion 1.4s;
+  animation: cardAnimacion 1.4s;
+  box-shadow: 0 0 0 0.8em rgba(255, 255, 255, 0);
+  border-radius: 20px;
+}
+
+@-webkit-keyframes cardAnimacion {
+  0% {
+    box-shadow: 0 0 0 0 var(--hoverContorno);
+  }
+}
+
+@keyframes cardAnimacion {
+  0% {
+    box-shadow: 0 0 0 0 var(--hoverContorno);
+  }
+}
+
+/*.card1 {
+  width: 250px;
+  height: 350px;
+  background: transparent;
+  border: 2px solid #2c07ff;
+  box-shadow: 2px 2px 15px #000000 inset;
+  text-align: center;
+  color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Pacifico";
+  position: absolute;
+  left: 10%;
+  top: 10%;
+}*/
+/*.card2 {
+  width: 250px;
+  height: 350px;
+  background: transparent;
+  border: 2px solid #2c07ff;
+  box-shadow: 2px 2px 15px #13175f inset;
+  text-align: center;
+  color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Pacifico";
+  position: absolute;
+  left: 40%;
+  top: 10%;
+}*/
+/*.card3 {
+  width: 250px;
+  height: 350px;
+  background: transparent;
+  border: 2px solid #2c07ff;
+  box-shadow: 2px 2px 15px #000000 inset;
+  text-align: center;
+  color: #e8e8e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Pacifico";
+  position: absolute;
+  left: 70%;
+  top: 10%;
+}*/
+.card-content {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+/*.card1:hover {
+  color: #0717ff;
+  box-shadow: 2px 2px 15px #0b07ff inset;
+}
+: opacity 0.3s ease-in-out;
+}
+.card1:hover .card-content {
+  opacity: 1;
+}*/
+/*.card2:hover {
+  color: #0717ff;
+  box-shadow: 2px 2px 15px #0b07ff inset;
+}*/
+
+.card2:hover .card-content {
+  opacity: 1;
+}
+/*.card3:hover {
+  color: #0717ff;
+  box-shadow: 2px 2px 15px #0b07ff inset;
+}*/
+
+.card3:hover .card-content {
+  opacity: 1;
 }
 
 a {
