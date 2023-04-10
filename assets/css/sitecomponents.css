@@ -306,28 +306,6 @@ a.menu-link {
   margin-bottom: -7px;
 }
 
-#bg-video {
-  min-width: 100%;
-  min-height: 100vh;
-  max-width: 100%;
-  max-height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-}
-
-#bg-video::-webkit-media-controls {
-  display: none !important;
-}
-
-.video-overlay {
-  position: absolute;
-  background-color: rgba(22, 34, 57, 0.85);
-  top: 0;
-  left: 0;
-  bottom: 7px;
-  width: 100%;
-}
-
 .main-banner .caption {
   text-align: center;
   position: absolute;
@@ -488,6 +466,8 @@ section.features .col-4 {
   }
 }
 
+<<<<<<< HEAD
+=======
 /* Why Choosing Us */
 
 section.why-us {
@@ -612,6 +592,7 @@ section.why-us {
   }
 }
 
+>>>>>>> 0e5b2f9fb0419b9de4638959a1998afe0be4cc37
 /* Coming Soon */
 
 
@@ -637,53 +618,6 @@ section.coming-soon .continer h4 em {
   section.coming-soon .continer h4 {
     text-align: center;
   }
-}
-
-section.coming-soon .continer .counter .days,
-section.coming-soon .continer .counter .hours,
-section.coming-soon .continer .counter .minutes,
-section.coming-soon .continer .counter .seconds {
-  width: 22%;
-  height: 140px;
-  float: left;
-  text-align: center;
-  font-size: 48px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  color: #fff;
-  background-color: rgba(250, 250, 250, 0.1);
-}
-@media screen and (max-width: 992px) {
-  section.coming-soon .continer .counter .days,
-  section.coming-soon .continer .counter .hours,
-  section.coming-soon .continer .counter .minutes,
-  section.coming-soon .continer .counter .seconds {
-    font-size: 26px;
-  }
-
-  section.coming-soon .continer .counter .days .value,
-  section.coming-soon .continer .counter .hours .value,
-  section.coming-soon .continer .counter .minutes .value,
-  section.coming-soon .continer .counter .seconds .value {
-    margin-top: 40px !important;
-  }
-
-  section.coming-soon .continer .counter span {
-    font-size: 14px !important;
-  }
-}
-section.coming-soon .continer .counter .days,
-section.coming-soon .continer .counter .hours,
-section.coming-soon .continer .counter .minutes {
-  margin-right: 4%;
-}
-section.coming-soon .continer .counter .days .value,
-section.coming-soon .continer .counter .hours .value,
-section.coming-soon .continer .counter .minutes .value,
-section.coming-soon .continer .counter .seconds .value {
-  margin-top: 15px;
-  display: block;
-  width: 100%;
 }
 
 section.coming-soon .continer .counter span {
@@ -777,6 +711,8 @@ section.coming-soon form button {
   box-shadow: none;
   border: none;
 }
+<<<<<<< HEAD
+=======
 
 /* Courses */
 
@@ -1590,3 +1526,4 @@ footer p a:hover {
     letter-spacing: 0.25px;
   }
 }
+>>>>>>> 0e5b2f9fb0419b9de4638959a1998afe0be4cc37
