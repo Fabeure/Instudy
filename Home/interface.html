@@ -17,8 +17,8 @@
 
     <!-- Additional CSS Files -->
     
-    <link rel="stylesheet" href="./assets/css/sitecomponents.css" />
-    <link rel="stylesheet" href="./assets/css/img.css" />
+    <link rel="stylesheet" href="../assets/css/sitecomponents.css" />
+    <link rel="stylesheet" href="../assets/css/img.css" />
 
 </head>
 
@@ -26,7 +26,7 @@
     <!--header-->
     <header class="main-header clearfix" role="header">
         <div class="logo">
-            <img class="imgv2" src="./assets/images/download.png" alt="INSAT 2.0" />
+            <img class="imgv2" src="../assets/images/download.png" alt="INSAT 2.0" />
         </div>
         <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
         <nav id="menu" class="main-nav" role="navigation">
@@ -41,13 +41,13 @@
                         <li><a href="#section3">How it works?</a></li>
                     </ul>
                 </li>
-                <li><a href="#section5">Sign in</a></li>
+                <li><a href="../Register/register.html">Sign in</a></li>
             </ul>
         </nav>
     </header>
 
     <section class="section main-banner" id="top" data-section="section1">
-        <img class="imgv3" src="./assets/images/background.jpg" alt="INSAT 2.0" />
+        <img class="imgv3" src="../assets/images/background.jpg" alt="INSAT 2.0" />
         <div class="card-img-overlay">
             <div class="caption">
                 <h2><em>Your</em> Guide</h2>
@@ -93,48 +93,7 @@
             </div>
         </div>
     </section>
-
-    <section class="section coming-soon" data-section="section3">
-        <div class="col-md-5">
-            <div class="right-content">
-                <div class="top-content">
-                    <h6>Register now</h6>
-                </div>
-                <form id="contact" action="" method="get">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <fieldset>
-                                <input name="name" type="text" class="form-control" id="name" placeholder="Your Name"
-                                    required="" />
-                            </fieldset>
-                        </div>
-                        <div class="col-md-12">
-                            <fieldset>
-                                <input name="email" type="text" class="form-control" id="email" placeholder="Your Email"
-                                    required="" />
-                            </fieldset>
-                        </div>
-                        <div class="col-md-12">
-                            <fieldset>
-                                <input name="phone-number" type="text" class="form-control" id="phone-number"
-                                    placeholder="Your Phone Number" required="" />
-                            </fieldset>
-                        </div>
-                        <div class="col-md-12">
-                            <fieldset>
-                                <button type="submit" id="form-submit" class="button">
-                                    Sign up 
-                                </button>
-                            </fieldset>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div>
-        </div>
-    </section>
-
+    
 
 
     <!-- Scripts -->
@@ -144,58 +103,8 @@
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
     </script>
     
-
-    <script>
-    $(".nav li:first").addClass("active");
-
-    var showSection = function showSection(section, isAnimate) {
-        var direction = section.replace(/#/, ""),
-            reqSection = $(".section").filter(
-                '[data-section="' + direction + '"]'
-            ),
-            reqSectionPos = reqSection.offset().top - 0;
-
-        if (isAnimate) {
-            $("body, html").animate({
-                    scrollTop: reqSectionPos,
-                },
-                800
-            );
-        } else {
-            $("body, html").scrollTop(reqSectionPos);
-        }
-    };
-
-    var checkSection = function checkSection() {
-        $(".section").each(function() {
-            var $this = $(this),
-                topEdge = $this.offset().top - 80,
-                bottomEdge = topEdge + $this.height(),
-                wScroll = $(window).scrollTop();
-            if (topEdge < wScroll && bottomEdge > wScroll) {
-                var currentId = $this.data("section"),
-                    reqLink = $("a").filter("[href*=\\#" + currentId + "]");
-                reqLink
-                    .closest("li")
-                    .siblings()
-                    .removeClass("active");
-            }
-        });
-    };
-
-    $(".main-menu, .scroll-to-section").on("click", "a", function(e) {
-        if ($(e.target).hasClass("external")) {
-            return;
-        }
-        e.preventDefault();
-        $("#menu").removeClass("active");
-        showSection($(this).attr("href"), true);
-    });
-
-    $(window).scroll(function() {
-        checkSection();
-    });
-    </script>
+    <script src="interface.js"></script>
+    
 
 </body>
 
