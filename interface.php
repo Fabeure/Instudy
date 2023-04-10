@@ -32,7 +32,7 @@
         <nav id="menu" class="main-nav" role="navigation">
             <ul class="main-menu">
                 <li><a href="#section1">Home</a></li>
-                <li><a href="#section4">Courses</a></li>
+                <li><a href="#section4">Hub</a></li>
                 <li class="has-submenu">
                     <a href="#section2">About Us</a>
                     <ul class="sub-menu">
@@ -69,21 +69,6 @@
                             <div class="content-show">
                                 <h4><i class="fa fa-pencil"></i>All Courses</h4>
                             </div>
-                            <div class="content-hide">
-                                <p>
-                                    Curabitur id eros vehicula, tincidunt libero eu, lobortis
-                                    mi. In mollis eros a posuere imperdiet. Donec maximus
-                                    elementum ex. Cras convallis ex rhoncus, laoreet libero eu,
-                                    vehicula libero.
-                                </p>
-                                <p class="hidden-sm">
-                                    Curabitur id eros vehicula, tincidunt libero eu, lobortis
-                                    mi. In mollis eros a posuere imperdiet.
-                                </p>
-                                <div class="scroll-to-section">
-                                    <a href="#section2">More Info.</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -93,21 +78,6 @@
                             <div class="content-show">
                                 <h4><i class="fa fa-graduation-cap"></i>Demo2</h4>
                             </div>
-                            <div class="content-hide">
-                                <p>
-                                    Curabitur id eros vehicula, tincidunt libero eu, lobortis
-                                    mi. In mollis eros a posuere imperdiet. Donec maximus
-                                    elementum ex. Cras convallis ex rhoncus, laoreet libero eu,
-                                    vehicula libero.
-                                </p>
-                                <p class="hidden-sm">
-                                    Curabitur id eros vehicula, tincidunt libero eu, lobortis
-                                    mi. In mollis eros a posuere imperdiet.
-                                </p>
-                                <div class="scroll-to-section">
-                                    <a href="#section3">Details</a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -116,21 +86,6 @@
                         <div class="features-content">
                             <div class="content-show">
                                 <h4><i class="fa fa-book"></i>Demo 3</h4>
-                            </div>
-                            <div class="content-hide">
-                                <p>
-                                    Curabitur id eros vehicula, tincidunt libero eu, lobortis
-                                    mi. In mollis eros a posuere imperdiet. Donec maximus
-                                    elementum ex. Cras convallis ex rhoncus, laoreet libero eu,
-                                    vehicula libero.
-                                </p>
-                                <p class="hidden-sm">
-                                    Curabitur id eros vehicula, tincidunt libero eu, lobortis
-                                    mi. In mollis eros a posuere imperdiet.
-                                </p>
-                                <div class="scroll-to-section">
-                                    <a href="#section4">Read More</a>
-                                </div>
                             </div>
                         </div>
                     </div>

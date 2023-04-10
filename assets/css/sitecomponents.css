@@ -7,26 +7,12 @@ https://templatemo.com/tm-557-grad-school
 */
 
 @import url(fontawesome.css);
-@import url(
-  "<link href="https://fonts.googleapis.com/css?family=Montserrat:100,
-  200,
-  300,
-  400,
-  500,
-  600,
-  700,
-  800,
-  900" rel="stylesheet">"
-);
 body {
   font-family: "Montserrat", sans-serif;
 }
 
 /* Basic */
-#signin-form {
-  display: inline-table;
-  z-index: 999;
-}
+
 
 .dropdown-menu {
   width: 900px;
@@ -577,8 +563,6 @@ section.why-us {
   display: block;
   margin-bottom: 0.75em;
 }
-#tabs ul .ui-tabs-active {
-}
 #tabs ul .ui-tabs-active a {
   color: #f52525;
 }
@@ -630,13 +614,7 @@ section.why-us {
 
 /* Coming Soon */
 
-section.coming-soon {
-  background-image: url(../images/coming-soon-bg.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: #172238;
-  padding: 120px 0px;
-}
+
 
 section.coming-soon .continer .counter div {
   display: inline-block;
@@ -846,7 +824,6 @@ section.courses .item .down-content img {
 }
 
 section.courses .item .down-content .text-button-pay {
-  float: right;
   display: inline-block;
   margin-top: -30px;
 }
@@ -857,7 +834,6 @@ section.courses .item .down-content .text-button-pay a {
 }
 
 section.courses .item .down-content .text-button-free {
-  float: right;
   display: inline-block;
   margin-top: -30px;
 }
@@ -1017,6 +993,7 @@ section.video .left-content .main-button {
   z-index: 1043;
   position: fixed;
   outline: none !important;
+  backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
 }
 
@@ -1130,6 +1107,7 @@ button.mfp-arrow {
   cursor: pointer;
   background: transparent;
   border: 0;
+  appearance: none;
   -webkit-appearance: none;
   display: block;
   outline: none;
