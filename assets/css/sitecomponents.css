@@ -25,7 +25,7 @@ body {
   padding: 40px;
   margin: 10px auto;
   transform: translate(-50%, -55%);
-  background: rgba(29, 21, 66, 0.9);
+  background: rgba(29, 21, 66, 1);
   box-sizing: border-box;
   box-shadow: 0 15px 25px rgba(28, 23, 39, 0.6);
   border-radius: 10px;
@@ -78,8 +78,8 @@ body {
 
 .signin-form form a {
   position: relative;
+  margin : auto;
   display: inline-block;
-  padding: 10px 20px;
   font-weight: bold;
   color: #fff;
   font-size: 16px;
@@ -92,7 +92,7 @@ body {
 }
 
 .signin-form a:hover {
-  background: #fff;
+  background: #ffffff8c;
   color: #272727;
   border-radius: 5px;
 }
@@ -557,6 +557,12 @@ a.menu-link {
   margin-left: 15px;
   position: relative;
 }
+.submitbutton{
+  display: inline-block;
+  line-height: 18px;
+  margin-left: 15px;
+  position: relative;
+}
 
 .main-menu li:first-child {
   margin-left: 0px;
@@ -631,7 +637,7 @@ a.menu-link {
 
 .main-nav li:hover a,
 .main-nav li.active a {
-  border: 2px solid #f52525;
+  /* border: 2px solid #f52525; */
 }
 
 @media (max-width: 950px) {
