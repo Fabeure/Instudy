@@ -4,13 +4,13 @@
  */
 @font-face {
   font-family: "FontAwesome";
-  src: url("../fonts/fontawesome-webfont.eot?v=4.3.0");
-  src: url("../fonts/fontawesome-webfont.eot?#iefix&v=4.3.0")
+  src: url("fontsome-webfont.eot?v=4.3.0");
+  src: url("fontsome-webfont.eot?#iefix&v=4.3.0")
       format("embedded-opentype"),
-    url("../fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"),
-    url("../fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"),
-    url("../fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"),
-    url("../fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular")
+    url("fontsome-webfont.woff2?v=4.3.0") format("woff2"),
+    url("fontsome-webfont.woff?v=4.3.0") format("woff"),
+    url("fontsome-webfont.ttf?v=4.3.0") format("truetype"),
+    url("fontsome-webfont.svg?v=4.3.0#fontawesomeregular")
       format("svg");
   font-weight: normal;
   font-style: normal;

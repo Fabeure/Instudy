@@ -27,7 +27,7 @@ var checkSection = function checkSection() {
   });
 };
 
-$(".main-menu, .scroll-to-section").on("click", "a:not([href^='../Register/register.html'])", function(e) {
+$(".main-menu, .scroll-to-section").on("click", "a:not([href='/register'])", function(e) {
   if ($(e.target).hasClass("external")) {
     return;
   }
