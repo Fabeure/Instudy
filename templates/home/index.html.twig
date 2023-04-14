@@ -44,26 +44,48 @@
         <ul class="main-menu">
             <li><a href="#section1">Home</a></li>
             <li><a href="#section4">Hub</a></li>
+            {% if app.user %}
+                <li>  <a href="#"> {{ app.user.userIdentifier }} </a> </li>
+                <li><a href="{{ path('app_logout') }}">Logout</a></li>
+            {% endif %}
+            {% if not app.user %}
             <li><a class="signin-button" >Sign in</a>
                 <div class="signin-form container">
                     <p>Login</p>
-                    <form>
+                    <form method="post">
+                        {% if error %}
+                            <div>
+
+                                   {{ error.messageKey|trans(error.messageData, 'security') }}
+
+                            </div>
+                        {% endif %}
                         <div class="user-box">
-                            <input required="" name="" type="text">
+                            <input required="" id="inputEmail" name="email" type="email" value="{{ last_username }}"
+                                   autocomplete="email" required autofocus>
                             <label>Email</label>
                         </div>
                         <div class="user-box">
-                            <input required="" name="" type="password">
+                            <input required="" type="password" name="password" id="inputPassword"
+                                   autocomplete="current-password" required>
                             <label>Password</label>
+
                         </div>
-                        <div class = "d-flex justify-content-center mb-5 submitbutton">
-                            <a href="">
-                                Submit
-                            </a>
+                        <div class="user-box">
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}"
+                            >
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-5 submitbutton">
+                            <button class="btn btn-lg btn-primary" type="submit">
+                                Sign in
+                            </button>
                         </div>
                     </form>
                     <p>Don't have an account? <a href="{{ path('app_register') }}" class="a2" id="signup-link">Sign up!</a></p>
                 </div></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
