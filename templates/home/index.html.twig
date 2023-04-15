@@ -45,7 +45,7 @@
             <li><a href="#section1">Home</a></li>
             <li><a href="#section4">Hub</a></li>
             {% if app.user %}
-                <li>  <a href="#"> {{ app.user.userIdentifier }} </a> </li>
+                <li>  <a href="#"> {{ app.user.username }} </a> </li>
                 <li><a href="{{ path('app_logout') }}">Logout</a></li>
             {% endif %}
             {% if not app.user %}
@@ -55,9 +55,7 @@
                     <form method="post">
                         {% if error %}
                             <div>
-
                                    {{ error.messageKey|trans(error.messageData, 'security') }}
-
                             </div>
                         {% endif %}
                         <div class="user-box">
@@ -174,5 +172,7 @@
 <!--
     <script src="{{ asset('assets/js/interface.js') }}"></script>
     -->
+
+<script src="{{ asset('assets/js/destroySession.js') }}"></script>
 </body>
 </html>

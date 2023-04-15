@@ -29,6 +29,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
+    #[ORM\Column]
+    private ?string $username = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,7 +48,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
 
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+        return $this;
+    }
     /**
      * A visual identifier that represents this user.
      *
