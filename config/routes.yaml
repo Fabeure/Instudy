@@ -8,3 +8,8 @@ home:
     path: /
     controller: App\Controller\HomeController::index
 
+
+contact:
+    path: /contact
+    controller: App\Controller\ContactController::index
+

@@ -26,6 +26,9 @@ class RegistrationFormType extends AbstractType
                         'message' => 'You should agree to our terms.',
                     ]),
                 ],
+                // link to the terms page
+                'label' => 'I agree to the <a href="/terms">terms of service</a>',
+                'label_html' => true,
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
