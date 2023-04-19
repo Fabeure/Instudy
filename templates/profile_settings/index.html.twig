@@ -64,7 +64,7 @@
                     <div class="img-circle text-center mb-3">
                         <img src="" alt="Image" class="shadow" />
                     </div>
-                    <h4 class="text-center">Hannachi Mohamed</h4>
+                    <h4 class="text-center">{{ app.user.username }}</h4>
                 </div>
                 <div
                         class="nav flex-column nav-pills"
@@ -121,61 +121,41 @@
                 >
                     <h3 class="mb-4">Account Settings</h3>
                     <div class="row">
+                        {{ form_start(profileSettingsForm) }}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" value="" />
+                                {{ form_row(profileSettingsForm.username) }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" value="" />
+                                {{ form_row(profileSettingsForm.name) }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Email</label>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        value=""
-                                />
+                                {{ form_row(profileSettingsForm.surname) }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Phone number</label>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        value=""
-                                />
+                                {{ form_row(profileSettingsForm.phone) }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Year</label>
-                                <input
-                                        type="text"
-                                        class="form-control"
-                                        value=""
-                                />
+                                {{ form_row(profileSettingsForm.email) }}
                             </div>
                         </div>
-
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Bio</label>
-                                <textarea class="form-control" rows="4">
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error similique quia numquam ullam corporis officia odio repellendus aperiam consequatur laudantium porro voluptatibus, itaque laboriosam veritatis voluptatum distinctio!</textarea
-                                >
+                                {{ form_row(profileSettingsForm.bio) }}
                             </div>
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-light">Cancel</button>
+                        <button type= "submit" class="btn btn-primary">Update </button>
+                        {{ form_end(profileSettingsForm) }}
                     </div>
                 </div>
                 <div
@@ -186,30 +166,26 @@ Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore vero enim error 
                 >
                     <h3 class="mb-4">Password Settings</h3>
                     <div class="row">
+                        {{ form_start(profileSettingsPasswordForm) }}
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Old password</label>
-                                <input type="password" class="form-control" />
+                                {{ form_row(profileSettingsPasswordForm.OldPlainPassword) }}
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>New password</label>
-                                <input type="password" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Confirm new password</label>
-                                <input type="password" class="form-control" />
+                                {{ form_row(profileSettingsPasswordForm.NewPlainPassword, {
+                                    label: 'New Password'
+                                })
+                                }}
                             </div>
                         </div>
                     </div>
                     <div>
                         <button class="btn btn-primary">Update</button>
-                        <button class="btn btn-light">Cancel</button>
+                        {{ form_end(profileSettingsPasswordForm) }}
                     </div>
                 </div>
 
