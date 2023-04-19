@@ -41,27 +41,48 @@
         </ul>
     </nav>
 </header>
+<!--header-->
 
 <section class="section main-banner" id="top" data-section="section1" style="color:white">
+
     <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" />
-    <section class="section coming-soon caption container text-center" data-section="section3">
+    <section class="section coming-soon caption container" data-section="section3">    
+        <div class="col-md-12 mt-5">
+            <div class="middle-content">
+                <h1>Admin Pannel</h1>
+            </div>
+        </div>            
         <div class="row">
             <div class="col-md-8">
-                
+                {% for dem in data.demandes %}
+                    <div class="card m-2 px-5" style="text-align:left; background: linear-gradient(-120deg, rgba(68,37,120,1) 0%, rgba(160,22,22,1) 48%, rgba(127,178,200,1) 100%);">
+                        <div class="row m-2">
+                            <div class="col-auto me-auto">
+                                <h5 class="card-title">{{dem.id}} : {{dem.title}}</h5>
+                                <p class="card-text">{{dem.username}}</p>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-outline-info">Info</button>
+                            </div>
+                        </div>
+                        {# <button type="button" class="btn btn-info col-auto">Info</button> #}
+                    </div>
+                {% endfor %}
             </div>
-            <div class="col-md-4 mt-5">
+
+            <div class="col-md-4">
                 <h4>List of Users</h4>
                 <div class="d-flex" style="height: 500px">
                     <div class="overflow-auto">
-                        {% for user in data %}
-                            <div class="card m-2" style="max-width: 540px;{% if user.isActive == false %} background-color: #555555; {% endif %}">
+                        {% for user in data.users %}
+                            <div class="card m-2" style="max-width: 540px; background: {% if user.isActive %} linear-gradient(22deg, rgba(160,22,22,1) 0%, rgba(148,80,88,0.5215336134453781) 28%, rgba(127,178,200,1) 63%); {% else %} #fff8 {% endif %}">
                                 <div class="row g-0">
                                     <div class="col-md-3">
                                         <img src="{{asset(user.profilePic)}}" class="img-fluid rounded-circle shadow-4-strong" style=" height: 100%;"/>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="card-body m-auto">
-                                            <h5 class="card-title">{{user.username}}</h5>
+                                            <h5 class="card-title">{{user.username}}  {% if user.isActive == false %} (notActive) {% endif %}</h5>
 
                                             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                                                 {% if user.isActive %}

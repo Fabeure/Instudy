@@ -13,7 +13,7 @@ class AdminPannelController extends AbstractController
     public function index(): Response
     {
 
-        $data = [
+        $users = [
             $user1 = [
                 'profilePic' => 'assets/images/defaultProfilePic.png',
                 'username' => 'User 1',
@@ -46,10 +46,40 @@ class AdminPannelController extends AbstractController
             ],
         ];
 
+        $demandes = [
+            $d1 = [
+                'id' => '1',
+                'username' => 'User 1',
+                'date' => '2021-05-01',
+                'title' => 'Demande 1',
+            ],
+            $d2 = [
+                'id' => '2',
+                'username' => 'User 2',
+                'date' => '2021-05-02',
+                'title' => 'Demande 2',
+            ],
+            $d3 = [
+                'id' => '3',
+                'username' => 'User 3',
+                'date' => '2021-05-03',
+                'title' => 'Demande 3',
+            ],
+            $d4 = [
+                'id' => '4',
+                'username' => 'User 4',
+                'date' => '2021-05-04',
+                'title' => 'Demande 4',
+            ],
+        ];
+
 
         return $this->render('admin_pannel/index.html.twig', [
             'controller_name' => 'AdminPannelController',
-            'data' => $data,
+            'data' => [
+                'users' => $users,
+                'demandes' => $demandes
+            ],
         ]);
     }
 }
