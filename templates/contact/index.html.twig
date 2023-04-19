@@ -49,20 +49,17 @@
             <div class="middle-content">
                 <h1>Contact Us</h1>
                 {{ form_start(form) }}
+
+                    {% if not app.user %}
+                        <div class="form-group">
+                            {{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    {% endif %}
                     <div class="form-group">
-                        {{ form_label(form.name) }}
-                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.name) }}
+                        {{ form_row(form.subject, {'attr': {'class': 'form-control'}}) }}
                     </div>
                     <div class="form-group">
-                        {{ form_label(form.email) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.email) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.message) }}
-                        {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.message) }}
+                        {{ form_row(form.content, {'attr': {'class': 'form-control'}}) }}
                     </div>
                     <button type="submit" class="btn btn-primary">Send</button>
                 {{ form_end(form) }}
