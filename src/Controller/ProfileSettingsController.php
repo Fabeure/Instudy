@@ -33,7 +33,7 @@ class ProfileSettingsController extends AbstractController
             $user->setSurname($form->get('surname')->getData());
             $user->setPhone($form->get('phone')->getData());
             $user->setBio($form->get('bio')->getData());
-            $user->setPersonalEmail($form->get('email')->getData());
+            $user->setPersonalEmail($form->get('personalEmail')->getData());
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash('success', 'Your profile has been updated.');

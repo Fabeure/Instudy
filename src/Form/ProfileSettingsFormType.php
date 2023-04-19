@@ -34,7 +34,7 @@ class ProfileSettingsFormType extends AbstractType
             ->add('bio', TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('email', TextType::class, [
+            ->add('personalEmail', TextType::class, [
                 'attr' => ['class' => 'form-control'],
             ])
         ;
