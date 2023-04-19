@@ -1,6 +1,14 @@
 @import url(fontawesome.css);
 @import url(
-  "<link href= "https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">"
+  "<link href= "https://fonts.googleapis.com/css?family=Montserrat:100,
+  200,
+  300,
+  400,
+  500,
+  600,
+  700,
+  800,
+  900" rel="stylesheet">"
 );
 body {
   font-family: "Montserrat", sans-serif;
@@ -70,7 +78,7 @@ body {
 
 .signin-form form a {
   position: relative;
-  margin : auto;
+  margin: auto;
   display: inline-block;
   font-weight: bold;
   color: #fff;
@@ -285,79 +293,14 @@ body {
   }
 }
 
-/*.card1 {
-  width: 250px;
-  height: 350px;
-  background: transparent;
-  border: 2px solid #2c07ff;
-  box-shadow: 2px 2px 15px #000000 inset;
-  text-align: center;
-  color: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Pacifico";
-  position: absolute;
-  left: 10%;
-  top: 10%;
-}*/
-/*.card2 {
-  width: 250px;
-  height: 350px;
-  background: transparent;
-  border: 2px solid #2c07ff;
-  box-shadow: 2px 2px 15px #13175f inset;
-  text-align: center;
-  color: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Pacifico";
-  position: absolute;
-  left: 40%;
-  top: 10%;
-}*/
-/*.card3 {
-  width: 250px;
-  height: 350px;
-  background: transparent;
-  border: 2px solid #2c07ff;
-  box-shadow: 2px 2px 15px #000000 inset;
-  text-align: center;
-  color: #e8e8e8;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Pacifico";
-  position: absolute;
-  left: 70%;
-  top: 10%;
-}*/
 .card-content {
   opacity: 0;
   transition: opacity 0.3s ease-in-out;
 }
-/*.card1:hover {
-  color: #0717ff;
-  box-shadow: 2px 2px 15px #0b07ff inset;
-}
-: opacity 0.3s ease-in-out;
-}
-.card1:hover .card-content {
-  opacity: 1;
-}*/
-/*.card2:hover {
-  color: #0717ff;
-  box-shadow: 2px 2px 15px #0b07ff inset;
-}*/
 
 .card2:hover .card-content {
   opacity: 1;
 }
-/*.card3:hover {
-  color: #0717ff;
-  box-shadow: 2px 2px 15px #0b07ff inset;
-}*/
 
 .card3:hover .card-content {
   opacity: 1;
@@ -549,7 +492,7 @@ a.menu-link {
   margin-left: 15px;
   position: relative;
 }
-.submitbutton{
+.submitbutton {
   display: inline-block;
   line-height: 18px;
   margin-left: 15px;
