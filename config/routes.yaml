@@ -8,3 +8,12 @@ home:
     path: /
     controller: App\Controller\HomeController::index
 
+
+contact:
+    path: /contact
+    controller: App\Controller\ContactController::index
+
+contact_submit:
+    path: /contact
+    methods: [POST]
+    controller: App\Controller\ContactController::submit
