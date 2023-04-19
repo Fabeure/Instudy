@@ -14,6 +14,11 @@ class AdminPannelController extends AbstractController
     {
 
         $users = [
+            // evry user is an array
+            // has a profilePic (string) : path to the profile picture in assets
+            // has a username (string)
+            // has an isActive (bool) : if the user 3mel sign up or not
+
             $user1 = [
                 'profilePic' => 'assets/images/defaultProfilePic.png',
                 'username' => 'User 1',
