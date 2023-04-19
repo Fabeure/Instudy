@@ -13,8 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MessageFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Name',

@@ -1,7 +1,7 @@
 {# templates/contact/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}Contact{% endblock %}
+{% block title %}AdminPannel{% endblock %}
 
 
 {% block body %}
@@ -44,28 +44,41 @@
 
 <section class="section main-banner" id="top" data-section="section1" style="color:white">
     <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" />
-    <section class="section coming-soon caption" data-section="section3">
-        <div class="col-md-12 mt-5">
-            <div class="middle-content">
-                <h1>Contact Us</h1>
-                {{ form_start(form) }}
-                    <div class="form-group">
-                        {{ form_label(form.name) }}
-                        {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.name) }}
+    <section class="section coming-soon caption container text-center" data-section="section3">
+        <div class="row">
+            <div class="col-md-8">
+                
+            </div>
+            <div class="col-md-4 mt-5">
+                <h4>List of Users</h4>
+                <div class="d-flex" style="height: 500px">
+                    <div class="overflow-auto">
+                        {% for user in data %}
+                            <div class="card m-2" style="max-width: 540px;{% if user.isActive == false %} background-color: #555555; {% endif %}">
+                                <div class="row g-0">
+                                    <div class="col-md-3">
+                                        <img src="{{asset(user.profilePic)}}" class="img-fluid rounded-circle shadow-4-strong" style=" height: 100%;"/>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body m-auto">
+                                            <h5 class="card-title">{{user.username}}</h5>
+
+                                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                                {% if user.isActive %}
+                                                    <input type="checkbox" class="btn-check" id="btncheck1" checked>
+                                                    <label class="btn btn-success" for="btncheck1">Show</label>
+                                                {% endif %}
+
+                                                <input type="checkbox" class="btn-check" id="btncheck2" >
+                                                <label class="btn btn-danger" for="btncheck2">Deleate</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="form-group">
-                        {{ form_label(form.email) }}
-                        {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.email) }}
-                    </div>
-                    <div class="form-group">
-                        {{ form_label(form.message) }}
-                        {{ form_widget(form.message, {'attr': {'class': 'form-control'}}) }}
-                        {{ form_errors(form.message) }}
-                    </div>
-                    <button type="submit" class="btn btn-primary">Send</button>
-                {{ form_end(form) }}
+                </div>
             </div>
         </div>
     </section>
