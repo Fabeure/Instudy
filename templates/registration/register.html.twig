@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+
 
 {% block title %}Register{% endblock %}
 
@@ -46,8 +46,14 @@
         <div class="col-md-12 mt-5">
             <div class="middle-content">
                 <div class="middle-content">
-                    <h6>Register now</h6>
+                    <h6>Register now
+                    </h6>
                 </div>
+                {% for flash_message in app.flashes('error') %}
+                    <div class="alert alert-danger">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
                 {{ form_start(registrationForm) }}
                 {{ form_row(registrationForm.username) }}
                 {{ form_row(registrationForm.email) }}
