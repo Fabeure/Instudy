@@ -7,11 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AdminPannelController extends AbstractController
+class AdminPanelController extends AbstractController
 {
-    #[Route('/adminPannel', name: 'app_admin_pannel')]
+    #[Route('/adminPanel', name: 'app_admin_panel')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
         $users = [
             // evry user is an array
