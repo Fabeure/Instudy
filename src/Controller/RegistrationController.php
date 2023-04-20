@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\RegisteredEmails;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,28 +25,62 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+
+        //create user instance and handle form request
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
+
+
+        //register user
         if ($form->isSubmitted() && $form->isValid()) {
-            // encode the plain password
-            $user->setPassword(
-                $userPasswordHasher->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
-            );
-            if (($form->get('email')->getData()) == 'admin@admin.insat.ucar.tn'){
+            $email = $form->get('email')->getData();
+
+
+
+
+            //check if user is an admin
+            if ($email == 'admin@admin.insat.ucar.tn'){
                 $user->setRoles(['ROLE_ADMIN']);
+                $user->setPassword($userPasswordHasher->hashPassword($user,$form->get('plainPassword')->getData()));
+                $entityManager->persist($user);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_home');
             }
-            $entityManager->persist($user);
-            $entityManager->flush();
+
+
+
+            //check if user is in pre-registration database or not
+            $preRegisteredEmail = $entityManager->getRepository(RegisteredEmails::class)->findOneBy(['email' => $email]);
+
+
+
+            //add error flash if user does not exist
+            if(!$preRegisteredEmail){
+                $entity = new User();
+                $form = $this->createForm(RegistrationFormType::class, $entity);
+                $this->addFlash('error', 'This email has not been pre-registered.');
+            }
+
+
+
+            else{
+                //make user active
+                $preRegisteredEmail->setActif(true);
+                // encode the plain password
+                $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
+                $entityManager->persist($user);
+                $entityManager->flush();
+                return $this->redirectToRoute('app_home');
+            }
+
+
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_home');
-        }
 
+
+        }
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
         ]);

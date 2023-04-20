@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -168,6 +169,11 @@
                     <div class="row">
                         {{ form_start(profileSettingsPasswordForm) }}
                         <div class="col-md-6">
+                            {% for flash_message in app.flashes('error') %}
+                                <div class="alert alert-danger">
+                                    {{ flash_message }}
+                                </div>
+                            {% endfor %}
                             <div class="form-group">
                                 {{ form_row(profileSettingsPasswordForm.OldPlainPassword) }}
                             </div>

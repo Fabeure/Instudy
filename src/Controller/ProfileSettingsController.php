@@ -18,8 +18,13 @@ class ProfileSettingsController extends AbstractController
     #[Route('/profile/settings', name: 'app_profile_settings')]
     public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+
+        //get Current user Id and find user
         $id = $this->getUser()->getId();
         $user = $entityManager->getRepository(User::class)->find($id);
+
+
+        //create and handle forms
         $form = $this->createForm(ProfileSettingsFormType::class, $user);
         $form2 = $this->createForm(ProfileSettingsPasswordFormType::class, $user);
         $form->handleRequest($request);
@@ -27,6 +32,8 @@ class ProfileSettingsController extends AbstractController
 
 
 
+
+        //modify user credentials
         if ($form->isSubmitted() && $form->isValid()) {
             $user->setUsername($form->get('username')->getData());
             $user->setName($form->get('name')->getData());
@@ -39,17 +46,14 @@ class ProfileSettingsController extends AbstractController
             $this->addFlash('success', 'Your profile has been updated.');
             return $this->redirectToRoute('app_home');
         }
+
+        //modify password
         if ($form2->isSubmitted() && $form2->isValid()){
             if (!$userPasswordHasher->isPasswordValid($user, $form2->get('OldPlainPassword')->getData())){
-                return $this->redirectToRoute('app_register');
+                $this->addFlash('error', 'Wrong password.');
             }
             else {
-                $user->setPassword(
-                    $userPasswordHasher->hashPassword(
-                        $user,
-                        $form2->get('NewPlainPassword')->getData()
-                    )
-                );
+                $user->setPassword($userPasswordHasher->hashPassword($user, $form2->get('NewPlainPassword')->getData()));
                 $entityManager->persist($user);
                 $entityManager->flush();
             }
