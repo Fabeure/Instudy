@@ -48,16 +48,14 @@ class ProfileSettingsController extends AbstractController
         }
 
         //modify password
-        if ($form2->isSubmitted() && $form2->isValid()){
-            if (!$userPasswordHasher->isPasswordValid($user, $form2->get('OldPlainPassword')->getData())){
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            if (!$userPasswordHasher->isPasswordValid($user, $form2->get('OldPlainPassword')->getData())) {
                 $this->addFlash('error', 'Wrong password.');
-            }
-            else {
+            } else {
                 $user->setPassword($userPasswordHasher->hashPassword($user, $form2->get('NewPlainPassword')->getData()));
                 $entityManager->persist($user);
                 $entityManager->flush();
             }
-
         }
 
         return $this->render('profile_settings/index.html.twig', [

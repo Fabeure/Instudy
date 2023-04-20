@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminPanelController extends AbstractController
 {
     #[Route('/adminPanel', name: 'app_admin_panel')]
-    public function index(Request $request,EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         //handle access control
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
@@ -27,7 +27,7 @@ class AdminPanelController extends AbstractController
         $form->handleRequest($request);
 
         //adding a new user to the pre-registration database
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $email->setEmail($form->get('email')->getData());
             $email->setActif(false);
             $entityManager->persist($email);
@@ -44,27 +44,24 @@ class AdminPanelController extends AbstractController
         rsort($fetched_emails); //to show active users first
 
         //get user fields to show
-        foreach($fetched_emails as $email){
+        foreach ($fetched_emails as $email) {
 
-            if($email->isActif()){
+            if ($email->isActif()) {
                 //get user by email
-                $user_instance = $entityManager->getRepository(User::class)->findOneBy(['email'=>$email->getEmail()]);
-                $users[$i]= [
+                $user_instance = $entityManager->getRepository(User::class)->findOneBy(['email' => $email->getEmail()]);
+                $users[$i] = [
+                    'id' => $user_instance->getId(),
                     'isActive' => true,
                     'username' => $user_instance->getUsername()
                 ];
-                $i +=1;
-            }
-
-
-            else{
-                $users[$i]= [
+                $i += 1;
+            } else {
+                $users[$i] = [
                     'email' => $email->getEmail(),
                     'isActive' => false
                 ];
-                $i +=1;
+                $i += 1;
             }
-
         }
 
 
@@ -94,5 +91,30 @@ class AdminPanelController extends AbstractController
             ],
             'PreRegisterForm' => $form->createView()
         ]);
+    }
+
+    // remove a user from the user database and desactivate his email from the pre-registration database
+    #[Route('/adminPanel/removeUser/{id}', name: 'app_remove_user')]
+    public function removeUser($id, EntityManagerInterface $entityManager): Response
+    {
+        //handle access control
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+
+        //get user by id
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+        //get email by user email
+        $email = $entityManager->getRepository(RegisteredEmails::class)->findOneBy(['email' => $user->getEmail()]);
+
+        //remove user
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        //desactivate email
+        $email->setActif(false);
+        $entityManager->persist($email);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_panel');
     }
 }

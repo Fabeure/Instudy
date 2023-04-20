@@ -25,7 +25,7 @@ class ContactController extends AbstractController
     public function index(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
 
-        if ($this->getUser()){
+        if ($this->getUser()) {
             $id = $this->getUser()->getId();
             $user = $entityManager->getRepository(User::class)->find($id);
             $defaultData = ['message' => 'Type your message here'];
@@ -43,8 +43,7 @@ class ContactController extends AbstractController
                     ->text($form->get('content')->getData());
                 $mailer->send($email);
             }
-        }
-        else{
+        } else {
             $defaultData = ['message' => 'Type your message here'];
             $form = $this->createFormBuilder($defaultData)
                 ->add('email', TextType::class)
@@ -61,7 +60,6 @@ class ContactController extends AbstractController
                     ->text($form->get('content')->getData());
                 $mailer->send($email);
             }
-
         }
 
 

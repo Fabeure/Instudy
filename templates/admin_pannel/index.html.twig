@@ -71,7 +71,6 @@
                                 <button type="button" class="btn btn-outline-info">Info</button>
                             </div>
                         </div>
-                        {# <button type="button" class="btn btn-info col-auto">Info</button> #}
                     </div>
                 {% endfor %}
             </div>
@@ -97,12 +96,12 @@
 
                                             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                                                 {% if user.isActive %}
-                                                    <input type="checkbox" class="btn-check" id="btncheck1" checked>
-                                                    <label class="btn btn-success" for="btncheck1">Show</label>
+                                                    <button class="btn btn-success" for="btncheck1">Show</button>
 
-
-                                                <input type="checkbox" class="btn-check" id="btncheck2" >
-                                                <label class="btn btn-danger" for="btncheck2">Delete</label>
+                                                    {# go from this buuton to route app_remove_user #}
+                                                    <button class="btn btn-danger" for="btncheck2">
+                                                        <a href="{{ path('app_remove_user', {'id': user.id}) }}" style="color: white">Remove</a>
+                                                    </button>
                                                 {% endif %}
                                             </div>
                                         </div>
