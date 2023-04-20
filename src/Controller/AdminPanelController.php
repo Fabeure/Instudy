@@ -19,7 +19,10 @@ class AdminPanelController extends AbstractController
     public function index(Request $request,EntityManagerInterface $entityManager): Response
     {
         //handle access control
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+        if(!$this->isGranted('ROLE_ADMIN')){
+            $this->addFlash('error', 'You need to be an admin to visit this page.');
+            return $this->redirectToRoute('app_profile_settings');
+        }
 
         //adding an email for pre-registration
         $email = new RegisteredEmails();

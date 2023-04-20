@@ -36,6 +36,11 @@
     </div>
     <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
     <nav id="menu" class="main-nav" role="navigation">
+        {% for flash_message in app.flashes('error') %}
+            <div class="alert alert-danger d-inline-block">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
         <ul class="main-menu">
             <li><a href="{{ path('app_home') }}">Home</a></li>
         </ul>

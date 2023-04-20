@@ -38,9 +38,14 @@
                 src="{{ asset('assets/images/download.png') }}"
                 alt="INSAT 2.0"
         />
+
     </div>
-    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
     <nav id="menu" class="main-nav" role="navigation">
+        {% for flash_message in app.flashes('error') %}
+            <div class="alert alert-danger d-inline-block">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
         <ul class="main-menu">
             <li><a href="#section1">Home</a></li>
             <li><a href="#section4">Hub</a></li>
@@ -87,7 +92,6 @@
         </ul>
     </nav>
 </header>
-
 <section class="section main-banner" id="top" data-section="section1">
     <img
             class="imgv3"

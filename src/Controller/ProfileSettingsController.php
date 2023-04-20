@@ -18,6 +18,12 @@ class ProfileSettingsController extends AbstractController
     #[Route('/profile/settings', name: 'app_profile_settings')]
     public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+            $this->addFlash('error', 'Login to access this page.');
+            return $this->redirectToRoute('app_home');
+        }
+
 
         //get Current user Id and find user
         $id = $this->getUser()->getId();
