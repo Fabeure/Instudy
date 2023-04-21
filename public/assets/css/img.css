@@ -15,3 +15,20 @@
     display: block;
     margin: 0 auto;
 }
+.alert {
+    width:40%;
+}
+#wrapper{
+    background:red;
+    overflow:auto;
+}
+
+#c1{
+    float:left;
+    background:blue;
+}
+
+#c2 {
+    background: green;
+    float: right;
+}

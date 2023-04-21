@@ -1,0 +1,145 @@
+{# templates/contact/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}AdminPannel{% endblock %}
+
+
+{% block body %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
+          rel="stylesheet" />
+
+    <title>Terms of Agreement</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <!-- Additional CSS Files -->
+
+    <link rel="stylesheet" href="{{ asset('assets/css/sitecomponents.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/img.css') }}" />
+
+</head>
+
+
+<!--header-->
+<header class="main-header clearfix" role="banner">
+    <div class="logo">
+        <img class="imgv2" src="{{ asset('assets/images/download.png') }}" alt="INSAT 2.0" />
+    </div>
+    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+    <nav id="menu" class="main-nav" role="navigation">
+        {% for flash_message in app.flashes('error') %}
+            <div class="alert alert-danger d-inline-block">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        {% for flash_message in app.flashes('success') %}
+            <div class="alert alert-success d-inline-block">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
+        <ul class="main-menu">
+            <li><a href="{{ path('app_home') }}">Home</a></li>
+        </ul>
+    </nav>
+</header>
+<!--header-->
+
+<section class="section main-banner" id="top" data-section="section1" style="color:white">
+
+    <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" />
+    <section class="section coming-soon caption container" data-section="section3">    
+        <div class="col-md-12 mt-5">
+            <div class="middle-content">
+                <h1>Admin Pannel</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <h5>Add User</h5>
+                {{ form_start(PreRegisterForm) }}
+                {{ form_row(PreRegisterForm.email) }}
+                <button type="submit" class="btn">Add</button>
+                {{ form_end(PreRegisterForm) }}
+                {% for dem in data.demandes %}
+                    <div class="card m-2 px-5" style="text-align:left; background: linear-gradient(-120deg, rgba(68,37,120,1) 0%, rgba(160,22,22,1) 48%, rgba(127,178,200,1) 100%);">
+                        <div class="row m-2">
+                            <div class="col-auto me-auto">
+                                <h5 class="card-title">{{dem.id}} : {{dem.title}}</h5>
+                                <p class="card-text">{{dem.username}}</p>
+                            </div>
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-outline-info">Info</button>
+                            </div>
+                        </div>
+                        {# <button type="button" class="btn btn-info col-auto">Info</button> #}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-4">
+                <h4>List of Users</h4>
+                <div class="d-flex" style="height: 500px">
+                    <div class="overflow-auto">
+                        {% for user in data.users %}
+                            <div class="card m-2" style="max-width: 540px; background: {% if user.isActive %} linear-gradient(22deg, rgba(160,22,22,1) 0%, rgba(148,80,88,0.5215336134453781) 28%, rgba(127,178,200,1) 63%); {% else %} #fff8 {% endif %}">
+                                <div class="row g-0">
+                                    <div class="col-md-3">
+                                        <img src="assets/images/defaultProfilePic.png" class="img-fluid rounded-circle shadow-4-strong" style=" height: 100%;"/>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="card-body m-auto">
+                                            {% if not user.isActive %}
+                                            <h5 class="card-title">{{user.email}} (not Active)</h5>
+                                            {% endif %}
+                                            {% if user.isActive %}
+                                            <h5 class="card-title">{{user.username}}</h5>
+                                            {% endif %}
+
+                                            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                                {% if user.isActive %}
+                                                    <input type="checkbox" class="btn-check" id="btncheck1" checked>
+                                                    <label class="btn btn-success" for="btncheck1">Show</label>
+
+
+                                                <input type="checkbox" class="btn-check" id="btncheck2" >
+                                                <label class="btn btn-danger" for="btncheck2">Delete</label>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+
+
+<!-- Scripts -->
+<!-- Bootstrap core JavaScript -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
+</script>
+<script src="{{ asset('assets/js/destroySession.js') }}"></script>
+
+
+
+
+
+</html>
+{% endblock %}
