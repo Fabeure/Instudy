@@ -46,6 +46,11 @@
                 {{ flash_message }}
             </div>
         {% endfor %}
+        {% for flash_message in app.flashes('success') %}
+            <div class="alert alert-success d-inline-block">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
         <ul class="main-menu">
             <li><a href="#section1">Home</a></li>
             <li><a href="#section4">Hub</a></li>
