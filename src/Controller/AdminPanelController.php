@@ -20,38 +20,59 @@ class AdminPanelController extends AbstractController
     {
         //handle access control
         if(!$this->isGranted('ROLE_ADMIN')){
+
+            //add error flash message
             $this->addFlash('error', 'You need to be an admin to visit this page.');
-            return $this->redirectToRoute('app_profile_settings');
+
+            //return to home
+            return $this->redirectToRoute('app_home');
         }
 
         //adding an email for pre-registration
         $email = new RegisteredEmails();
+
+        //create pre-registration form to add user email to database
         $form = $this->createForm(PreRegisterFormType::class, $email);
+
+        //handle form
         $form->handleRequest($request);
 
-        //adding a new user to the pre-registration database
+        //saving a new user to the pre-registration database
         if ($form->isSubmitted() && $form->isValid()){
+
+            //set fields for new user email
             $email->setEmail($form->get('email')->getData());
             $email->setActif(false);
-            $entityManager->persist($email);
-            $entityManager->flush();
+
+            //save email to database
+            $entityManager->getRepository(RegisteredEmails::class)->save($email, true);
+
+            //add success message
+            $this->addFlash('success', 'User added successfully');
+
+            //clear form ????
             $entity = new RegisteredEmails();
             $form = $this->createForm(PreRegisterFormType::class, $entity);
         }
 
 
         //fetch all users and pass them to view
-        $users = [];
-        $i = 0;
-        $fetched_emails = $entityManager->getRepository(RegisteredEmails::class)->findAll();
-        rsort($fetched_emails); //to show active users first
+            $users = [];
+            $i = 0;
+            $fetched_emails = $entityManager->getRepository(RegisteredEmails::class)->findAllActiveFirst();
 
         //get user fields to show
         foreach($fetched_emails as $email){
 
             if($email->isActif()){
+
+                //get user email
+                $user_email = $email->getEmail();
+
                 //get user by email
-                $user_instance = $entityManager->getRepository(User::class)->findOneBy(['email'=>$email->getEmail()]);
+                $user_instance = $entityManager->getRepository(User::class)->findOneBy(['email'=>$user_email]);
+
+                //add user to array
                 $users[$i]= [
                     'isActive' => true,
                     'username' => $user_instance->getUsername()
@@ -61,6 +82,7 @@ class AdminPanelController extends AbstractController
 
 
             else{
+                //add user to array
                 $users[$i]= [
                     'email' => $email->getEmail(),
                     'isActive' => false

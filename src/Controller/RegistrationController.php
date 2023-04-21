@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\RegisteredEmails;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,14 +39,16 @@ class RegistrationController extends AbstractController
             $email = $form->get('email')->getData();
 
 
-
-
             //check if user is an admin
             if ($email == 'admin@admin.insat.ucar.tn'){
+                //give user admin role
                 $user->setRoles(['ROLE_ADMIN']);
+                //hash password
                 $user->setPassword($userPasswordHasher->hashPassword($user,$form->get('plainPassword')->getData()));
-                $entityManager->persist($user);
-                $entityManager->flush();
+                //save user
+                $entityManager->getRepository(User::class)->save($user, true);
+                //add success message
+                $this->addFlash('success', 'Admin created successfully');
                 return $this->redirectToRoute('app_home');
             }
 
@@ -58,6 +61,7 @@ class RegistrationController extends AbstractController
 
             //add error flash if user does not exist
             if(!$preRegisteredEmail){
+                //empty form fields??
                 $entity = new User();
                 $form = $this->createForm(RegistrationFormType::class, $entity);
                 $this->addFlash('error', 'This email has not been pre-registered.');
@@ -70,8 +74,11 @@ class RegistrationController extends AbstractController
                 $preRegisteredEmail->setActif(true);
                 // encode the plain password
                 $user->setPassword($userPasswordHasher->hashPassword($user, $form->get('plainPassword')->getData()));
-                $entityManager->persist($user);
-                $entityManager->flush();
+                //save user
+                $entityManager->getRepository(User::class)->save($user, true);
+                //add success flash message
+                $this->addFlash('success', 'User created successfully');
+                //redirect to home
                 return $this->redirectToRoute('app_home');
             }
 
