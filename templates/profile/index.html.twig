@@ -40,19 +40,13 @@
             type="text/css"
             href="{{ asset('assets/css/style_interface_settings.css') }}"
     />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="{{ asset('assets/css/style_interface_settings2.scss') }}"
-    />
-    //to align tags
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
+        /*to align tags */
         .inline {
             display: inline-block;
         }
-    </style>
-    //to change the color of the btn
-    <style>
+    /*to change the color of the btn */
         .btn-secondary, .btn-secondary:active, .btn-secondary:visited {
             background-color: #32225c !important;
             border-color: #1f1f42;
@@ -65,9 +59,7 @@
             -ms-transition: all 30ms ease;
             transform: scale(1.1);
         }
-    </style>
-    //tabulation de données
-    <style>
+    /*tabulation de données*/
         .tab {
             display: inline-block;
             margin-left: 40px;
@@ -109,7 +101,9 @@
                 <h1 class="mb-5">{{ app.user.username }}'s account</h1>
             </div>
             <div class="col-md-2">
+                   {%  if( app.user.allNotNull ) %}
                     <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings') }}';"> edit profile </button>
+                    {% endif %}
             </div>
         </div>
         <div class="row justify-content-around">
@@ -162,6 +156,17 @@
                 </div>
             </div>
         </div>
+        {% if(not(app.user.allNotNull)) %}
+        <div class="row">
+            <div class="alert alert-danger col-md-4">
+                <i class="fas fa-exclamation-triangle text-danger"></i>
+                <strong>
+                    Please  finish <a href='{{ path('app_profile_settings') }}' class="alert-link">sitting your account </a>
+                </strong>.
+            </div>
+
+        </div>
+        {% endif %}
     </div>
 </section>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
