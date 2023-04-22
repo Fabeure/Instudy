@@ -66,6 +66,13 @@
             transform: scale(1.1);
         }
     </style>
+    //tabulation de données
+    <style>
+        .tab {
+            display: inline-block;
+            margin-left: 40px;
+        }
+        </style>
 </head>
 <body>
 <header class="main-header clearfix" role="banner">
@@ -102,35 +109,53 @@
                 <h1 class="mb-5">{{ app.user.username }}'s account</h1>
             </div>
             <div class="col-md-2">
-                    <button type= "submit" class="btn btn-secondary">edit profile </button>
+                    <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings') }}';"> edit profile </button>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-5">
-                    <img src="{{ asset('assets/images/profileDefaultPhoto.jpg') }}" alt="Profile Image" class="rounded-circle" width="304" height="236"/>
+        <div class="row justify-content-around">
+            <div class="col-md-3">
+
+                    <img src="{{ asset('assets/images/profileDefaultPhoto.jpg') }}" alt="Profile Image" class="rounded-circle shadow rounded-lg d-block d-sm-flex" width="236" height="236" />
            <br>
-                bio place
+                <div class="text-center">
+                    {{ app.user.bio }}
+                </div>
             </div>
-            <div class="col-md-7">
+            <div class="col-md-5">
                 <div class="bg-white shadow rounded-lg d-block d-sm-flex">
                     <div class="tab-content p-4 p-md-5" >
                         <div class="tab-pane fade show active">
+                            {% if(app.user.surname != '') %}
                             <div class="mb-3">
-                                <h3> surname </h3>
+                                <h3 class="tab" > {{ app.user.surname }} </h3>
                             </div>
                             <br>
+                            {% endif %}
+                            {% if(app.user.phone != '') %}
                             <div class="mb-3">
                                 phone number:
                                 <br>
+                                <div class="tab">
                                 <i class="fa fa-phone"></i>
-                                99 999 999
+                                {{ app.user.phone }}
+                                </div>
                             </div>
+                            {% endif %}
                             <br>
                             <div class="mb-3">
                                 email address :
                                 <br>
+                                <div class="tab">
+                                    <i class="fa fa-envelope"></i>
+                                    {{ app.user.email }}
+                                </div>
+                                <br>
+                                {% if(app.user.personalEmail != '') %}
+                                <div class="tab">
                                 <i class="fa fa-envelope"></i>
-                                admin@admin.insat.ucar.tn
+                                {{ app.user.personalEmail }}
+                                </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
