@@ -65,8 +65,6 @@ class AdminPanelController extends AbstractController
         }
 
 
-
-
         $demandes = [
             $d1 = [
                 'id' => '1',
@@ -116,6 +114,25 @@ class AdminPanelController extends AbstractController
         $email->setActif(false);
         $entityManager->persist($email);
         $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_panel');
+    }
+
+    //app_remove_dem
+    #[Route('/adminPanel/removeDem/{id}', name: 'app_remove_dem')]
+    public function removeDem($id, EntityManagerInterface $entityManager): Response
+    {
+        //handle access control
+
+        // you have acces only if thsi demande is yours or you are an admin
+
+
+        //get demande by id
+        // $demande = $entityManager->getRepository(Demande::class)->find($id);
+
+        //remove demande
+        // $entityManager->remove($demande);
+        // $entityManager->flush();
 
         return $this->redirectToRoute('app_admin_panel');
     }

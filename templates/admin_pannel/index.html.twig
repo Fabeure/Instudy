@@ -46,7 +46,16 @@
 <section class="section caption main-banner" id="top" data-section="section1" style="color:white; background-image: url({{ asset('assets/images/choosing-bg.jpg') }}); ">
 
     {# <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" /> #}
-    <section class="section container" data-section="section3" style="margin-top=80px;">    
+    <section class="section container" data-section="section3">    
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="block">
+                        <h1 class="text-center">Admin Pannel</h1>
+                    </div>
+                </div>
+            </div>
+            
         <div class="col-md-12 mt-5">
             <div class="middle-content text-center">
                 <h1>Admin Pannel</h1>
@@ -65,13 +74,16 @@
 
                 {% for dem in data.demandes %}
                     <div class="card m-2 px-5" style="text-align:left; background: linear-gradient(-120deg, rgba(68,37,120,1) 0%, rgba(160,22,22,1) 48%, rgba(127,178,200,1) 100%);">
-                        <div class="row m-2">
+                        <div class="row my-2">
                             <div class="col-auto me-auto">
                                 <h5 class="card-title">{{dem.id}} : {{dem.title}}</h5>
-                                <p class="card-text">{{dem.username}}</p>
+                                <p class="card-text">{{ dem.username }}</p>
                             </div>
                             <div class="col-auto">
                                 <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModal" data-backdrop="static">Info</button>
+                                <a type="button" class="btn btn-outline-danger" href="{{ path('app_remove_dem', {'id': dem.id}) }}">
+                                    <i class="fas fa-times"></i>
+                                </a>
                             </div>
 
                             {# Modal #}

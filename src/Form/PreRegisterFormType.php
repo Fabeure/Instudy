@@ -14,9 +14,11 @@ class PreRegisterFormType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['class' => 'form-control'],
-            ])
-        ;
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Enter the new Email',
+                ],
+                'label' => false,
+            ]);
     }
-
 }
