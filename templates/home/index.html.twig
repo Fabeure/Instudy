@@ -27,6 +27,9 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/sitecomponents.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/img.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/buttons.css') }}" />
+
 </head>
 
 <body>
@@ -52,8 +55,8 @@
             </div>
         {% endfor %}
         <ul class="main-menu">
-            <li><a href="#section1">Home</a></li>
-            <li><a href="#section4">Hub</a></li>
+            <li><a href="">Home</a></li>
+            <li><a href="">Hub</a></li>
             {% if app.user %}
                 <li>  <a href="{{ path('app_profile_settings') }}"> {{ app.user.username }} </a> </li>
                 <li><a href="{{ path('app_logout') }}">Logout</a></li>
@@ -117,19 +120,7 @@
     </div>
 </section>
 
-<section class="features">
-    <div class="container">
-            <div class="col-lg-4 col-12">
-                <div class="features-post second-features">
-                    <div class="features-content">
-                        <div class="content-show">
-                            <h4><i class="fa fa-graduation-cap"></i>Contact Us</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-</section>
 
 <!-- Scripts -->
 <!-- Bootstrap core JavaScript -->
