@@ -61,7 +61,7 @@ class ProfileSettingsController extends AbstractController
             $this->addFlash('success', 'Your profile has been updated.');
 
             //return to home
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_profile_settings');
         }
 
         //modify password

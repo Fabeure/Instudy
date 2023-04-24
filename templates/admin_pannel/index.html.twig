@@ -56,10 +56,10 @@
 <section class="section main-banner" id="top" data-section="section1" style="color:white">
 
     <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" />
-    <section class="section coming-soon caption container" data-section="section3">    
+    <section class="coming-soon caption">
         <div class="col-md-12 mt-5">
             <div class="middle-content">
-                <h1>Admin Pannel</h1>
+                <h1 class="adminPanel">Admin Panel</h1>
             </div>
         </div>
 
@@ -87,7 +87,7 @@
             </div>
 
             <div class="col-md-4">
-                <h4>List of Users</h4>
+                <h4>Users</h4>
                 <div class="d-flex" style="height: 500px">
                     <div class="overflow-auto">
                         {% for user in data.users %}
