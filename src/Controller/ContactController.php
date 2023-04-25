@@ -34,7 +34,6 @@ class ContactController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
 
-
         //need to check if getUser returns current user or not, if yes then no need to fetch from database
         if ($this->getUser()){
             if ($form->isSubmitted() && $form->isValid()) {
@@ -59,7 +58,6 @@ class ContactController extends AbstractController
                 //send email, needs fixing
                 $mailer->send($email);
             }
-
         }
 
 

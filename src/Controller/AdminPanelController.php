@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminPanelController extends AbstractController
 {
     #[Route('/adminPanel', name: 'app_admin_panel')]
-    public function index(Request $request,EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         //handle access control
         if(!$this->isGranted('ROLE_ADMIN')){
@@ -41,6 +41,7 @@ class AdminPanelController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             //set fields for new user email
+
             $email->setEmail($form->get('email')->getData());
             $email->setActif(false);
 
@@ -62,7 +63,7 @@ class AdminPanelController extends AbstractController
             $fetched_emails = $entityManager->getRepository(RegisteredEmails::class)->findAllActiveFirst();
 
         //get user fields to show
-        foreach($fetched_emails as $email){
+        foreach ($fetched_emails as $email) {
 
             if($email->isActif()){
 
@@ -74,6 +75,7 @@ class AdminPanelController extends AbstractController
 
                 //add user to array
                 $users[$i]= [
+                    'id' => $user_instance->getId(),
                     'isActive' => true,
                     'username' => $user_instance->getUsername()
                 ];
@@ -87,12 +89,9 @@ class AdminPanelController extends AbstractController
                     'email' => $email->getEmail(),
                     'isActive' => false
                 ];
-                $i +=1;
+                $i += 1;
             }
-
         }
-
-
 
 
         $demandes = [
@@ -101,12 +100,14 @@ class AdminPanelController extends AbstractController
                 'username' => 'User 1',
                 'date' => '2021-05-01',
                 'title' => 'Demande 1',
+                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl.'
             ],
             $d2 = [
                 'id' => '2',
                 'username' => 'User 2',
                 'date' => '2021-05-02',
                 'title' => 'Demande 2',
+                'description' => 'Lorem ipsum dolor'
             ],
         ];
 
@@ -119,5 +120,49 @@ class AdminPanelController extends AbstractController
             ],
             'PreRegisterForm' => $form->createView()
         ]);
+    }
+
+    // remove a user from the user database and desactivate his email from the pre-registration database
+    #[Route('/adminPanel/removeUser/{id}', name: 'app_remove_user')]
+    public function removeUser($id, EntityManagerInterface $entityManager): Response
+    {
+        //handle access control
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
+
+        //get user by id
+        $user = $entityManager->getRepository(User::class)->find($id);
+
+        //get email by user email
+        $email = $entityManager->getRepository(RegisteredEmails::class)->findOneBy(['email' => $user->getEmail()]);
+
+        //remove user
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        //desactivate email
+        $email->setActif(false);
+        $entityManager->persist($email);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_panel');
+    }
+
+    //app_remove_dem
+    #[Route('/adminPanel/removeDem/{id}', name: 'app_remove_dem')]
+    public function removeDem($id, EntityManagerInterface $entityManager): Response
+    {
+        //handle access control
+
+        // you have acces only if thsi demande is yours or you are an admin
+
+
+        //get demande by id
+        // $demande = $entityManager->getRepository(Demande::class)->find($id);
+
+        //remove demande
+        // $entityManager->remove($demande);
+        // $entityManager->flush();
+
+        return $this->redirectToRoute('app_admin_panel');
     }
 }
