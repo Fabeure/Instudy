@@ -21,6 +21,13 @@ class RegisteredEmailsRepository extends ServiceEntityRepository
         parent::__construct($registry, RegisteredEmails::class);
     }
 
+    public function findAllActiveFirst()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.actif', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
     public function save(RegisteredEmails $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

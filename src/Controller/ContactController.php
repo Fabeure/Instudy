@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,40 +25,37 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function index(Request $request, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
+        //creating the email form
+        $defaultData = ['message' => 'Type your message here'];
+        $form = $this->createFormBuilder($defaultData)
+            ->add('email', EmailType::class)
+            ->add('subject', TextType::class)
+            ->add('content', TextType::class)
+            ->getForm();
+        $form->handleRequest($request);
 
-        if ($this->getUser()) {
-            $id = $this->getUser()->getId();
-            $user = $entityManager->getRepository(User::class)->find($id);
-            $defaultData = ['message' => 'Type your message here'];
-            $form = $this->createFormBuilder($defaultData)
-                ->add('subject', TextType::class)
-                ->add('content', TextType::class)
-                ->getForm();
-            $form->handleRequest($request);
-
+        //need to check if getUser returns current user or not, if yes then no need to fetch from database
+        if ($this->getUser()){
             if ($form->isSubmitted() && $form->isValid()) {
+                //create the email object
                 $email = (new Email())
-                    ->from($user->getEmail())
+                    ->from($this->getUser()->getEmail())
                     ->to('sazaouzi@gmail.com')
                     ->subject($form->get('subject')->getData())
                     ->text($form->get('content')->getData());
+                //send email, needs fixing
                 $mailer->send($email);
             }
-        } else {
-            $defaultData = ['message' => 'Type your message here'];
-            $form = $this->createFormBuilder($defaultData)
-                ->add('email', TextType::class)
-                ->add('subject', TextType::class)
-                ->add('content', TextType::class)
-                ->getForm();
-            $form->handleRequest($request);
-
+        }
+        else{
             if ($form->isSubmitted() && $form->isValid()) {
+                //create the email object
                 $email = (new Email())
                     ->from($form->get('email')->getData())
                     ->to('sazaouzi@gmail.com')
                     ->subject($form->get('subject')->getData())
                     ->text($form->get('content')->getData());
+                //send email, needs fixing
                 $mailer->send($email);
             }
         }

@@ -33,6 +33,8 @@
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+    <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assets/css/buttons.css') }}" />
     <link
             rel="stylesheet"
             type="text/css"
@@ -51,13 +53,28 @@
     </div>
     <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
     <nav id="menu" class="main-nav" role="navigation">
+        {% for flash_message in app.flashes('error') %}
+            <div class="alert alert-danger d-inline-block">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
         <ul class="main-menu">
-            <li><a href="{{ path('app_home') }}">Home</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Hub</a></li>
+            {% if app.user %}
+                <li>  <a href="{{ path('app_profile_settings') }}"> {{ app.user.username }} </a> </li>
+                <li><a href="{{ path('app_logout') }}">Logout</a></li>
+            {% endif %}
         </ul>
     </nav>
 </header>
 <section class="py-5 my-5">
     <div class="container">
+        {% for flash_message in app.flashes('error') %}
+            <div class="alert alert-danger">
+                {{ flash_message }}
+            </div>
+        {% endfor %}
         <h1 class="mb-5">Account Settings</h1>
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
             <div class="profile-tab-nav border-right">
@@ -169,11 +186,6 @@
                     <div class="row">
                         {{ form_start(profileSettingsPasswordForm) }}
                         <div class="col-md-6">
-                            {% for flash_message in app.flashes('error') %}
-                                <div class="alert alert-danger">
-                                    {{ flash_message }}
-                                </div>
-                            {% endfor %}
                             <div class="form-group">
                                 {{ form_row(profileSettingsPasswordForm.OldPlainPassword) }}
                             </div>
