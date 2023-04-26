@@ -7,6 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,11 +28,11 @@ class ContactController extends AbstractController
         //creating the email form
         $defaultData = ['message' => 'Type your message here'];
         $form = $this->createFormBuilder($defaultData)
+            ->add('email', EmailType::class)
             ->add('subject', TextType::class)
             ->add('content', TextType::class)
             ->getForm();
         $form->handleRequest($request);
-
 
         //need to check if getUser returns current user or not, if yes then no need to fetch from database
         if ($this->getUser()){
@@ -57,7 +58,6 @@ class ContactController extends AbstractController
                 //send email, needs fixing
                 $mailer->send($email);
             }
-
         }
 
 

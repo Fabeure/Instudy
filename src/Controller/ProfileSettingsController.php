@@ -83,7 +83,6 @@ class ProfileSettingsController extends AbstractController
                 //add success message
                 $this->addFlash('success', 'Password updated successfully');
             }
-
         }
 
         return $this->render('profile_settings/index.html.twig', [
