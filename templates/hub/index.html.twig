@@ -1,0 +1,90 @@
+{% block title %}Hello HubController!{% endblock %}
+{% block body %}
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title> Hub </title>
+        <meta
+                content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+                name="viewport"
+        />
+        <link
+                rel="stylesheet"
+                href="{{ asset('assets/css/sitecomponents.css') }}"
+        />
+        <link rel="stylesheet" href="{{ asset('assets/css/img.css') }}" />
+        <link
+                rel="stylesheet"
+                type="text/css"
+                href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        />
+        <link
+                rel="stylesheet"
+                type="text/css"
+                href="{{ asset('assets/css/style_interface_settings.css') }}"
+        />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <style>
+            /*to align tags */
+            .inline {
+                display: inline-block;
+            }
+            /*to change the color of the btn */
+            .btn-secondary, .btn-secondary:active, .btn-secondary:visited {
+                background-color: #32225c !important;
+                border-color: #1f1f42;
+            }
+            .btn-secondary:hover {
+                transition: all 30ms ease;
+                -webkit-transition:all 30ms ease;
+                -moz-transition: all 30ms ease;
+                -o-transition: all 30ms ease;
+                -ms-transition: all 30ms ease;
+                transform: scale(1.1);
+            }
+            /*tabulation de données*/
+            .tab {
+                display: inline-block;
+                margin-left: 40px;
+            }
+            body{
+            background-image: url({{asset('assets/images/courses-bg.jpg')}});
+            background-size: cover;
+            width: 500px;
+            height: 300px;
+            margin: 100px auto;
+            opacity: 0.2;
+            }
+        </style>
+    </head>
+    <body>
+    <header class="main-header clearfix" role="banner">
+        <div class="logo">
+            <img class="imgv2" src="{{ asset('assets/images/download.png') }}" alt="INSAT 2.0" />
+        </div>
+        <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
+        <nav id="menu" class="main-nav" role="navigation">
+            {% for flash_message in app.flashes('error') %}
+                <div class="alert alert-danger d-inline-block">
+                    {{ flash_message }}
+                </div>
+            {% endfor %}
+            <ul class="main-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Hub</a></li>
+                {% if app.user %}
+                    <li>  <a href="{{ path('app_profile_settings') }}"> {{ app.user.username }} </a> </li>
+                    <li><a href="{{ path('app_logout') }}">Logout</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+    <section class="py-5 my-5">
+        <div class="container">
+
+        </div>
+    </section>
+    </body>
+    </html>
+
+{% endblock %}
