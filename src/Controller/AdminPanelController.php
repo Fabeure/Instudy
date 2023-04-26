@@ -167,10 +167,11 @@ class AdminPanelController extends AbstractController
 
         //remove ticket
         $entityManager->remove($ticket);
-
+        $entityManager->flush();
 
         // $entityManager->flush();
 
         return $this->redirectToRoute('app_admin_panel');
+
     }
 }
