@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\RegisteredEmails;
+use App\Entity\Ticket;
 use App\Entity\User;
 use App\Form\PreRegisterFormType;
 use App\Form\RegistrationFormType;
@@ -93,36 +94,41 @@ class AdminPanelController extends AbstractController
             }
         }
 
+        //fetch all tickets and pass them to view
+        $fetched_tickets = $entityManager->getRepository(Ticket::class)->findAll();
+        $tickets = [];
+        $i = 0;
 
-        $demandes = [
-            $d1 = [
-                'id' => '1',
-                'username' => 'User 1',
-                'date' => '2021-05-01',
-                'title' => 'Demande 1',
-                'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl. Sed euismod, nisl eget aliquam tincidunt, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl.'
-            ],
-            $d2 = [
-                'id' => '2',
-                'username' => 'User 2',
-                'date' => '2021-05-02',
-                'title' => 'Demande 2',
-                'description' => 'Lorem ipsum dolor'
-            ],
-        ];
 
+
+
+        //assign each ticket value to array
+        foreach ($fetched_tickets as $ticket){
+
+            //fetch user that made the ticket by using the AuthorID field
+            $author = $entityManager->getRepository(User::class)->find($ticket->getAuthorID());
+
+            $tickets[$i] =[
+                'id' => $ticket->getId(),
+                'username' => $author->getUsername(),
+                'date' => $ticket->getDate(),
+                'title' => $ticket->getTitle(),
+                'description' => $ticket->getDescription()
+            ];
+            $i += 1;
+        }
 
         return $this->render('admin_pannel/index.html.twig', [
             'controller_name' => 'AdminPanelController',
             'data' => [
                 'users' => $users,
-                'demandes' => $demandes,
+                'demandes' => $tickets,
             ],
             'PreRegisterForm' => $form->createView()
         ]);
     }
 
-    // remove a user from the user database and desactivate his email from the pre-registration database
+    // remove a user from the user database and deactivate his email from the pre-registration database
     #[Route('/adminPanel/removeUser/{id}', name: 'app_remove_user')]
     public function removeUser($id, EntityManagerInterface $entityManager): Response
     {
@@ -139,11 +145,13 @@ class AdminPanelController extends AbstractController
         $entityManager->remove($user);
         $entityManager->flush();
 
-        //desactivate email
+        //deactivate email
         $email->setActif(false);
-        $entityManager->persist($email);
-        $entityManager->flush();
 
+        //save modifications to email
+        $entityManager->getRepository(RegisteredEmails::class)->save($email, true);
+
+        //reroute to adminPanel
         return $this->redirectToRoute('app_admin_panel');
     }
 
@@ -151,16 +159,16 @@ class AdminPanelController extends AbstractController
     #[Route('/adminPanel/removeDem/{id}', name: 'app_remove_dem')]
     public function removeDem($id, EntityManagerInterface $entityManager): Response
     {
-        //handle access control
-
-        // you have acces only if thsi demande is yours or you are an admin
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
 
 
-        //get demande by id
-        // $demande = $entityManager->getRepository(Demande::class)->find($id);
+        //get ticket by id
+        $ticket = $entityManager->getRepository(Ticket::class)->find($id);
 
-        //remove demande
-        // $entityManager->remove($demande);
+        //remove ticket
+        $entityManager->remove($ticket);
+
+
         // $entityManager->flush();
 
         return $this->redirectToRoute('app_admin_panel');
