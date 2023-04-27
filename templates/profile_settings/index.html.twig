@@ -3,10 +3,11 @@
 {% extends "base.html.twig" %}
 {% block title %}Profile Settings{% endblock %}
 
+
+{% block body %}
     {%  block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
-{% block body %}
 <section class="py-5 my-5">
     <div class="container">
         {% for flash_message in app.flashes('error') %}

@@ -57,7 +57,7 @@
                             <li><a href="{{ path('app_home') }}">Home</a></li>
                             <li><a href="">Hub</a></li>
                             {% if app.user %}
-                                <li>  <a href="{{ path('app_profile_settings') }}"> {{ app.user.username }} </a> </li>
+                                <li>  <a href="{{ path('app_profile',{'username':app.user.username}) }}"> {{ app.user.username }} </a> </li>
                                 <li><a href="{{ path('app_logout') }}">Logout</a></li>
                             {% endif %}
                             {% if not app.user %}
