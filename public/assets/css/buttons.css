@@ -90,3 +90,25 @@ a.menu-link {
         }
     }
 }
+/*to align tags */
+.inline {
+    display: inline-block;
+}
+/*to change the color of the btn */
+.btn-secondary, .btn-secondary:active, .btn-secondary:visited {
+    background-color: #32225c !important;
+    border-color: #1f1f42;
+}
+.btn-secondary:hover {
+    transition: all 30ms ease;
+    -webkit-transition:all 30ms ease;
+    -moz-transition: all 30ms ease;
+    -o-transition: all 30ms ease;
+    -ms-transition: all 30ms ease;
+    transform: scale(1.1);
+}
+/*tabulation de données  */
+.tab {
+    display: inline-block;
+    margin-left: 40px;
+}
