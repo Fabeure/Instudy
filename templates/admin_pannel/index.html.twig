@@ -74,12 +74,12 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-8 text-center">
 
                 <h5 class="text-center">Add User</h5>
                 {{ form_start(PreRegisterForm) }}
                     {{ form_row(PreRegisterForm.email) }}
-                    <button type="submit" class="btn">Add</button>
+                    <button type="submit" class="btn btn-success">Add</button>
                 {{ form_end(PreRegisterForm) }}
 
 
@@ -175,7 +175,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
 </script>
-<script src="{{ asset('assets/js/destroySession.js') }}"></script>
 
 
 
