@@ -1,82 +1,20 @@
-{% extends "parent.html.twig" %}
+{% extends "base.html.twig" %}
 
 
-{% block head %}{{ parent() }} {% endblock head %}
+{% block head %}{{
+    parent()
+    }} {% endblock head %}
 
 {% block body %}
-<header class="main-header clearfix" role="header">
-    <div class="logo">
-        <img
-                class="imgv2"
-                src="{{ asset('assets/images/download.png') }}"
-                alt="INSAT 2.0"
-        />
-    </div>
-    <nav id="menu" class="main-nav" role="navigation">
-        {% for flash_message in app.flashes('error') %}
-            <div class="alert alert-danger d-inline-block">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-        {% for flash_message in app.flashes('success') %}
-            <div class="alert alert-success d-inline-block">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-        <ul class="main-menu">
-            <li><a href="">Home</a></li>
-            <li><a href="">Hub</a></li>
-            {% if app.user %}
-                <li>  <a href="{{ path('app_profile_settings') }}"> {{ app.user.username }} </a> </li>
-                <li><a href="{{ path('app_logout') }}">Logout</a></li>
-            {% endif %}
-            {% if not app.user %}
-            <li><a class="signin-button" >Sign in</a>
-                <div class="signin-form container">
-                    <p>Login</p>
-                    <form method="post">
-                        {% if error %}
-                            <div>
-                                   {{ error.messageKey|trans(error.messageData, 'security') }}
-                            </div>
-                        {% endif %}
-                        <div class="user-box">
-                            <input required="" id="inputEmail" name="email" type="email" value="{{ last_username }}"
-                                   autocomplete="email" required autofocus>
-                            <label>Email</label>
-                        </div>
-                        <div class="user-box">
-                            <input required="" type="password" name="password" id="inputPassword"
-                                   autocomplete="current-password" required>
-                            <label>Password</label>
-
-                        </div>
-                        <div class="user-box">
-                            <input type="hidden" name="_csrf_token"
-                                   value="{{ csrf_token('authenticate') }}"
-                            >
-                        </div>
-
-                        <div class="d-flex justify-content-center mb-5 submitbutton">
-                            <button class="btn btn-lg btn-primary" type="submit">
-                                Sign in
-                            </button>
-                        </div>
-                    </form>
-                    <p>Don't have an account? <a href="{{ path('app_register') }}" class="a2" id="signup-link">Sign up!</a></p>
-                </div></li>
-            {% endif %}
-        </ul>
-    </nav>
-</header>
-
 <section class="section main-banner" id="top" data-section="section1">
     <img
             class="imgv3"
             src="{{ asset('assets/images/background.jpg') }}"
             alt="INSAT 2.0"
     />
-
+    {%  block header %} {{ parent() }}
+        {% block errors %} {{ parent() }} {% endblock %}
+    {% endblock %}
 
         <div class="caption">
             <h2><em>Your</em> Guide</h2>
@@ -90,4 +28,3 @@
     </div>
 </section>
 {% endblock %}
-{% block script %} {{ parent() }} {% endblock %}

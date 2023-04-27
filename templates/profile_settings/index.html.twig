@@ -1,33 +1,10 @@
 
-{% extends "parent.html.twig" %}
-
+{% extends "base.html.twig" %}
 {% block title %}Profile Settings{% endblock %}
-{% block head %}{{ parent() }} {% endblock head %}
-
-
-
 {% block body %}
-<header class="main-header clearfix" role="banner">
-    <div class="logo">
-        <img class="imgv2" src="{{ asset('assets/images/download.png') }}" alt="INSAT 2.0" />
-    </div>
-    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
-    <nav id="menu" class="main-nav" role="navigation">
-        {% for flash_message in app.flashes('error') %}
-            <div class="alert alert-danger d-inline-block">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-        <ul class="main-menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Hub</a></li>
-            {% if app.user %}
-                <li>  <a href="{{ path('app_profile_settings') }}"> {{ app.user.username }} </a> </li>
-                <li><a href="{{ path('app_logout') }}">Logout</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-</header>
+    {%  block header %} {{ parent() }}
+        {% block errors %} {% endblock %}
+    {% endblock %}
 <section class="py-5 my-5">
     <div class="container">
         {% for flash_message in app.flashes('error') %}
@@ -225,6 +202,5 @@
         </div>
     </div>
 </section>
-{% block script %}{{ parent() }}{% endblock %}
 {% endblock %}
 

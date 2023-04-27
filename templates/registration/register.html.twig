@@ -1,23 +1,12 @@
-{% extends "parent.html.twig" %}
+{% extends "base.html.twig" %}
 
 {% block title %}Register{% endblock %}
-{% block head %}{{ parent() }} {% endblock head %}
-
-
 
 {% block body %}
 <!--header-->
-<header class="main-header clearfix" role="banner">
-    <div class="logo">
-        <img class="imgv2" src="{{ asset('assets/images/download.png') }}" alt="INSAT 2.0" />
-    </div>
-    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
-    <nav id="menu" class="main-nav" role="navigation">
-        <ul class="main-menu">
-            <li><a href="{{ path('app_home') }}">Home</a></li>
-        </ul>
-    </nav>
-</header>
+    {%  block header %} {{ parent() }}
+            {% block errors %} {% endblock %}
+    {% endblock %}
 
 <section class="section main-banner" id="top" data-section="section1"  style="color:white">
     <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" />
@@ -49,5 +38,4 @@
     </section>
 
 </section>
-    {% block script %} {{ parent() }} {% endblock %}
 {% endblock %}
