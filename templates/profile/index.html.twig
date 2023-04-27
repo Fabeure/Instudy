@@ -7,13 +7,7 @@
         {% block errors %} {% endblock %}
     {% endblock %}
 <section class="py-5 my-5">
-    <div class="container">
-        {% for flash_message in app.flashes('error') %}
-            <div class="alert alert-danger">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-
+    <div class="container">}
         <div class="row">
             <div class="col-md-10">
                 <h1 class="mb-5">{{ user.username }}'s account</h1>
