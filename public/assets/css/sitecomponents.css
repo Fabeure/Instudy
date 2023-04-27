@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 @import url(fontawesome.css);
+=======
+>>>>>>> d16ff42de2b6f4b6ea333070d710daba73c89675
 body {
   font-family: "Montserrat", sans-serif;
 }
@@ -156,120 +159,9 @@ body {
   font-size: 14px;
 }
 
-.signin-form a.a2 {
-  color: #fff;
-  text-decoration: none;
-}
-
-.signin-form a.a2:hover {
-  background: transparent;
-  color: #aaa;
-  border-radius: 5px;
-}
-
 .signin-button:hover + .signin-form,
 .signin-form:hover {
   display: block;
-}
-
-/*cards*/
-.card1 {
-  width: 190px;
-  height: 254px;
-  background: transparent;
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 20px;
-  position: absolute;
-  left: 10%;
-  top: 10%;
-}
-
-.card1:hover {
-  width: 250px;
-  height: 350px;
-  background: rgb(255, 255, 255);
-  border: 2px solid rgb(200, 200, 200);
-  border-radius: 20px;
-  background-color: #dfdfdf;
-  transition: all 0.5s;
-}
-.card2 {
-  width: 190px;
-  height: 254px;
-  background: transparent;
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 20px;
-  position: absolute;
-  left: 40%;
-  top: 10%;
-}
-
-.card2:hover {
-  width: 250px;
-  height: 350px;
-  background: rgb(255, 255, 255);
-  border: 2px solid rgb(200, 200, 200);
-  border-radius: 20px;
-  background-color: #dfdfdf;
-  transition: all 0.5s;
-}
-
-.card3 {
-  width: 190px;
-  height: 254px;
-  background: transparent;
-  border: 2px solid rgb(255, 255, 255);
-  border-radius: 20px;
-  position: absolute;
-  left: 70%;
-  top: 10%;
-}
-
-.card3:hover {
-  width: 250px;
-  height: 350px;
-  background: rgb(255, 255, 255);
-  border: 2px solid rgb(200, 200, 200);
-  border-radius: 20px;
-  background-color: #dfdfdf;
-  transition: all 0.5s;
-}
-
-.secondAnimation {
-  --hoverContorno: #959595;
-}
-
-.secondAnimation:hover,
-.secondAnimation:focus {
-  -webkit-animation: cardAnimacion 1.4s;
-  animation: cardAnimacion 1.4s;
-  box-shadow: 0 0 0 0.8em rgba(255, 255, 255, 0);
-  border-radius: 20px;
-}
-
-@-webkit-keyframes cardAnimacion {
-  0% {
-    box-shadow: 0 0 0 0 var(--hoverContorno);
-  }
-}
-
-@keyframes cardAnimacion {
-  0% {
-    box-shadow: 0 0 0 0 var(--hoverContorno);
-  }
-}
-
-.card-content {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-.card2:hover .card-content {
-  opacity: 1;
-}
-
-.card3:hover .card-content {
-  opacity: 1;
 }
 
 a {
@@ -293,9 +185,80 @@ p {
   line-height: 22px;
 }
 
+<<<<<<< HEAD
 /* Buttons */
 
 .main-button a {
+=======
+section.coming-soon {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #172238;
+  padding: 120px 0px;
+}
+
+section.coming-soon .continer .counter div {
+  display: inline-block;
+}
+
+@media screen and (max-width: 767px) {
+  section.coming-soon .continer h4 {
+    text-align: center;
+  }
+}
+
+section.coming-soon .continer .counter span {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #f52525;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 0px;
+  display: block;
+}
+
+section.coming-soon .right-content {
+  margin-left: 30px;
+}
+
+@media screen and (max-width: 767px) {
+  section.coming-soon .right-content {
+    margin-top: 60px;
+    margin-left: 0px;
+  }
+}
+section.coming-soon form {
+  background-color: rgba(250, 250, 250, 0.1);
+  padding: 60px 40px;
+  width: 100%;
+  text-align: center;
+}
+
+section.coming-soon form input {
+  width: 100%;
+  height: 40px;
+  background-color: rgba(250, 250, 250, 0.1);
+  border-radius: 0px;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 13px;
+  margin-bottom: 20px;
+  letter-spacing: 0.5px;
+}
+
+section.coming-soon form input:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
+  color: #fff;
+  background-color: rgba(250, 250, 250, 0.1);
+}
+
+
+section.coming-soon form button {
+  margin-top: 10px;
+>>>>>>> d16ff42de2b6f4b6ea333070d710daba73c89675
   background-color: #f52525;
   color: #fff;
   font-size: 13px;
@@ -305,6 +268,7 @@ p {
   padding: 12px 20px;
   display: inline-block;
   outline: none;
+<<<<<<< HEAD
 }
 
 a.menu-link {
@@ -445,3 +409,8 @@ a.menu-link {
     font-size: 36px;
   }
 }
+=======
+  box-shadow: none;
+  border: none;
+}
+>>>>>>> d16ff42de2b6f4b6ea333070d710daba73c89675

@@ -18,7 +18,8 @@ class RegistrationController extends AbstractController
 {
 
     #[Route('/terms', name: 'app_terms')]
-    public function showTerms(){
+    public function showTerms()
+    {
         return $this->render('terms.html.twig');
     }
 
@@ -32,12 +33,9 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-
-
         //register user
         if ($form->isSubmitted() && $form->isValid()) {
             $email = $form->get('email')->getData();
-
 
             //check if user is an admin
             if ($email == 'admin@admin.insat.ucar.tn'){
@@ -65,11 +63,7 @@ class RegistrationController extends AbstractController
                 $entity = new User();
                 $form = $this->createForm(RegistrationFormType::class, $entity);
                 $this->addFlash('error', 'This email has not been pre-registered.');
-            }
-
-
-
-            else{
+            } else {
                 //make user active
                 $preRegisteredEmail->setActif(true);
                 // encode the plain password
