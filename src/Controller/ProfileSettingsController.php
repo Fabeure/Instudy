@@ -15,8 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileSettingsController extends AbstractController
 {
-    #[Route('/profile/settings', name: 'app_profile_settings')]
-    public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    #[Route('/profile/{username}/settings', name: 'app_profile_settings')]
+    public function index($username , Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         //handle access control
         if(!$this->isGranted('ROLE_USER')){
@@ -31,6 +31,30 @@ class ProfileSettingsController extends AbstractController
 
         //get current user
         $user = $this->getUser();
+        $current_user = $entityManager->getRepository(User::class)->findOneBy(['email'=>$user->getUserIdentifier()]);
+
+
+        //get current user id
+        $my_id = $current_user->getID();
+
+
+        //get visited user
+        $visited = $entityManager->getRepository(User::class)->findOneBy(['username'=>$username]);
+
+        //get visited user id
+        $visited_id = $visited->getID();
+
+
+        if ($visited_id != $my_id){
+            //add error message for unauthorised access
+            $this->addFlash('error', 'You are not allowed to access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_profile', array('username'=>($current_user->getUsername())));
+        }
+
+
+
 
         //create info form
         $form = $this->createForm(ProfileSettingsFormType::class, $user);
@@ -59,9 +83,8 @@ class ProfileSettingsController extends AbstractController
 
             //add success message
             $this->addFlash('success', 'Your profile has been updated.');
-
             //return to home
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_profile_settings', ['username'=>$user->getUsername()]);
         }
 
         //modify password

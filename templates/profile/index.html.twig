@@ -1,117 +1,21 @@
 
+{% extends "base.html.twig" %}
 
 {% block title %}Hello ProfileController!{% endblock %}
-
 {% block body %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title> Profile {{ app.user.username }} </title>
-    <meta
-            content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-            name="viewport"
-    />
-    <link
-            href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900"
-            rel="stylesheet"
-    />
-    <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-            crossorigin="anonymous"
-    />
-    <link
-            rel="stylesheet"
-            href="{{ asset('assets/css/sitecomponents.css') }}"
-    />
-    <link rel="stylesheet" href="{{ asset('assets/css/img.css') }}" />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="{{ asset('assets/css/style_interface_settings.css') }}"
-    />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="{{ asset('assets/css/style_interface_settings2.scss') }}"
-    />
-    <link rel="stylesheet" href="{{ asset('assets/css/header.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/css/buttons.css') }}" />
-
-    <style>
-        .inline {
-            display: inline-block;
-        }
-    </style>
-    //to change the color of the btn
-    <style>
-        .btn-secondary, .btn-secondary:active, .btn-secondary:visited {
-            background-color: #32225c !important;
-            border-color: #1f1f42;
-        }
-        .btn-secondary:hover {
-            transition: all 30ms ease;
-            -webkit-transition:all 30ms ease;
-            -moz-transition: all 30ms ease;
-            -o-transition: all 30ms ease;
-            -ms-transition: all 30ms ease;
-            transform: scale(1.1);
-        }
-    </style>
-    //tabulation de données
-    <style>
-        .tab {
-            display: inline-block;
-            margin-left: 40px;
-        }
-        </style>
-</head>
-<body>
-<header class="main-header clearfix" role="banner">
-    <div class="logo">
-        <img class="imgv2" src="{{ asset('assets/images/download.png') }}" alt="INSAT 2.0" />
-    </div>
-    <a href="#menu" class="menu-link"><i class="fa fa-bars"></i></a>
-    <nav id="menu" class="main-nav" role="navigation">
-        {% for flash_message in app.flashes('error') %}
-            <div class="alert alert-danger d-inline-block">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-        <ul class="main-menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Hub</a></li>
-            {% if app.user %}
-                <li>  <a href="{{ path('app_profile_settings') }}"> {{ app.user.username }} </a> </li>
-                <li><a href="{{ path('app_logout') }}">Logout</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-</header>
+    {%  block header %} {{ parent() }}
+        {% block errors %} {% endblock %}
+    {% endblock %}
 <section class="py-5 my-5">
-    <div class="container">
-        {% for flash_message in app.flashes('error') %}
-            <div class="alert alert-danger">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-
+    <div class="container">}
         <div class="row">
             <div class="col-md-10">
-                <h1 class="mb-5">{{ app.user.username }}'s account</h1>
+                <h1 class="mb-5">{{ user.username }}'s account</h1>
             </div>
             <div class="col-md-2">
-                    <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings') }}';"> edit profile </button>
+                   {%  if(( user.allNotNull ) and (user.id == app.user.id)) %}
+                    <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings',{'username' : app.user.username}) }}';"> edit profile </button>
+                    {% endif %}
             </div>
         </div>
         <div class="row justify-content-around">
@@ -120,26 +24,26 @@
                     <img src="{{ asset('assets/images/profileDefaultPhoto.jpg') }}" alt="Profile Image" class="rounded-circle shadow rounded-lg d-block d-sm-flex" width="236" height="236" />
            <br>
                 <div class="text-center">
-                    {{ app.user.bio }}
+                    {{ user.bio }}
                 </div>
             </div>
             <div class="col-md-5">
                 <div class="bg-white shadow rounded-lg d-block d-sm-flex">
                     <div class="tab-content p-4 p-md-5" >
                         <div class="tab-pane fade show active">
-                            {% if(app.user.surname != '') %}
+                            {% if(user.surname != '') %}
                             <div class="mb-3">
-                                <h3 class="tab" > {{ app.user.surname }} </h3>
+                                <h3 class="tab" > {{ user.surname }} </h3>
                             </div>
                             <br>
                             {% endif %}
-                            {% if(app.user.phone != '') %}
+                            {% if(user.phone != '') %}
                             <div class="mb-3">
                                 phone number:
                                 <br>
                                 <div class="tab">
                                 <i class="fa fa-phone"></i>
-                                {{ app.user.phone }}
+                                {{ user.phone }}
                                 </div>
                             </div>
                             {% endif %}
@@ -149,13 +53,13 @@
                                 <br>
                                 <div class="tab">
                                     <i class="fa fa-envelope"></i>
-                                    {{ app.user.email }}
+                                    {{ user.email }}
                                 </div>
                                 <br>
-                                {% if(app.user.personalEmail != '') %}
+                                {% if(user.personalEmail != '') %}
                                 <div class="tab">
                                 <i class="fa fa-envelope"></i>
-                                {{ app.user.personalEmail }}
+                                {{ user.personalEmail }}
                                 </div>
                                 {% endif %}
                             </div>
@@ -164,24 +68,22 @@
                 </div>
             </div>
         </div>
+        {% if(not(user.allNotNull) and (user.id == app.user.id)) %}
+        <div class="row">
+            <div class="alert alert-danger col-md-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <strong>
+                    Please  finish <a href='{{ path('app_profile_settings',{'username' : app.user.username}) }}' class="alert-link">sitting your account </a>
+                </strong>.
+            </div>
+
+        </div>
+        {% endif %}
     </div>
 </section>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
-        crossorigin="anonymous"
-></script>
 
-<!--
-    <script src="{{ asset('assets/js/interface.js') }}"></script>
-    -->
-
-<script src="{{ asset('assets/js/destroySession.js') }}"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-
 {% endblock %}
