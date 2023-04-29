@@ -23,8 +23,7 @@ class Message
 
     #[ORM\ManyToOne(targetEntity:"User", inversedBy:"messages"  )]
     private $user;
-
-    #[ORM\ManyToOne(targetEntity:"User", inversedBy:"messages"  )]
+    #[ORM\ManyToOne(targetEntity:"Conversation", inversedBy:"messages"  )]
     private $conversation;
 
     public function getId(): ?int
@@ -66,5 +65,17 @@ class Message
         $this->conversation = $conversation;
 
         return $this;
+    }
+    public function getMine()
+    {
+        return $this->mine;
+    }
+
+    /**
+     * @param mixed $mine
+     */
+    public function setMine($mine): void
+    {
+        $this->mine = $mine;
     }
 }
