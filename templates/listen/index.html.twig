@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ListenController!{% endblock %}
+
+{% block body %}
+    <p id="test">aa </p>
+    <script>
+        const eventSource = new EventSource("{{ mercure('https://example.com/books/1')|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            const elem = document.getElementById("test");
+            elem.innerHTML+= event.data.toString();
+        }
+    </script>
+{% endblock %}

@@ -14,6 +14,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\WebLink\Link;
 
@@ -22,11 +24,10 @@ class ConversationController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/newConversations', name: 'app_newConversations')]
-    public function index(Request $request, UserRepository $userRepository, ConversationRepository $conversationRepository, EntityManagerInterface $entityManager): JsonResponse
+    #[Route('/newConversations/{username}', name: 'app_newConversations')]
+    public function index($username, HubInterface $hub, Request $request, UserRepository $userRepository, ConversationRepository $conversationRepository, EntityManagerInterface $entityManager): Response
     {
-        $otherUser = $request->get('otherUser', 0);
-        $otherUser = $userRepository->find($otherUser);
+        $otherUser = $userRepository->findOneBy(['username'=>$username]);
 
         if (is_null($otherUser)) {
             throw new Exception("The user was not found");
@@ -44,7 +45,7 @@ class ConversationController extends AbstractController
         );
 
         if (count($conversation)) {
-            throw new Exception("The conversation already exists");
+            return $this->redirectToRoute('app_chat');
         }
 
         $conversation = new Conversation();
@@ -71,17 +72,15 @@ class ConversationController extends AbstractController
             $entityManager->rollback();
             throw $e;
         }
-
-
-        return $this->json([
-            'id' => $conversation->getId()
-        ], Response::HTTP_CREATED, [], []);
+        return $this->redirectToRoute('app_chat');
     }
     #[Route('/getConversations', name: 'app_getConversations')]
-    public function getConvs(ConversationRepository $conversationRepository, Request $request): JsonResponse
+    public function getConvs(ConversationRepository $conversationRepository, Request $request): Response
     {
         $conversations = $conversationRepository->findConversationsByUser($this->getUser()->getId());
+
         $hubUrl = $this->getParameter('mercure.default_hub');
+
         $this->addLink($request, new Link('mercure', $hubUrl));
         return $this->json($conversations);
     }

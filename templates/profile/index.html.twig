@@ -7,10 +7,10 @@
         {% block errors %} {% endblock %}
     {% endblock %}
 <section class="py-5 my-5">
-    <div class="container">}
+    <div class="container">
         <div class="row">
             <div class="col-md-10">
-                <h1 class="mb-5">{{ user.username }}'s account</h1>
+                <h1 class="mb-5">{{ username }}'s account</h1>
             </div>
             <div class="col-md-2">
                    {%  if(( user.allNotNull ) and (user.id == app.user.id)) %}
@@ -26,6 +26,12 @@
                 <div class="text-center">
                     {{ user.bio }}
                 </div>
+                {% if ((app.user.username) != ( username )) %}
+                <div class="text-center">
+                    <a href="{{ path('app_newConversations',{'username' : username}) }}"> testconvo</a>
+                </div>
+                {% endif %}
+
             </div>
             <div class="col-md-5">
                 <div class="bg-white shadow rounded-lg d-block d-sm-flex">

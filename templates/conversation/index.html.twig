@@ -9,8 +9,17 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
+    <script>
+        const eventSource = new EventSource("{{ mercure('127.0.0.1:8000/getConversations')|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            console.log(JSON.parse(event.data));
+        }
+    </script>
+    <p>
+
+    </p>
     This friendly message is coming from:
     <ul>
         <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/INSTUDY/src/Controller/ConversationController.php'|file_link(0) }}">src/Controller/ConversationController.php</a></code></li>
