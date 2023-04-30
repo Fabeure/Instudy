@@ -25,9 +25,9 @@ class ConversationController extends AbstractController
      * @throws Exception
      */
     #[Route('/newConversations/{username}', name: 'app_newConversations')]
-    public function index($username, HubInterface $hub, Request $request, UserRepository $userRepository, ConversationRepository $conversationRepository, EntityManagerInterface $entityManager): Response
+    public function index($username, EntityManagerInterface $entityManager): Response
     {
-        $otherUser = $userRepository->findOneBy(['username'=>$username]);
+        $otherUser = $entityManager->getRepository(User::class)->findOneBy(['username'=>$username]);
 
         if (is_null($otherUser)) {
             throw new Exception("The user was not found");
@@ -39,13 +39,9 @@ class ConversationController extends AbstractController
         }
 
         // Check if conversation already exists
-        $conversation = $conversationRepository->findConversationByParticipants(
-            $otherUser->getId(),
-            $this->getUser()->getId()
-        );
-
-        if (count($conversation)) {
-            return $this->redirectToRoute('app_chat', ['username'=> $username]);
+        $conversationID = $entityManager->getRepository(Conversation::class)->findConversationIdByParticipants($otherUser->getId(), $this->getUser()->getId());
+        if ($conversationID) {
+            return $this->redirectToRoute('app_chat', ['id'=> $conversationID]);
         }
 
         $conversation = new Conversation();
@@ -72,7 +68,7 @@ class ConversationController extends AbstractController
             $entityManager->rollback();
             throw $e;
         }
-        return $this->redirectToRoute('app_chat', ['username' => $username]);
+        return $this->redirectToRoute('app_chat', ['id' => $conversation->getId()]);
     }
     #[Route('/getConversations', name: 'app_getConversations')]
     public function getConvs(ConversationRepository $conversationRepository, Request $request): Response

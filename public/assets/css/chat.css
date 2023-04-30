@@ -119,7 +119,7 @@
 
 .message-main-sender {
     padding: 3px 20px !important;
-    margin-left: 40% !important;
+
 }
 
 .message-text {
@@ -152,7 +152,7 @@
 }
 
 .sender {
-    float: right;
+    margin-left: 80%;
     width: auto !important;
     background: #dcf8c6;
     border-radius: 10px 10px 0 10px;

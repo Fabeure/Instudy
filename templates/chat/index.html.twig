@@ -10,8 +10,8 @@
     {%  block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
+    {% set link = 'https://example.com/books/1' %}
         <div class="container app">
             <div class="row app-one">
                 <div class="conversation">
@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="col-sm-8 col-xs-7 heading-name">
-                            <a class="heading-name-meta">{{ username }}
+                            <a class="heading-name-meta">{{ id }}
                             </a>
                         </div>
                     </div>
@@ -32,6 +32,15 @@
                                 <div class="receiver">
                                     <div class="message-text">
                                         Hi, what are you doing?!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row message-body">
+                            <div class="col-sm-12 message-main-sender">
+                                <div class="sender">
+                                    <div class="message-text">
+                                        I am doing nothing man!
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +77,7 @@
 
                     <div class="row reply">
                         <div class="col-sm-9 col-xs-9 reply-main">
-                            <textarea class="form-control" rows="1" id="comment"></textarea>
+                            <textarea class="form-control" rows="1" id="reply"></textarea>
                         </div>
                         <button id="my-button">aa</button>
                         </div>
@@ -76,20 +85,27 @@
                 </div>
             </div>
     <script>
-        $(document).ready(function() {
-            $('#my-button').click(function() {
-                $.ajax({
-                    url: '/publish',
-                    type: 'POST',
-                    success: function(response) {
-                        console.log(response);
-                    },
-                    error: function(error) {
-                        console.log(error);
-                    }
-                });
-            });
-        });
+        window.chat= {
+            id: "{{ id }}",
+            author: "{{ app.user.username }}"
+        };
     </script>
+    <script>
+        const eventSource = new EventSource("{{ mercure(link)|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            const data = JSON.parse(event.data);
+            //check if i am sender or receiver
+            if (data.author === "{{ app.user.username }}"){
+                const new_message = create(data.message, "SENDER")
+                insert(new_message)
+            }
+            else{
+                const new_message = create(data.message, "RECEIVER")
+                insert(new_message)
+            }
+        }
+    </script>
+    <script src="{{ asset('assets/js/chat.js') }}"
 
 {% endblock %}
