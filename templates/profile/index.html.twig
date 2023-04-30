@@ -13,7 +13,7 @@
                 <h1 class="mb-5">{{ username }}'s account</h1>
             </div>
             <div class="col-md-2">
-                   {%  if(( user.allNotNull ) and (user.id == app.user.id)) %}
+                   {%  if(user.id == app.user.id) %}
                     <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings',{'username' : app.user.username}) }}';"> edit profile </button>
                     {% endif %}
             </div>
@@ -28,7 +28,7 @@
                 </div>
                 {% if ((app.user.username) != ( username )) %}
                 <div class="text-center">
-                    <a href="{{ path('app_newConversations',{'username' : username}) }}"> testconvo</a>
+                    <a href="{{ path('app_newConversations',{'username' : username}) }}"> Chat ! </a>
                 </div>
                 {% endif %}
 

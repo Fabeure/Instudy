@@ -10,6 +10,7 @@
     {%  block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
         <div class="container app">
             <div class="row app-one">
@@ -21,7 +22,7 @@
                             </div>
                         </div>
                         <div class="col-sm-8 col-xs-7 heading-name">
-                            <a class="heading-name-meta">John Doe
+                            <a class="heading-name-meta">{{ username }}
                             </a>
                         </div>
                     </div>
@@ -69,8 +70,26 @@
                         <div class="col-sm-9 col-xs-9 reply-main">
                             <textarea class="form-control" rows="1" id="comment"></textarea>
                         </div>
+                        <button id="my-button">aa</button>
                         </div>
                     </div>
                 </div>
             </div>
+    <script>
+        $(document).ready(function() {
+            $('#my-button').click(function() {
+                $.ajax({
+                    url: '/publish',
+                    type: 'POST',
+                    success: function(response) {
+                        console.log(response);
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
+
 {% endblock %}

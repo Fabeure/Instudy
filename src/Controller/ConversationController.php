@@ -45,7 +45,7 @@ class ConversationController extends AbstractController
         );
 
         if (count($conversation)) {
-            return $this->redirectToRoute('app_chat');
+            return $this->redirectToRoute('app_chat', ['username'=> $username]);
         }
 
         $conversation = new Conversation();
@@ -72,7 +72,7 @@ class ConversationController extends AbstractController
             $entityManager->rollback();
             throw $e;
         }
-        return $this->redirectToRoute('app_chat');
+        return $this->redirectToRoute('app_chat', ['username' => $username]);
     }
     #[Route('/getConversations', name: 'app_getConversations')]
     public function getConvs(ConversationRepository $conversationRepository, Request $request): Response
