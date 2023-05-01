@@ -22,8 +22,12 @@ function insert(text){
     let button = document.getElementById("my-button")
     button.onclick = (()=>{
         $.ajax({
-            url: `/chat/${window.chat.id}/publish/${window.chat.author}/${x.value}`,
+            url: `/chat/${window.chat.id}/publish/`,
             type: 'POST',
+            data:{
+              value: x.value,
+                sender: window.chat.author
+            },
             success: function(response) {
                 console.log(response);
             },

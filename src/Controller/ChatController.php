@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
@@ -19,9 +20,11 @@ class ChatController extends AbstractController
         ]);
     }
 
-    #[Route('/chat/{id}/publish/{author}/{content}', name: 'app_chat_publish')]
-    public function publish(HubInterface $hub, $content, $author): Response
+    #[Route('/chat/{id}/publish/', name: 'app_chat_publish')]
+    public function publish(Request $request, HubInterface $hub): Response
     {
+        $content = $request->request->get('value');
+        $author = $request->request->get('sender');
         $update = new Update(
             'https://example.com/books/1',
             json_encode(['message' => $content,
