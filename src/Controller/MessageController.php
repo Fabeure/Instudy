@@ -20,60 +20,37 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends AbstractController
 {
-
-    const ATTRIBUTES_TO_SERIALIZE = ['id', 'content', 'createdAt', 'mine'];
-
-    #[Route('/getMessages/{id}', name: 'app_getMessages')]
-    public function index(Request $request, Conversation $conversation, MessageRepository $messageRepository): Response
-    {
-        // can i view the conversation
-
-        $this->denyAccessUnlessGranted('view', $conversation);
-
-        $messages = $messageRepository->findMessageByConversationId($conversation->getId());
-        array_map(function ($message) {
-            $message->setMine(
-                $message->getUser()->getId() === $this->getUser()->getId()
-                    ? true : false
-            );
-        }, $messages);
-
-
-        return $this->json($messages, Response::HTTP_OK, [], [
-            'attributes' => self::ATTRIBUTES_TO_SERIALIZE
-        ]);
-    }
-
     /**
      * @throws OptimisticLockException
      * @throws \Doctrine\DBAL\Exception
      * @throws ORMException
      */
-    #[Route('/newMessage/', name: 'app_newMessage')]
-    public function newMessage($id, Request $request, Conversation $conversation, EntityManagerInterface $entityManager)
+    #[Route('/newMessage', name: 'app_newMessage')]
+    public function newMessage(Request $request, EntityManagerInterface $entityManager)
     {
-        $content = $request->request->get('content', null);
-        $sender = $request->request->get('sender');
+        //get contents of request
+        $content = $request->request->get('value', null);
+        $author = $request->request->get('sender');
+        $conversation_id = $request->request->get('conversation_id');
+
+        //get convo from database
+        $conversation = $entityManager->getRepository(Conversation::class)->find($conversation_id);
+
+        //create new message
         $message = new Message();
         $message->setContent($content);
-        $message->setUser($entityManager->getRepository(User::class)->findOneBy(['username' => $sender]));
+        $message->setConversation($conversation);
+        $message->setUser($entityManager->getRepository(User::class)->findOneBy(['username' => $author]));
         $message->setMine(true);
 
-        // what conversation am i in ???
+        /* add message to,
+        $conversation = $entityManager->getRepository(Conversation::class)->find($conversation_id);
         $conversation->addMessage($message);
         $conversation->setLastMessage($message);
+        */
 
-        $entityManager->getConnection()->beginTransaction();
-        try {
-            $entityManager->persist($message);
-            $entityManager->persist($conversation);
-            $entityManager->flush();
-            $entityManager->commit();
-        } catch (Exception $e) {
-            $entityManager->rollback();
-            throw $e;
-        }
-
-        return $this->redirectToRoute("app_home");
+        //save message
+        $entityManager->persist($message);
+        $entityManager->flush();
     }
 }

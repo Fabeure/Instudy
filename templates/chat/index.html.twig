@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="col-sm-8 col-xs-7 heading-name">
-                            <a class="heading-name-meta">{{ id }}
+                            <a class="heading-name-meta">{{ other_username }}
                             </a>
                         </div>
                     </div>
@@ -30,16 +30,28 @@
                     </div>
                     <div class="row reply">
                         <div class="col-sm-9 col-xs-9 reply-main">
-                            <textarea class="form-control" rows="1" id="reply"></textarea>
+                            <textarea class="form-control" rows="1" id="reply" onkeydown="submitOnEnter(event)"></textarea>
                         </div>
-                        <button id="my-button">aa</button>
                         </div>
                     </div>
                 </div>
             </div>
+    <script src="{{ asset('assets/js/chat.js') }}"></script>
+    {% for message in messages %}
+        {% if app.user.username == message.author %}
+            <script>
+                add("{{ message.content }}", "SENDER")
+            </script>
+        {% else %}
+            <script>
+                add("{{ message.content }}", "RECEIVER")
+            </script>
+        {% endif %}
+    {% endfor %}
     <script>
         window.chat= {
             id: "{{ id }}",
+            username: "{{ other_username }}",
             author: "{{ app.user.username }}"
         };
     </script>
@@ -50,15 +62,12 @@
             const data = JSON.parse(event.data);
             //check if i am sender or receiver
             if (data.author === "{{ app.user.username }}"){
-                const new_message = create(data.message, "SENDER")
-                insert(new_message)
+                add(data.message, "SENDER")
             }
             else{
-                const new_message = create(data.message, "RECEIVER")
-                insert(new_message)
+                add(data.message, "RECEIVER")
             }
         }
     </script>
-    <script src="{{ asset('assets/js/chat.js') }}"
 
 {% endblock %}

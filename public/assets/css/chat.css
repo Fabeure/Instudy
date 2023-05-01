@@ -23,6 +23,11 @@
 }
 
 .heading {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     padding: 10px 16px 10px 15px;
     margin: 0;
     height: 60px;

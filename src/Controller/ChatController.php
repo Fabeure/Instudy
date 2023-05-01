@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Conversation;
+use App\Entity\Message;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,9 +47,37 @@ class ChatController extends AbstractController
             return $this->redirectToRoute('app_profile', ['username'=>($this->getUser()->getUsername())]);
         }
 
-        //view conversation if all checks pass
+        //get the other user in this conversation !!!NEED A BETTER WAY TO DO THIS!!!
+
+
+            //get the id that ISN'T mine
+        if ($my_id == $participant_ids[0]['id']){
+            $other_id = $participant_ids[1]['id'];
+        }
+        else{
+            $other_id = $participant_ids[0]['id'];
+        }
+
+        //fetch the other user from the database
+        $other_user = $entityManager->getRepository(User::class)->find($other_id);
+
+        //get the conversation
+        $conversation = $entityManager->getRepository(Conversation::class)->find($id);
+        //fetch past messages
+        $messages = $entityManager->getRepository(Message::class)->findBy(['conversation'=>$conversation]);
+        $i=0;
+        $history=[];
+        foreach ($messages as $message){
+            $history[$i]=[
+                'content' => $message->getContent(),
+                'author' => $message->getUser()->getUsername(),
+            ];
+            $i += 1;
+        }
+        //pass others username's id, conversation id and past messages to view
         return $this->render('chat/index.html.twig', [
-            'controller_name' => 'ChatController',
+            'messages'=> $history,
+            'other_username' => $other_user->getUsername(),
             'id' => $id
         ]);
     }

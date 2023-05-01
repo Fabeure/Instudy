@@ -60,7 +60,7 @@ class Message
         return $this->conversation;
     }
 
-    public function setConversation(?User $conversation): self
+    public function setConversation(?Conversation $conversation): self
     {
         $this->conversation = $conversation;
 

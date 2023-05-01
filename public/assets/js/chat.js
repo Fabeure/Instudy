@@ -17,25 +17,41 @@ function insert(text){
 
 }
 
-// ajax code to handle message sent request
-    let x = document.getElementById("reply");
-    let button = document.getElementById("my-button")
-    button.onclick = (()=>{
-        $.ajax({
+function add(text, nature){
+    let message= create(text, nature);
+    insert(message);
+}
+//code for textarea when clicking enter:
+//send to ajax requests:
+//request1 send a request to the chat publisher that pushes a new update to the mercure HUB
+//request2 sends a request the Message controller that instantiates a new message entity and saves it to the database.
+let x = document.getElementById("reply");
+function submitOnEnter(event) {
+    let request1=null;
+    let request2=null;
+    if (event.keyCode === 13 && !event.shiftKey) { // 13 is the "Enter" key code
+        event.preventDefault(); // prevent default behavior of creating a new line
+        request1= $.ajax({
             url: `/chat/${window.chat.id}/publish/`,
             type: 'POST',
             data:{
-              value: x.value,
+                value: x.value,
                 sender: window.chat.author
-            },
-            success: function(response) {
-                console.log(response);
-            },
-            error: function(error) {
-                console.log(error);
+            }
+        })
+        request2= $.ajax({
+            url: `/newMessage`,
+            type: 'POST',
+            data:{
+                value: x.value,
+                sender: window.chat.author,
+                conversation_id: window.chat.id
             }
         })
         x.value="";
-    });
+    }
+
+    Promise.all([request2, request1]).then(r =>console.log("success") )
+}
 
 
