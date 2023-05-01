@@ -66,6 +66,9 @@ class ConversationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
+    /**
+     * @throws NonUniqueResultException
+     */
     public function findConversationIdByParticipants(int $otherUserId, int $myId): ?int
     {
         $qb = $this->createQueryBuilder('c');
@@ -94,33 +97,6 @@ class ConversationRepository extends ServiceEntityRepository
         $result = $qb->getQuery()->getOneOrNullResult();
 
         return $result ? $result['id'] : null;
-    }
-    public function findConversationByParticipants(int $otherUserId, int $myId)
-    {
-        $qb = $this->createQueryBuilder('c');
-        $qb
-            ->select($qb->expr()->count('p.conversation'))
-            ->innerJoin('c.participants', 'p')
-            ->where(
-                $qb->expr()->orX(
-                    $qb->expr()->eq('p.user', ':me'),
-                    $qb->expr()->eq('p.user', ':otherUser')
-                )
-            )
-            ->groupBy('p.conversation')
-            ->having(
-                $qb->expr()->eq(
-                    $qb->expr()->count('p.conversation'),
-                    2
-                )
-            )
-            ->setParameters([
-                'me' => $myId,
-                'otherUser' => $otherUserId
-            ])
-        ;
-
-        return $qb->getQuery()->getResult();
     }
 
     public function findConversationsByUser(int $userId)

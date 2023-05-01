@@ -3,11 +3,16 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Participant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use function Webmozart\Assert\Tests\StaticAnalysis\uniqueValues;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -55,6 +60,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $user->setPassword($newHashedPassword);
 
         $this->save($user, true);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function getUserIdsForConversation($id)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('u.id')
+            ->from('App\Entity\User', 'u')
+            ->join('u.participants', 'p')
+            ->where('p.conversation = :conversationId')
+            ->setParameter('conversationId', $id)
+            ->distinct();
+
+        return $qb->getQuery()->getResult();
     }
 
 //    /**

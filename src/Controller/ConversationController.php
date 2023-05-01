@@ -27,15 +27,20 @@ class ConversationController extends AbstractController
     #[Route('/newConversations/{username}', name: 'app_newConversations')]
     public function index($username, EntityManagerInterface $entityManager): Response
     {
+        // get the user you are trying to start a conversation with
         $otherUser = $entityManager->getRepository(User::class)->findOneBy(['username'=>$username]);
 
+
+        //check if the other user you are starting a conversation with exists
         if (is_null($otherUser)) {
-            throw new Exception("The user was not found");
+            $this->addFlash('error', 'User does not exist.');
+            return $this->redirectToRoute('app_profile', ['username'=>($this->getUser()->getUsername())]);
         }
 
         // cannot create a conversation with myself
         if ($otherUser->getId() === $this->getUser()->getId()) {
-            throw new Exception("That's deep but you cannot create a conversation with yourself");
+            $this->addFlash('error', 'You cannot start a conversation with yourself');
+            return $this->redirectToRoute('app_profile', ['username'=>($this->getUser()->getUsername())]);
         }
 
         // Check if conversation already exists
@@ -44,32 +49,34 @@ class ConversationController extends AbstractController
             return $this->redirectToRoute('app_chat', ['id'=> $conversationID]);
         }
 
+
+        //create new conversation
         $conversation = new Conversation();
 
+
+        //add myself as participant
         $participant = new Participant();
         $participant->setUser($this->getUser());
         $participant->setConversation($conversation);
 
-
+        //add the other user as a participant to the same conversation
         $otherParticipant = new Participant();
         $otherParticipant->setUser($otherUser);
         $otherParticipant->setConversation($conversation);
 
-        $entityManager->getConnection()->beginTransaction();
-        try {
-            $entityManager->persist($conversation);
-            $entityManager->persist($participant);
-            $entityManager->persist($otherParticipant);
+        //persis data to database
+        $entityManager->persist($conversation);
+        $entityManager->persist($participant);
+        $entityManager->persist($otherParticipant);
+        $entityManager->flush();
+        $entityManager->commit();
 
-            $entityManager->flush();
-            $entityManager->commit();
-
-        } catch (Exception $e) {
-            $entityManager->rollback();
-            throw $e;
-        }
+        //redirect to the conversation page
         return $this->redirectToRoute('app_chat', ['id' => $conversation->getId()]);
     }
+
+    //what is this ??
+    /*
     #[Route('/getConversations', name: 'app_getConversations')]
     public function getConvs(ConversationRepository $conversationRepository, Request $request): Response
     {
@@ -80,4 +87,6 @@ class ConversationController extends AbstractController
         $this->addLink($request, new Link('mercure', $hubUrl));
         return $this->json($conversations);
     }
+
+    */
 }

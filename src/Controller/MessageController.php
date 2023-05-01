@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Conversation;
 use App\Entity\Message;
+use App\Entity\User;
 use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -48,17 +49,17 @@ class MessageController extends AbstractController
      * @throws \Doctrine\DBAL\Exception
      * @throws ORMException
      */
-    #[Route('/newMessage/{id}', name: 'app_newMessage')]
-    public function newMessage($id, Request $request, Conversation $conversation, EntityManagerInterface $entityManager,UserRepository $userRepository)
+    #[Route('/newMessage/', name: 'app_newMessage')]
+    public function newMessage($id, Request $request, Conversation $conversation, EntityManagerInterface $entityManager)
     {
-        // TODO: put everything back
-        $user = $this->getUser();
-        $content = $request->get('content', null);
+        $content = $request->request->get('content', null);
+        $sender = $request->request->get('sender');
         $message = new Message();
         $message->setContent($content);
-        $message->setUser($userRepository->findOneBy(['id' => $id]));
+        $message->setUser($entityManager->getRepository(User::class)->findOneBy(['username' => $sender]));
         $message->setMine(true);
 
+        // what conversation am i in ???
         $conversation->addMessage($message);
         $conversation->setLastMessage($message);
 
@@ -73,8 +74,6 @@ class MessageController extends AbstractController
             throw $e;
         }
 
-        return $this->json($message, Response::HTTP_CREATED, [], [
-            'attributes' => self::ATTRIBUTES_TO_SERIALIZE
-        ]);
+        return $this->redirectToRoute("app_home");
     }
 }
