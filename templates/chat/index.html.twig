@@ -11,7 +11,7 @@
         {% block errors %} {% endblock %}
     {% endblock %}
 <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
-    {% set link = 'https://example.com/books/1' %}
+    {% set link = 'id' %}
         <div class="container app">
             <div class="row app-one">
                 <div class="conversation">
@@ -56,7 +56,7 @@
         };
     </script>
     <script>
-        const eventSource = new EventSource("{{ mercure(link)|escape('js') }}");
+        const eventSource = new EventSource("{{ mercure(id)|escape('js') }}");
         eventSource.onmessage = event => {
             // Will be called every time an update is published by the server
             const data = JSON.parse(event.data);
