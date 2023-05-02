@@ -81,28 +81,4 @@ class ChatController extends AbstractController
             'id' => $id
         ]);
     }
-
-    #[Route('/chat/{id}/publish/', name: 'app_chat_publish')]
-    public function publish(Request $request, HubInterface $hub): Response
-    {
-
-        //get contents of the new message
-        $content = $request->request->get('value');
-        $author = $request->request->get('sender');
-
-
-        //create the new update that will be passed to the mercure HUB
-        $update = new Update(
-            'https://example.com/books/1',
-            json_encode(['message' => $content,
-                            'author'=> $author])
-        );
-
-
-        //publish update to the mercure HUB
-        $hub->publish($update);
-
-        //success message for debugging
-        return new Response('published!');
-    }
 }
