@@ -1,0 +1,73 @@
+{% extends "base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
+{% endblock  %}
+{% block title %}Chat{% endblock %}
+{% block jsdelivr %} {% endblock %}
+{% block body %}
+    {%  block header %} {{ parent() }}
+        {% block errors %} {% endblock %}
+    {% endblock %}
+<link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
+    {% set link = 'id' %}
+        <div class="container app">
+            <div class="row app-one">
+                <div class="conversation">
+                    <div class="row heading">
+                        <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+                            <div class="heading-avatar-icon">
+                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                            </div>
+                        </div>
+                        <div class="col-sm-8 col-xs-7 heading-name">
+                            <a class="heading-name-meta">{{ other_username }}
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row message" id="conversation">
+                    </div>
+                    <div class="row reply">
+                        <div class="col-sm-9 col-xs-9 reply-main">
+                            <textarea class="form-control" rows="1" id="reply" onkeydown="submitOnEnter(event)"></textarea>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <script src="{{ asset('assets/js/chat.js') }}"></script>
+    {% for message in messages %}
+        {% if app.user.username == message.author %}
+            <script>
+                add("{{ message.content }}", "SENDER")
+            </script>
+        {% else %}
+            <script>
+                add("{{ message.content }}", "RECEIVER")
+            </script>
+        {% endif %}
+    {% endfor %}
+    <script>
+        window.chat= {
+            id: "{{ id }}",
+            username: "{{ other_username }}",
+            author: "{{ app.user.username }}"
+        };
+    </script>
+    <script>
+        const eventSource = new EventSource("{{ mercure(id)|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            const data = JSON.parse(event.data);
+            //check if i am sender or receiver
+            if (data.author === "{{ app.user.username }}"){
+                add(data.message, "SENDER")
+            }
+            else{
+                add(data.message, "RECEIVER")
+            }
+        }
+    </script>
+
+{% endblock %}

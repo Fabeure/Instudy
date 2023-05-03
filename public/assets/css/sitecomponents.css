@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-@import url(fontawesome.css);
-=======
->>>>>>> d16ff42de2b6f4b6ea333070d710daba73c89675
+
 body {
   font-family: "Montserrat", sans-serif;
 }
@@ -185,11 +182,6 @@ p {
   line-height: 22px;
 }
 
-<<<<<<< HEAD
-/* Buttons */
-
-.main-button a {
-=======
 section.coming-soon {
   background-repeat: no-repeat;
   background-size: cover;
@@ -258,7 +250,6 @@ section.coming-soon form input:focus {
 
 section.coming-soon form button {
   margin-top: 10px;
->>>>>>> d16ff42de2b6f4b6ea333070d710daba73c89675
   background-color: #f52525;
   color: #fff;
   font-size: 13px;
@@ -409,8 +400,3 @@ a.menu-link {
     font-size: 36px;
   }
 }
-=======
-  box-shadow: none;
-  border: none;
-}
->>>>>>> d16ff42de2b6f4b6ea333070d710daba73c89675
