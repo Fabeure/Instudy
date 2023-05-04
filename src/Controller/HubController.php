@@ -17,4 +17,16 @@ class HubController extends AbstractController
             'controller_name' => 'HubController',
         ]);
     }
+    /**
+     * @Route("/hub", name="search_profile", methods={"POST"})
+     */
+    public function  searchProfile(Request $request){
+
+        $Users =   $this->UserRepository->findAll();
+        $Names = [];
+        for ($i=0; $i<count($Users); $i++){
+            $Names[$i] =$Users[$i]->getName() ;
+        }
+        return  $this->JSON($Names) ;
+    }
 }

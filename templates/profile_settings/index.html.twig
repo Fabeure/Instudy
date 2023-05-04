@@ -1,15 +1,18 @@
 
-
 {% extends "base.html.twig" %}
 {% block title %}Profile Settings{% endblock %}
-
-
 {% block body %}
     {%  block header %} {{ parent() }}
+        {% block stylesheets %}
+            {{ parent() }}
+            <link rel="stylesheet" href="{{ asset('assets/css/style_interface_settings2.scss') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/style_interface_settings.css') }}" />
         {% block errors %} {% endblock %}
+            {% endblock %}
     {% endblock %}
 <section class="py-5 my-5">
     <div class="container">
+
         {% for flash_message in app.flashes('error') %}
             <div class="alert alert-danger">
                 {{ flash_message }}
@@ -22,7 +25,7 @@
                     <div class="img-circle text-center mb-3">
                         <img src="" alt="Image" class="shadow" />
                     </div>
-                    <h4 class="text-center">{{ app.user.username }}</h4>
+                    <h4 class="text-center" >{{ app.user.username }}</h4>
                 </div>
                 <div
                         class="nav flex-column nav-pills"

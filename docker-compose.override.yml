@@ -1,14 +1,8 @@
 version: '3'
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
+###> symfony/mercure-bundle ###
+  mercure:
     ports:
-      - "5432"
-###< doctrine/doctrine-bundle ###
-
-###> symfony/mailer ###
-  mailer:
-    image: schickling/mailcatcher
-    ports: ["1025", "1080"]
-###< symfony/mailer ###
+      - "80"
+###< symfony/mercure-bundle ###

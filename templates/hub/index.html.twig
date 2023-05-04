@@ -1,25 +1,90 @@
-
 {% extends "base.html.twig" %}
 {% block stylesheets %}
-    {{  parent()}}
+    {{ parent()  }}
+    <link href="{{ asset('assets/css/styleHub.css') }}" rel="stylesheet">
 
 {% endblock %}
 {% block title %}Hello ProfileController!{% endblock %}
 {% block body %}
-    {%  block header %} {{ parent() }}
+    {% block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
-    <section class="py-5 my-5">
+    <section id="hero" class="d-flex" >
         <div class="container">
-            <h1>List of Users</h1>
-                <label for="username">Username:</label>
-                <input type="text" id="searchUserName" name="username">
-                <button type="submit" id="searchButton">Search</button>
+            <div class="row row-cols-2 ">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <label for="username">searching profile:</label>
+                    <!-- Button trigger modal -->
+                    <div type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" class="input-group mb-3" id="updateDetails">
+                <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                      height="16" fill="currentColor"
+                                                                      class="bi bi-search" viewBox="0 0 16 16">
+                                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                                                </svg>
+                </span>
+                        <input class="form-control">
+                    </div>
+                    <!--  modal  -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="exampleModalLabel">searching profile </h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
+                                </div>
+                                <div class="modal-body">
+                                    <div  class="input-group mb-3" >
+                                <span class="input-group-text" id="basic-addon1"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                                      height="16" fill="currentColor"
+                                                                                      class="bi bi-search" viewBox="0 0 16 16">
+                                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                                                                </svg>
+                                </span>
+                                        <input class="form-control" id ="InputNameSearch">
+                                    </div>
 
-            <div id="user-list"></div>
+                                    <ul class="list-group list-group-flush" id="ProfileList">
+                                        <li class="list-group-item" id="profileName"></li>
+                                    </ul>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row ">
+                <div class="col-md-6 col-lg-4  " >
+                    <div class="icon-box">
+                        <div class="icon "><i class="ri-palette-line "></i></div>
+                           <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
+                                <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4  " >
+                    <div class="icon-box">
+                        <div class="icon"><i class="ri-command-line"></i></div>
+                                <h4 class="title"><a href="">Magni Dolores</a></h4>
+                                <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+                    </div>
+                </div>
 
+                <div class="col-md-6 col-lg-4 " >
+                    <div class="icon-box">
+                                <div class="icon"><i class="ri-fingerprint-line"></i></div>
+                                <h4 class="title"><a href="">Nemo Enim</a></h4>
+                                <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    <script src="{{  asset('assets/js/searchProfileByUsername.js')}}" type="text/javascript"></script>
+
+    <script src="{{ asset('assets/js/searchProfileByUsername.js') }}" type="text/javascript"></script>
 {% endblock %}
+

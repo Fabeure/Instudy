@@ -8,18 +8,12 @@
     {% endblock %}
 <section class="py-5 my-5">
     <div class="container">
-        {% for flash_message in app.flashes('error') %}
-            <div class="alert alert-danger">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
-
         <div class="row">
             <div class="col-md-10">
-                <h1 class="mb-5">{{ user.username }}'s account</h1>
+                <h1 class="mb-5">{{ username }}'s account</h1>
             </div>
             <div class="col-md-2">
-                   {%  if(( user.allNotNull ) and (user.id == app.user.id)) %}
+                   {%  if(user.id == app.user.id) %}
                     <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings',{'username' : app.user.username}) }}';"> edit profile </button>
                     {% endif %}
             </div>
@@ -32,6 +26,12 @@
                 <div class="text-center">
                     {{ user.bio }}
                 </div>
+                {% if ((app.user.username) != ( username )) %}
+                <div class="text-center">
+                    <a href="{{ path('app_newConversations',{'username' : username}) }}"> Chat ! </a>
+                </div>
+                {% endif %}
+
             </div>
             <div class="col-md-5">
                 <div class="bg-white shadow rounded-lg d-block d-sm-flex">
