@@ -27,6 +27,17 @@ class ConversationController extends AbstractController
     #[Route('/newConversations/{username}', name: 'app_newConversations')]
     public function index($username, EntityManagerInterface $entityManager): Response
     {
+
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'You cannot view this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
+        }
+
         // get the user you are trying to start a conversation with
         $otherUser = $entityManager->getRepository(User::class)->findOneBy(['username'=>$username]);
 
