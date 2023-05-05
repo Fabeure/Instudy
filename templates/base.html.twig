@@ -72,7 +72,7 @@
                                     {% block errors %}
                                         {% if error %}
                                             <div>
-                                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                                                <p>{{ error.messageKey|trans(error.messageData, 'security') }}</p>
                                             </div>
                                         {% endif %}
                                     {% endblock %}
