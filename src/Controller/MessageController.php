@@ -5,15 +5,10 @@ namespace App\Controller;
 use App\Entity\Conversation;
 use App\Entity\Message;
 use App\Entity\User;
-use App\Repository\MessageRepository;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -45,10 +40,14 @@ class MessageController extends AbstractController
 
         //add message as last sent to conversation
         $conversation->addMessage($message);
-        $conversation->setLastMessage($message->getContent());
+        $conversation->setLastMessage($message);
 
 
         //save message
-        $entityManager->getRepository(Message::class)->save($message);
+        $entityManager->getRepository(Message::class)->save($message, true);
+        $entityManager->getRepository(Conversation::class)->save($conversation, true);
+
+        //success message for debugging
+        return new Response('published!');
     }
 }
