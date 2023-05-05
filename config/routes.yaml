@@ -17,7 +17,3 @@ contact_submit:
     path: /contact
     methods: [POST]
     controller: App\Controller\ContactController::submit
-
-search:
-    path: /search
-    controller: App\Controller\HubController::search
