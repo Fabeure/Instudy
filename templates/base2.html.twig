@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+        <style>
+            .container
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0px;
+                position: relative;
+                width: 874px;
+                height: 428px;
+                left: 20%;
+                top: 48px;
+                /* Neutrals/Gray 80 */
+                background: #343541;
+                transform:scale(0.8);
+            }
+            .header
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 24px 48px;
+                gap: 24px;
+                width: 874px;
+                height: 78px;
+                /* Inside auto layout */
+                flex: none;
+                order: 0;
+                align-self: stretch;
+                flex-grow: 0;
+            }
+            .title
+            {
+                width: 656px;
+                height: 28px;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 28px;
+                /* identical to box height, or 175% */
+                display: flex;
+                align-items: center;
+                /* Neutrals/Gray 20 */
+                color: #D1D5DB;
+                /* Inside auto layout */
+                flex: none;
+                order: 1;
+                flex-grow: 1;
+                position: absolute;
+                top: -11px;
+                left: 313px;
+                font-size: xx-large;
+                font-weight: 600;
+            }
+            .avatar
+            {
+                width: 30px;
+                height: 30px;
+                /* Accents/Avatar */
+
+                border-radius: 2px;
+                /* Inside auto layout */
+                flex: none;
+                order: 0;
+                flex-grow: 0;
+                position: absolute;
+                top: 64px;
+            }
+            .question
+            {
+                width: 656px;
+                height: 28px;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 28px;
+                /* identical to box height, or 175% */
+                display: flex;
+                align-items: center;
+                /* Neutrals/Gray 20 */
+                color: #D1D5DB;
+                /* Inside auto layout */
+                flex: none;
+                order: 1;
+                flex-grow: 1;
+                position: absolute;
+                top: 64px;
+                left: 100px;
+            }
+            .gpt-response
+            {
+                display: flex;
+                flex-direction: row;
+                align-items: flex-start;
+                padding: 24px 48px;
+                gap: 24px;
+
+                height: 216px;
+                /* Neutrals/Gray 60 */
+                background: #444654;
+                /* Inside auto layout */
+                flex: none;
+                order: 1;
+                align-self: stretch;
+                flex-grow: 0;
+            }
+            .gpt-logo
+            {
+                width: 30px;
+                height: 30px;
+                /* Accents/ChatGPT */
+
+                border-radius: 2px;
+                /* Inside auto layout */
+                flex: none;
+                order: 0;
+                flex-grow: 0;
+            }
+            .gpt
+            {
+                width: 656px;
+                height: 168px;
+                font-family: 'Segoe UI';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 16px;
+                line-height: 28px;
+                /* or 175% */
+                display: flex;
+                align-items: center;
+                /* Neutrals/Gray 20 */
+                color: #D1D5DB;
+                /* Inside auto layout */
+                flex: none;
+                order: 1;
+                flex-grow: 1;
+            }
+            .stream
+            {
+                color:white;
+                font-size:larger;
+            }
+            .type
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 24px 0px;
+                gap: 4px;
+                width: 874px;
+                height: 134px;
+                flex: none;
+                order: 2;
+                align-self: stretch;
+                flex-grow: 0;
+                background: #343541;
+            }
+            .input-div
+            {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 0px 48px;
+                gap: 8px;
+                width: 874px;
+                height: 50px;
+                /* Inside auto layout */
+                flex: none;
+                order: 0;
+                align-self: stretch;
+                flex-grow: 0;
+            }
+            .text-input
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                width: 778px;
+                height: 50px;
+                /* Neutrals/Gray 60 */
+                background: #444654;
+                box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+                border-radius: 6px;
+                /* Inside auto layout */
+                flex: none;
+                order: 0;
+                align-self: stretch;
+                flex-grow: 0;
+            }
+            .text
+            {
+                position: absolute;
+                left: 98px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-end;
+                align-items: center;
+                width: 653px;
+                height: 38px;
+                background: #444654;
+                box-shadow: 0px 0px 15px rgb(0 0 0 / 10%);
+                /* border-radius: 6px; */
+                flex: none;
+                order: 0;
+                align-self: stretch;
+                flex-grow: 0;
+                border: none;
+                top: 419px;
+                color: white;
+                text-decoration: none;
+                outline: none;
+            }
+            .send
+            {
+                width: 26px;
+                height: 30px;
+                flex: none;
+                order: 0;
+                flex-grow: 0;
+                position: absolute;
+                left: 728px;
+                top: -38px;
+                cursor: pointer;
+            }
+            .btn
+            {
+                position: absolute;
+                border: none;
+                background: none;
+            }
+        </style>
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+</head>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>
