@@ -5,19 +5,11 @@ namespace App\Controller;
 use App\Entity\Conversation;
 use App\Entity\Participant;
 use App\Entity\User;
-use App\Repository\ConversationRepository;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\WebLink\Link;
 
 class ConversationController extends AbstractController
 {
@@ -78,9 +70,9 @@ class ConversationController extends AbstractController
         $otherParticipant->setConversation($conversation);
 
         //persist data to database
-        $entityManager->getRepository(Conversation::class)->save($conversation);
-        $entityManager->getRepository(Participant::class)->save($participant);
-        $entityManager->getRepository(Participant::class)->save($otherParticipant);
+        $entityManager->getRepository(Conversation::class)->save($conversation, true);
+        $entityManager->getRepository(Participant::class)->save($participant, true);
+        $entityManager->getRepository(Participant::class)->save($otherParticipant, true);
 
         //redirect to the new conversation page
         return $this->redirectToRoute('app_chat', ['id' => $conversation->getId()]);

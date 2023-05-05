@@ -5,20 +5,18 @@ namespace App\Controller;
 use App\Entity\RegisteredEmails;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationController extends AbstractController
 {
 
     #[Route('/terms', name: 'app_terms')]
-    public function showTerms()
+    public function showTerms(): Response
     {
         return $this->render('terms.html.twig');
     }
@@ -59,11 +57,9 @@ class RegistrationController extends AbstractController
 
             //add error flash if user does not exist
             if(!$preRegisteredEmail){
-                //empty form fields??
-                $entity = new User();
-                $form = $this->createForm(RegistrationFormType::class, $entity);
                 $this->addFlash('error', 'This email has not been pre-registered.');
-            } else {
+            }
+            else {
                 //make user active
                 $preRegisteredEmail->setActif(true);
                 // encode the plain password
