@@ -1,4 +1,4 @@
-//create a new message
+//function to create a new message
 function create(text, nature){
     let message="";
     if (nature === "RECEIVER"){
@@ -10,7 +10,7 @@ function create(text, nature){
     return message;
 }
 
-//insert the enw message
+//functon to insert a new message
 function insert(text){
     const conversation = document.getElementById("conversation");
     conversation.innerHTML += text;
@@ -21,7 +21,7 @@ function add(text, nature){
     let message= create(text, nature);
     insert(message);
 }
-//code for textarea when clicking enter:
+//code for textarea when clicking enter: prevents the default return to line
 //send to ajax requests:
 //request1 send a request to the chat publisher that pushes a new update to the mercure HUB
 //request2 sends a request the Message controller that instantiates a new message entity and saves it to the database.

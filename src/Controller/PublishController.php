@@ -15,7 +15,7 @@ class PublishController extends AbstractController
     public function publish(Request $request, HubInterface $hub): Response
     {
 
-        //get contents of the new message
+        //get contents of the publish request
         $content = $request->request->get('value');
         $author = $request->request->get('sender');
         $convo_id = $request->request->get('convo_id');
@@ -23,6 +23,8 @@ class PublishController extends AbstractController
 
         //create the appropriate topic to listen to
         $topic = ''.$convo_id;
+
+
         //create the new update that will be passed to the mercure HUB
         $update = new Update(
             $topic,

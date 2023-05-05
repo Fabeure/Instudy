@@ -45,12 +45,14 @@ class ConversationController extends AbstractController
 
         // Check if conversation already exists
         $conversationID = $entityManager->getRepository(Conversation::class)->findConversationIdByParticipants($otherUser->getId(), $this->getUser()->getId());
+
+        //redirect me to the already-existing conversation
         if ($conversationID) {
             return $this->redirectToRoute('app_chat', ['id'=> $conversationID]);
         }
 
 
-        //create new conversation
+        //create new conversation if it does not exist yet
         $conversation = new Conversation();
 
 
@@ -64,29 +66,12 @@ class ConversationController extends AbstractController
         $otherParticipant->setUser($otherUser);
         $otherParticipant->setConversation($conversation);
 
-        //persis data to database
-        $entityManager->persist($conversation);
-        $entityManager->persist($participant);
-        $entityManager->persist($otherParticipant);
-        $entityManager->flush();
-        $entityManager->commit();
+        //persist data to database
+        $entityManager->getRepository(Conversation::class)->save($conversation);
+        $entityManager->getRepository(Participant::class)->save($participant);
+        $entityManager->getRepository(Participant::class)->save($otherParticipant);
 
-        //redirect to the conversation page
+        //redirect to the new conversation page
         return $this->redirectToRoute('app_chat', ['id' => $conversation->getId()]);
     }
-
-    //what is this ??
-    /*
-    #[Route('/getConversations', name: 'app_getConversations')]
-    public function getConvs(ConversationRepository $conversationRepository, Request $request): Response
-    {
-        $conversations = $conversationRepository->findConversationsByUser($this->getUser()->getId());
-
-        $hubUrl = $this->getParameter('mercure.default_hub');
-
-        $this->addLink($request, new Link('mercure', $hubUrl));
-        return $this->json($conversations);
-    }
-
-    */
 }

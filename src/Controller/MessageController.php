@@ -43,14 +43,12 @@ class MessageController extends AbstractController
         $message->setUser($entityManager->getRepository(User::class)->findOneBy(['username' => $author]));
         $message->setMine(true);
 
-        /* add message to,
-        $conversation = $entityManager->getRepository(Conversation::class)->find($conversation_id);
+        //add message as last sent to conversation
         $conversation->addMessage($message);
-        $conversation->setLastMessage($message);
-        */
+        $conversation->setLastMessage($message->getContent());
+
 
         //save message
-        $entityManager->persist($message);
-        $entityManager->flush();
+        $entityManager->getRepository(Message::class)->save($message);
     }
 }
