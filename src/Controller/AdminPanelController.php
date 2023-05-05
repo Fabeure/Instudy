@@ -51,72 +51,45 @@ class AdminPanelController extends AbstractController
 
             //add success message
             $this->addFlash('success', 'User added successfully');
-
-            //clear form ????
-            $entity = new RegisteredEmails();
-            $form = $this->createForm(PreRegisterFormType::class, $entity);
         }
 
 
         //fetch all users and pass them to view
-            $users = [];
-            $i = 0;
-            $fetched_emails = $entityManager->getRepository(RegisteredEmails::class)->findAllActiveFirst();
+        $fetched_emails = $entityManager->getRepository(RegisteredEmails::class)->findAllActiveFirst();
+        foreach ($fetched_emails as $ignored) {
 
-        //get user fields to show
-        foreach ($fetched_emails as $email) {
+            $users = array_map(function ($email) use ($entityManager) {
+                if (!$email->isActif()) {
+                    return [
+                        'email' => $email->getEmail(),
+                        'isActive' => false
+                    ];
+                }
 
-            if($email->isActif()){
+                $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email->getEmail()]);
 
-                //get user email
-                $user_email = $email->getEmail();
-
-                //get user by email
-                $user_instance = $entityManager->getRepository(User::class)->findOneBy(['email'=>$user_email]);
-
-                //add user to array
-                $users[$i]= [
-                    'id' => $user_instance->getId(),
+                return [
+                    'id' => $user->getId(),
                     'isActive' => true,
-                    'username' => $user_instance->getUsername()
+                    'username' => $user->getUsername()
                 ];
-                $i +=1;
-            }
+            }, $fetched_emails);
 
-
-            else{
-                //add user to array
-                $users[$i]= [
-                    'email' => $email->getEmail(),
-                    'isActive' => false
-                ];
-                $i += 1;
-            }
         }
-
         //fetch all tickets and pass them to view
         $fetched_tickets = $entityManager->getRepository(Ticket::class)->findAll();
-        $tickets = [];
-        $i = 0;
-
-
-
-
-        //assign each ticket value to array
-        foreach ($fetched_tickets as $ticket){
+        $tickets = array_map(function($ticket) use($entityManager) {
 
             //fetch user that made the ticket by using the AuthorID field
             $author = $entityManager->getRepository(User::class)->find($ticket->getAuthorID());
-
-            $tickets[$i] =[
+            return [
                 'id' => $ticket->getId(),
                 'username' => $author->getUsername(),
                 'date' => $ticket->getDate(),
                 'title' => $ticket->getTitle(),
                 'description' => $ticket->getDescription()
             ];
-            $i += 1;
-        }
+        }, $fetched_tickets);
 
         return $this->render('admin_pannel/index.html.twig', [
             'controller_name' => 'AdminPanelController',
