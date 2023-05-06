@@ -116,39 +116,6 @@ class AdminPanelController extends AbstractController
         $entityManager->remove($user);
         $entityManager->flush();
 
-        // remove all messages related to user
-        $messages = $entityManager->getRepository(Message::class)->findBy(['user_id' => $id]);
-        if($messages != null){
-            foreach ($messages as $message) {
-                $conversation = $entityManager->getRepository(Conversation::class)->findOneBy(['last_message_id' => $message->getId()]);
-                if($conversation != null)
-                {
-                    $particpant = $entityManager->getRepository(Participant::class)->findBy(['conversation_id' => $conversation->getId()]);
-                    if($particpant != null){
-                        foreach ($particpant as $part) {
-
-                            $entityManager->remove($part);
-                            $entityManager->flush();
-                        }
-                    }
-
-                    $entityManager->remove($conversation);
-                    $entityManager->flush();
-                }
-    
-                $entityManager->remove($message);
-                $entityManager->flush();
-            }
-        }
-
-        
-
-        $ticket = $entityManager->getRepository(Ticket::class)->findBy(['authorID' => $id]);
-        foreach ($ticket as $t) {
-            $entityManager->remove($t);
-            $entityManager->flush();
-        }
-
         //deactivate email
         $email->setActif(false);
 
