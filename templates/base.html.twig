@@ -58,7 +58,7 @@
                 {% endfor %}
                 <ul class="main-menu">
                     <li><a href="{{ path('app_home') }}">Home</a></li>
-                    <li><a href="">Hub</a></li>
+                    <li><a href="{{ path('app_hub') }}">Hub</a></li>
                     {% if app.user %}
                         <li>  <a href="{{ path('app_profile',{'username':app.user.username}) }}"> {{ app.user.username }} </a> </li>
                         <li><a href="{{ path('app_logout') }}">Logout</a></li>
