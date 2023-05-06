@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\UserRepository;
+use Vich\UploaderBundle\Mapping\PropertyMappingFactory;
+use Vich\UploaderBundle\Storage\StorageInterface;
 
 class ProfileController extends AbstractController
 {
@@ -32,7 +34,7 @@ class ProfileController extends AbstractController
         } else {
             return $this->render('profile/index.html.twig', [
                 'user' => $user,
-                'username' => $username
+                'username' => $username,
             ]);
         }
     }
