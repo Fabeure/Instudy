@@ -1,0 +1,96 @@
+/*cards*/
+.card1 {
+    width: 190px;
+    height: 254px;
+    background: transparent;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 20px;
+    position: absolute;
+    left: 10%;
+    top: 10%;
+}
+
+.card1:hover {
+    width: 250px;
+    height: 350px;
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 20px;
+    background-color: #dfdfdf;
+    transition: all 0.5s;
+}
+.card2 {
+    width: 190px;
+    height: 254px;
+    background: transparent;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 20px;
+    position: absolute;
+    left: 40%;
+    top: 10%;
+}
+
+.card2:hover {
+    width: 250px;
+    height: 350px;
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 20px;
+    background-color: #dfdfdf;
+    transition: all 0.5s;
+}
+
+.card3 {
+    width: 190px;
+    height: 254px;
+    background: transparent;
+    border: 2px solid rgb(255, 255, 255);
+    border-radius: 20px;
+    position: absolute;
+    left: 70%;
+    top: 10%;
+}
+
+.card3:hover {
+    width: 250px;
+    height: 350px;
+    border: 2px solid rgb(200, 200, 200);
+    border-radius: 20px;
+    background-color: #dfdfdf;
+    transition: all 0.5s;
+}
+
+.secondAnimation {
+    --hoverContorno: #959595;
+}
+
+.secondAnimation:hover,
+.secondAnimation:focus {
+    -webkit-animation: cardAnimacion 1.4s;
+    animation: cardAnimacion 1.4s;
+    box-shadow: 0 0 0 0.8em rgba(255, 255, 255, 0);
+    border-radius: 20px;
+}
+
+@-webkit-keyframes cardAnimacion {
+    0% {
+        box-shadow: 0 0 0 0 var(--hoverContorno);
+    }
+}
+
+@keyframes cardAnimacion {
+    0% {
+        box-shadow: 0 0 0 0 var(--hoverContorno);
+    }
+}
+
+.card-content {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.card2:hover .card-content {
+    opacity: 1;
+}
+
+.card3:hover .card-content {
+    opacity: 1;
+}

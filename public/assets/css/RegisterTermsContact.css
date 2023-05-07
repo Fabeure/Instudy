@@ -1,0 +1,66 @@
+section.coming-soon {
+    background-image: url("../images/choosing-bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #172238;
+    padding: 120px 0px;
+}
+section.coming-soon .top-content {
+    margin-bottom: -8px;
+}
+
+section.coming-soon .top-content h2 {
+    font-size: 30px;
+    color: #fff;
+    padding: 40px;
+    text-align: center;
+    line-height: 24px;
+}
+
+
+section.coming-soon form {
+    padding: 60px 40px;
+    width: 100%;
+    text-align: center;
+}
+
+section.coming-soon form input {
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    background-color: rgba(250, 250, 250, 0.1);
+    border-radius: 0px;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 13px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+}
+
+section.coming-soon form input:focus {
+    outline: none;
+    border: none;
+    box-shadow: none;
+    color: #fff;
+    background-color: rgba(250, 250, 250, 0.1);
+}
+
+section.coming-soon form::placeholder {
+    color: #fff;
+}
+
+section.coming-soon form button {
+    margin-top: 10px;
+    background-color: rgba(19, 21, 66, 1);
+    color: #fff;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 700;
+    padding: 12px 20px;
+    display: inline-block;
+    outline: none;
+    box-shadow: none;
+    border: none;
+}

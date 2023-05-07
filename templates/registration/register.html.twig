@@ -1,21 +1,22 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Register{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/RegisterTermsContact.css') }}" />
+{% endblock %}
 {% block body %}
-<!--header-->
     {%  block header %} {{ parent() }}
             {% block errors %} {% endblock %}
     {% endblock %}
 
 <section class="section main-banner" id="top" data-section="section1"  style="color:white">
-    <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" />
     <section class="section coming-soon caption" data-section="section3">
         <div class="col-md-12 mt-5">
-            <div class="middle-content">
-                <div class="middle-content">
-                    <h6>Register now
-                    </h6>
+            <div class="top-content">
+                <div class="top-content">
+                    <h2>Register now
+                    </h2>
                 </div>
                 {% for flash_message in app.flashes('error') %}
                     <div class="alert alert-danger">
@@ -33,7 +34,6 @@
                 <button type="submit" class="btn">Register</button>
                 {{ form_end(registrationForm) }}
             </div>
-        </div>
         </div>
     </section>
 

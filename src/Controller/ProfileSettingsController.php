@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ProfileSettingsFormType;
 use App\Form\ProfileSettingsPasswordFormType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProfileSettingsController extends AbstractController
 {
-    #[Route('/profile/settings', name: 'app_profile_settings')]
-    public function index(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
+    #[Route('/profile/{username}/settings', name: 'app_profile_settings')]
+    public function index($username , Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         //handle access control
         if(!$this->isGranted('ROLE_USER')){
@@ -31,6 +30,30 @@ class ProfileSettingsController extends AbstractController
 
         //get current user
         $user = $this->getUser();
+        $current_user = $entityManager->getRepository(User::class)->findOneBy(['email'=>$user->getUserIdentifier()]);
+
+
+        //get current user id
+        $my_id = $current_user->getID();
+
+
+        //get visited user
+        $visited = $entityManager->getRepository(User::class)->findOneBy(['username'=>$username]);
+
+        //get visited user id
+        $visited_id = $visited->getID();
+
+
+        if ($visited_id != $my_id){
+            //add error message for unauthorised access
+            $this->addFlash('error', 'You are not allowed to access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_profile', array('username'=>($current_user->getUsername())));
+        }
+
+
+
 
         //create info form
         $form = $this->createForm(ProfileSettingsFormType::class, $user);
@@ -47,27 +70,27 @@ class ProfileSettingsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             //set new user fields
-            $user->setUsername($form->get('username')->getData());
-            $user->setName($form->get('name')->getData());
-            $user->setSurname($form->get('surname')->getData());
-            $user->setPhone($form->get('phone')->getData());
-            $user->setBio($form->get('bio')->getData());
-            $user->setPersonalEmail($form->get('personalEmail')->getData());
+            $current_user->setUsername($form->get('username')->getData());
+            $current_user->setName($form->get('name')->getData());
+            $current_user->setSurname($form->get('surname')->getData());
+            $current_user->setPhone($form->get('phone')->getData());
+            $current_user->setBio($form->get('bio')->getData());
+            $current_user->setPersonalEmail($form->get('personalEmail')->getData());
+            $current_user->setImageFile($form->get('imageFile')->getData());
 
             //save user
-            $entityManager->getRepository(User::class)->save($user, true);
+            $entityManager->getRepository(User::class)->save($current_user, true);
 
             //add success message
             $this->addFlash('success', 'Your profile has been updated.');
-
             //return to home
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_profile_settings', ['username'=>$user->getUsername()]);
         }
 
         //modify password
         if ($form2->isSubmitted() && $form2->isValid()){
             //check if old password is correct
-            if (!$userPasswordHasher->isPasswordValid($user, $form2->get('OldPlainPassword')->getData())){
+            if (!$userPasswordHasher->isPasswordValid($current_user, $form2->get('OldPlainPassword')->getData())){
                 //add error flash message
 
                 $this->addFlash('error', 'Wrong password.');
@@ -75,10 +98,10 @@ class ProfileSettingsController extends AbstractController
             else {
 
                 //set new password
-                $user->setPassword($userPasswordHasher->hashPassword($user, $form2->get('NewPlainPassword')->getData()));
+                $user->setPassword($userPasswordHasher->hashPassword($current_user, $form2->get('NewPlainPassword')->getData()));
 
                 //save user
-                $entityManager->getRepository(User::class)->save($user, true);
+                $entityManager->getRepository(User::class)->save($current_user, true);
 
                 //add success message
                 $this->addFlash('success', 'Password updated successfully');

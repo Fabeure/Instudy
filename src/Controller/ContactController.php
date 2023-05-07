@@ -4,7 +4,6 @@
 
 namespace App\Controller;
 
-use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -34,7 +33,6 @@ class ContactController extends AbstractController
             ->getForm();
         $form->handleRequest($request);
 
-        //need to check if getUser returns current user or not, if yes then no need to fetch from database
         if ($this->getUser()){
             if ($form->isSubmitted() && $form->isValid()) {
                 //create the email object

@@ -1,30 +1,34 @@
 {% extends "base.html.twig" %}
-
-
-{% block head %}{{
-    parent()
-    }} {% endblock head %}
-
+{% block head %}
+    {{ parent() }}
+    {% block stylesheets %}
+        {{ parent() }}
+        <link rel="stylesheet" href="{{ asset('assets/css/Home.css') }}" />
+    {% endblock %}
+{% endblock head %}
 {% block body %}
+    {%  block header %} {{ parent() }}
+        {% block errors %} {{ parent() }} {% endblock %}
+    {% endblock %}
 <section class="section main-banner" id="top" data-section="section1">
     <img
             class="imgv3"
             src="{{ asset('assets/images/background.jpg') }}"
             alt="INSAT 2.0"
     />
-    {%  block header %} {{ parent() }}
-        {% block errors %} {{ parent() }} {% endblock %}
-    {% endblock %}
-
+    <div class="top">
+        <p class = "important">Welcome to INSTUDY - your ultimate studying platform! </p>
+        <p class="content">Are you tired of juggling between multiple apps and resources while trying to prepare for your exams?
+            INSTUDY is here to simplify your life and help you stay organized.</p>
+    </div>
         <div class="caption">
-            <h2><em>Your</em> Guide</h2>
+            <h2><em>INS</em>TUDY</h2>
             <div class="main-button">
                 <div class="scroll-to-section">
-                    <a href="#section2">Discover more</a>
+                    <a href="{{path('app_register')}}">Start Now</a>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
 </section>
 {% endblock %}
+
