@@ -72,21 +72,20 @@ class ChatController extends AbstractController
         $conversation = $entityManager->getRepository(Conversation::class)->find($id);
 
         //fetch past messages
-        $messages = $entityManager->getRepository(Message::class)->findBy(['conversation'=>$conversation]);
-
+        $messages = $entityManager->getRepository(Message::class)->findBy(['conversation'=>$conversation], limit:20, orderBy: ['id' => 'DESC']);
         //put past messages in an array to pass to the front end; //NEED TO MAKE IT MAX 10 OR 15 MESSAGES
         $history=array_map(function($message) {
             return [
                 'content' => $message->getContent(),
                 'author' => $message->getUser()->getUsername(),
             ];
-        }, $messages);
+        }, array_reverse($messages));
 
 
         //pass others username's id, conversation id and past messages to view
         return $this->render('chat/index.html.twig', [
             'messages'=> $history,
-            'other_username' => $other_user->getUsername(),
+            'other_user' => $other_user,
             'id' => $id
         ]);
     }
