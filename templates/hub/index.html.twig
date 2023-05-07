@@ -8,6 +8,7 @@
     {% block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
+    {% set url = vich_uploader_asset(app.user, 'imageFile') %}
     <section id="hero" class="d-flex" >
         <div class="container">
             <div class="row row-cols-2 ">
