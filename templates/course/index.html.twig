@@ -1,7 +1,7 @@
 
 {% extends "base.html.twig" %}
 
-{% block title %}Hello ProfileController!{% endblock %}
+{% block title %}{{ course.CourseTitle }}{% endblock %}
 {% block body %}
     {%  block header %} {{ parent() }}
         {% block errors %} {% endblock %}
@@ -14,15 +14,15 @@
         {# course title #}
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1>Course : Fonctions de plusieurs variables reelles-Differentiabilite</h1>
+                <h1>Course : {{ CourseTitle }}</h1>
             </div>
         </div>
 
         {# course pdf preview #}
         <div>
-            <object data="{{ asset('assets/pdf/test.pdf') }}"  type="application/pdf" width="100%" height="500px">
+            <object data='{{ pdf }}'  type="application/pdf" width="100%" height="500px">
                 <p>It appears your Web browser is not configured to display PDF files.
-                    No worries, just <a href="{{ asset('assets/pdf/test.pdf') }}">click here to download the PDF file.</a>
+                    No worries, just <a href='{{ pdf }}'>click here to download the PDF file.</a>
                 </p>
             </object>
         </div>
