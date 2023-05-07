@@ -1,0 +1,33 @@
+
+{% extends "base.html.twig" %}
+
+{% block title %}Subjects!{% endblock %}
+{% block body %}
+    {%  block header %} {{ parent() }}
+        {% block errors %} {% endblock %}
+    {% endblock %}
+<section class="py-5 my-5">
+    <div class="container"> 
+        <h1 class="text-center">Subjects</h1>
+
+        <div class="card m-2" style="width: 80%;">
+            <div class="card-body">
+                <h5 class="card-title">Add a new subject</h5>
+                <a href="#" class="btn btn-danger" href="{{ path('app_add_matiere') }}">Add</a>
+            </div>
+        </div>
+
+        {% for matiere in matieres %}
+            <div class="card m-2" style="width: 80%;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ matiere.name }}</h5>
+                    <a href="#" class="btn btn-info" href="{{ path('app_matiere', matiere.id) }}">show</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+</body>
+</html>
+{% endblock %}

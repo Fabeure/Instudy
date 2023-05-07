@@ -23,6 +23,10 @@ class Course
     #[ORM\JoinColumn(nullable: false)]
     private ?User $idProf = null;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $idMatiere = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -57,9 +61,21 @@ class Course
         return $this->idProf;
     }
 
-    public function setIdProf(?user $idProf): self
+    public function setIdProf(?User $idProf): self
     {
         $this->idProf = $idProf;
+
+        return $this;
+    }
+
+    public function getIdMatiere(): ?Matiere
+    {
+        return $this->idMatiere;
+    }
+
+    public function setIdMatiere(?Matiere $idMatiere): self
+    {
+        $this->idMatiere = $idMatiere;
 
         return $this;
     }
