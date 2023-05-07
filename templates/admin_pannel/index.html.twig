@@ -1,4 +1,4 @@
-{# templates/contact/index.html.twig #}
+
 {% extends 'base.html.twig' %}
 {% block title %}AdminPannel{% endblock %}
 {% block body %}
@@ -93,10 +93,12 @@
 
                                             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
                                                 {% if user.isActive %}
-                                                    <button class="btn btn-success" for="btncheck1">Show</button>
+                                                    <button class="btn btn-success">
+                                                        <a href="{{ path('app_profile', {'username': user.username }) }}"> Show </a>
+                                                    </button>
 
                                                     {# go from this buuton to route app_remove_user #}
-                                                    <button class="btn btn-danger" for="btncheck2">
+                                                    <button class="btn btn-danger">
                                                         <a href="{{ path('app_remove_user', {'id': user.id}) }}" style="color: white">Remove</a>
                                                     </button>
                                                 {% endif %}

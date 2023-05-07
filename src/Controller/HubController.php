@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class HubController extends AbstractController
@@ -18,36 +17,33 @@ class HubController extends AbstractController
     #[Route('/hub', name: 'app_hub')]
     public function index(UserRepository $userRepository): Response
     {
+
         //handle access control
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'You must be a user to access this page ');
+        if(!$this->isGranted('ROLE_USER')){
 
-        $user = $userRepository->findByUsernameLike('%nao%');
+            //add error flash message
+            $this->addFlash('error', 'Login to access this page.');
 
-        $usersName = array_map(fn ($user) => $user->getUsername(), $user);
-
-        return $this->render('hub/index.html.twig', [
-            'users' => $usersName
-        ]);
+            //return to home
+            return $this->redirectToRoute('app_home');
+        }
+        return $this->render('hub/index.html.twig');
     }
 
     #[Route('/hub/search', name: 'app_hub_search')]
     public function search(Request $request, EntityManagerInterface $entityManager, HubInterface $hub) :Response
     {
-        $query = $request->request->get('query');
+        $search = $request->request->get('query');
         $Users = $entityManager->getRepository(User::class)
-            ->findByUsernameLike('%'.$query.'%');
+            ->findByUsernameLike('%'.$search.'%');
 
-        $data = [];
-        $i= 0;
+        $data = array_map(function ($user) {
+            return $user->getUsername();
+        }, $Users);
 
-        foreach ($Users as $user) {
-            $data[$i] =
-                $user->getUsername();
-            $i += 1;
-        }
         //create the new update that will be passed to the mercure HUB
         $update = new Update(
-            'test',
+            "test",
             json_encode(['users' => $data] )
         );
 

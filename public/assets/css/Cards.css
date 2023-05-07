@@ -13,7 +13,6 @@
 .card1:hover {
     width: 250px;
     height: 350px;
-    background: rgb(255, 255, 255);
     border: 2px solid rgb(200, 200, 200);
     border-radius: 20px;
     background-color: #dfdfdf;
@@ -33,7 +32,6 @@
 .card2:hover {
     width: 250px;
     height: 350px;
-    background: rgb(255, 255, 255);
     border: 2px solid rgb(200, 200, 200);
     border-radius: 20px;
     background-color: #dfdfdf;
@@ -54,7 +52,6 @@
 .card3:hover {
     width: 250px;
     height: 350px;
-    background: rgb(255, 255, 255);
     border: 2px solid rgb(200, 200, 200);
     border-radius: 20px;
     background-color: #dfdfdf;

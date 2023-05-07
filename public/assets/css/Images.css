@@ -14,6 +14,7 @@
     max-height: 33%;
     display: block;
     margin: 0 auto;
+    filter: blur(2.5px);
 }
 .alert {
     width:40%;

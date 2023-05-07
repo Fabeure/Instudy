@@ -2,21 +2,21 @@
 
 
 {% block title %}Contact{% endblock %}
-
-{% block head %}{{ parent() }} {% endblock head %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/RegisterTermsContact.css') }}" />
+{% endblock %}
 {% block body %}
 
     {%  block header %} {{ parent() }}
-        {% block errors %} {% endblock %}
+        {% block errors %}{% endblock %}
     {% endblock %}
 
 <section class="section main-banner" id="top" data-section="section1" style="color:white">
-    <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" />
     <section class="section coming-soon caption" data-section="section3">
         <div class="col-md-12 mt-5">
-            <div class="middle-content">
-                <h1>Contact Us</h1>
+            <div class="top-content">
+                <h2>Contact Us</h2>
                 {{ form_start(form) }}
 
                     {% if not app.user %}
@@ -36,15 +36,4 @@
         </div>
     </section>
 </section>
-<<<<<<< HEAD
-
-
-
-<!-- Scripts -->
-<!-- Bootstrap core JavaScript -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous">
-</script>
-</html>
 {% endblock %}

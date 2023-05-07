@@ -6,18 +6,29 @@ use App\Entity\Conversation;
 use App\Entity\Message;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mercure\HubInterface;
-use Symfony\Component\Mercure\Update;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ChatController extends AbstractController
 {
+    /**
+     * @throws NonUniqueResultException
+     */
     #[Route('/chat/{id}', name: 'app_chat')]
     public function index($id, EntityManagerInterface $entityManager): Response
     {
+
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'You cannot view this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
+        }
 
         //check if I am a participant in this chat by the id, else reroute to profile
 
@@ -50,34 +61,31 @@ class ChatController extends AbstractController
         //get the other user in this conversation !!!NEED A BETTER WAY TO DO THIS!!!
 
 
-            //get the id that ISN'T mine
-        if ($my_id == $participant_ids[0]['id']){
-            $other_id = $participant_ids[1]['id'];
-        }
-        else{
-            $other_id = $participant_ids[0]['id'];
-        }
+        //get the id that ISN'T mine
+        $other_id = ($my_id == $participant_ids[0]['id']) ? $participant_ids[1]['id'] : $participant_ids[0]['id'];
+
 
         //fetch the other user from the database
         $other_user = $entityManager->getRepository(User::class)->find($other_id);
 
         //get the conversation
         $conversation = $entityManager->getRepository(Conversation::class)->find($id);
+
         //fetch past messages
-        $messages = $entityManager->getRepository(Message::class)->findBy(['conversation'=>$conversation]);
-        $i=0;
-        $history=[];
-        foreach ($messages as $message){
-            $history[$i]=[
+        $messages = $entityManager->getRepository(Message::class)->findBy(['conversation'=>$conversation], limit:20, orderBy: ['id' => 'DESC']);
+        //put past messages in an array to pass to the front end; //NEED TO MAKE IT MAX 10 OR 15 MESSAGES
+        $history=array_map(function($message) {
+            return [
                 'content' => $message->getContent(),
                 'author' => $message->getUser()->getUsername(),
             ];
-            $i += 1;
-        }
+        }, array_reverse($messages));
+
+
         //pass others username's id, conversation id and past messages to view
         return $this->render('chat/index.html.twig', [
             'messages'=> $history,
-            'other_username' => $other_user->getUsername(),
+            'other_user' => $other_user,
             'id' => $id
         ]);
     }

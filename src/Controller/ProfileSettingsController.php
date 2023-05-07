@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\ProfileSettingsFormType;
 use App\Form\ProfileSettingsPasswordFormType;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -71,15 +70,16 @@ class ProfileSettingsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             //set new user fields
-            $user->setUsername($form->get('username')->getData());
-            $user->setName($form->get('name')->getData());
-            $user->setSurname($form->get('surname')->getData());
-            $user->setPhone($form->get('phone')->getData());
-            $user->setBio($form->get('bio')->getData());
-            $user->setPersonalEmail($form->get('personalEmail')->getData());
+            $current_user->setUsername($form->get('username')->getData());
+            $current_user->setName($form->get('name')->getData());
+            $current_user->setSurname($form->get('surname')->getData());
+            $current_user->setPhone($form->get('phone')->getData());
+            $current_user->setBio($form->get('bio')->getData());
+            $current_user->setPersonalEmail($form->get('personalEmail')->getData());
+            $current_user->setImageFile($form->get('imageFile')->getData());
 
             //save user
-            $entityManager->getRepository(User::class)->save($user, true);
+            $entityManager->getRepository(User::class)->save($current_user, true);
 
             //add success message
             $this->addFlash('success', 'Your profile has been updated.');
@@ -90,7 +90,7 @@ class ProfileSettingsController extends AbstractController
         //modify password
         if ($form2->isSubmitted() && $form2->isValid()){
             //check if old password is correct
-            if (!$userPasswordHasher->isPasswordValid($user, $form2->get('OldPlainPassword')->getData())){
+            if (!$userPasswordHasher->isPasswordValid($current_user, $form2->get('OldPlainPassword')->getData())){
                 //add error flash message
 
                 $this->addFlash('error', 'Wrong password.');
@@ -98,10 +98,10 @@ class ProfileSettingsController extends AbstractController
             else {
 
                 //set new password
-                $user->setPassword($userPasswordHasher->hashPassword($user, $form2->get('NewPlainPassword')->getData()));
+                $user->setPassword($userPasswordHasher->hashPassword($current_user, $form2->get('NewPlainPassword')->getData()));
 
                 //save user
-                $entityManager->getRepository(User::class)->save($user, true);
+                $entityManager->getRepository(User::class)->save($current_user, true);
 
                 //add success message
                 $this->addFlash('success', 'Password updated successfully');

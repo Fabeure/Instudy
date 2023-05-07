@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/Chat.css') }}">
 {% endblock  %}
 {% block title %}Chat{% endblock %}
 {% block jsdelivr %} {% endblock %}
@@ -10,7 +10,8 @@
     {%  block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
-<link rel="stylesheet" href="{{ asset('assets/css/chat.css') }}">
+    {% set url = vich_uploader_asset(other_user, 'imageFile') %}
+<link rel="stylesheet" href="{{ asset('assets/css/Chat.css') }}">
     {% set link = 'id' %}
         <div class="container app">
             <div class="row app-one">
@@ -18,19 +19,23 @@
                     <div class="row heading">
                         <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
                             <div class="heading-avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png">
+                                {% if url %}
+                                <img src="{{ asset(url) }}" alt="{{ asset('assets/images/defaultProfilePic.png') }}">
+                                {% else %}
+                                <img src="{{ asset('assets/images/defaultProfilePic.png') }}" alt="Missing Picture">
+                                {% endif %}
                             </div>
                         </div>
                         <div class="col-sm-8 col-xs-7 heading-name">
-                            <a class="heading-name-meta">{{ other_username }}
+                            <a class="heading-name-meta" href="{{ path('app_profile', {'username' : other_user.username}) }}">{{ other_user.username }}
                             </a>
                         </div>
                     </div>
-                    <div class="row message" id="conversation">
+                    <div class="row message" id="conversation" style="overflow-y: scroll; max-height: 350px;">
                     </div>
                     <div class="row reply">
-                        <div class="col-sm-9 col-xs-9 reply-main">
-                            <textarea class="form-control" rows="1" id="reply" onkeydown="submitOnEnter(event)"></textarea>
+                        <div class="col-sm-9 col-xs-9 reply-main" id="replydiv" >
+                            <textarea class="form-control" style="-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" rows="1" id="reply" onkeydown="submitOnEnter(event)"></textarea>
                         </div>
                         </div>
                     </div>
@@ -51,7 +56,7 @@
     <script>
         window.chat= {
             id: "{{ id }}",
-            username: "{{ other_username }}",
+            username: "{{ other_user.username }}",
             author: "{{ app.user.username }}"
         };
     </script>

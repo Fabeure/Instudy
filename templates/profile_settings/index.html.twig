@@ -5,25 +5,20 @@
     {%  block header %} {{ parent() }}
         {% block stylesheets %}
             {{ parent() }}
-            <link rel="stylesheet" href="{{ asset('assets/css/style_interface_settings2.scss') }}" />
-            <link rel="stylesheet" href="{{ asset('assets/css/style_interface_settings.css') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/ProfileSettings2.scss') }}" />
+            <link rel="stylesheet" href="{{ asset('assets/css/ProfileSettings1.css') }}" />
         {% block errors %} {% endblock %}
             {% endblock %}
     {% endblock %}
+    {% set url = vich_uploader_asset(app.user, 'imageFile') %}
 <section class="py-5 my-5">
     <div class="container">
-
-        {% for flash_message in app.flashes('error') %}
-            <div class="alert alert-danger">
-                {{ flash_message }}
-            </div>
-        {% endfor %}
         <h1 class="mb-5">Account Settings</h1>
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
             <div class="profile-tab-nav border-right">
                 <div class="p-4">
                     <div class="img-circle text-center mb-3">
-                        <img src="" alt="Image" class="shadow" />
+                        <img src="{{ asset(url) }}" alt="Image" class="shadow" />
                     </div>
                     <h4 class="text-center" >{{ app.user.username }}</h4>
                 </div>

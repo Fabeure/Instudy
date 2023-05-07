@@ -1,8 +1,6 @@
 .fa-2x {
     font-size: 1.5em;
 }
-
-
 .app {
     position: relative;
     overflow: hidden;
@@ -178,6 +176,7 @@
     padding: 10px 5px 10px 5px !important;
     margin: 0 !important;
     z-index: 1000;
+
 }
 
 .reply-emojis {
@@ -235,4 +234,8 @@
     border: none;
     text-indent: 5px;
     box-shadow: none;
+}
+
+#replydiv{
+    max-width: 98%;
 }
