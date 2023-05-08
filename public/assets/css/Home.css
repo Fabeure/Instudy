@@ -83,7 +83,7 @@ p {
    width: 800px;
    height: 500px;
    position: absolute;
-   right: 25%;
+   right: 35%;
    top: 17%;
    border: 3px solid #f0f0f0;
    border-radius: 10px;
@@ -97,7 +97,7 @@ p {
   width: 100px;
   height: 50px;
   position: absolute;
-  right: 50%;
+  right: 60%;
   top: 33%;
   font-size: 7em;
   color: aliceblue;

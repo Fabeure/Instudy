@@ -145,4 +145,12 @@ class AdminPanelController extends AbstractController
         return $this->redirectToRoute('app_admin_panel');
 
     }
+    #[Route('/adminPanel/makeTeacher/{id}', name: 'app_make_teacher')]
+    public function makeTeacher($id, EntityManagerInterface $entityManager){
+        $user = $entityManager->getRepository(User::class)->findOneBy(["id"=>$id]);
+        $user->setRoles(['ROLE_TEACHER']);
+        $entityManager->getRepository(User::class)->save($user, true);
+        return $this->redirectToRoute('app_admin_panel');
+    }
+
 }
