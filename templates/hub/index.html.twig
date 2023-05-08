@@ -86,11 +86,13 @@
             </div>
         </div>
     </section>
+    <footer> Need help? open a ticket here</footer>
     <script>
         const eventSource = new EventSource("{{ mercure('test')|escape('js') }}");
         eventSource.onmessage = event => {
             // Will be called every time an update is published by the server
             const data = JSON.parse(event.data);
+            console.log(data.users)
             //create the list of users
             //insert the list
             add(data.users);
