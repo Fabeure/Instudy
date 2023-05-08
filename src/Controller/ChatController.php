@@ -58,8 +58,6 @@ class ChatController extends AbstractController
             return $this->redirectToRoute('app_profile', ['username'=>($this->getUser()->getUsername())]);
         }
 
-        //get the other user in this conversation !!!NEED A BETTER WAY TO DO THIS!!!
-
 
         //get the id that ISN'T mine
         $other_id = ($my_id == $participant_ids[0]['id']) ? $participant_ids[1]['id'] : $participant_ids[0]['id'];
@@ -68,11 +66,15 @@ class ChatController extends AbstractController
         //fetch the other user from the database
         $other_user = $entityManager->getRepository(User::class)->find($other_id);
 
+
         //get the conversation
         $conversation = $entityManager->getRepository(Conversation::class)->find($id);
 
+
         //fetch past messages
         $messages = $entityManager->getRepository(Message::class)->findBy(['conversation'=>$conversation], limit:20, orderBy: ['id' => 'DESC']);
+
+
         //put past messages in an array to pass to the front end; //NEED TO MAKE IT MAX 10 OR 15 MESSAGES
         $history=array_map(function($message) {
             return [

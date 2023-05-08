@@ -43,7 +43,7 @@ class HubController extends AbstractController
 
         //create the new update that will be passed to the mercure HUB
         $update = new Update(
-            "test",
+            $this->getUser()->getUsername(),
             json_encode(['users' => $data] )
         );
 

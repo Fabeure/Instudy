@@ -16,23 +16,41 @@ class GPTController extends AbstractController
     #[Route('/gpt/{filePath}', name: 'app_gpt')]
     public function index( $filePath, ? string $question, ? string $response): Response
     {
+
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'Login to access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_home');
+        }
+
+        //get the course file path
         $Path = $this->getParameter('kernel.project_dir') . '/public/assets/files/course_files/' .$filePath;
+
+        //convert the course from pdf to raw text using spatie
         $text = Pdf::getText($Path);
+
+        //pass the raw course text to view (important for passing it to chatGPT via ajax)
         return $this->render('ChatGPT/gpt.html.twig', [
             'text' => $text
         ]);
     }
 
 
-
+    //handle incoming prompt requests
     #[Route('/gptChat', name: 'send_chat', methods:"POST")]
     public function chat(Request $request, HubInterface $hub): Response
     {
+        //get the question contents
         $question=$request->request->get('text');
 
-        //set API key
 
+        //set the API key
         $myApiKey = $_ENV['OPENAI_KEY'];
+
 
         //setup client connection
         $client = OpenAI::client($myApiKey);
@@ -45,8 +63,11 @@ class GPTController extends AbstractController
             ],
         ]);
 
+        //get the top#1 result content
         $response=$result->choices[0]->message->content;
 
+
+        //create a new update containing chatGPT's response in raw text format
         $update = new Update(
             "testGPT",
             json_encode(['response' => $response] )

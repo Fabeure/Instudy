@@ -48,7 +48,7 @@
                                         <tbody id="ProfileList" >
                                         </tbody>
                                     </table>
-                                    <script src="{{ asset('assets/js/searchProfileByUsername.js') }}" type="text/javascript"></script>
+                                    <script src="{{ asset('assets/js/Hub.js') }}" type="text/javascript"></script>
 
                                 </div>
                                 <div class="modal-footer">
@@ -88,11 +88,10 @@
     </section>
     <footer> Need help? open a ticket here</footer>
     <script>
-        const eventSource = new EventSource("{{ mercure('test')|escape('js') }}");
+        const eventSource = new EventSource("{{ mercure(app.user.username)|escape('js') }}");
         eventSource.onmessage = event => {
             // Will be called every time an update is published by the server
             const data = JSON.parse(event.data);
-            console.log(data.users)
             //create the list of users
             //insert the list
             add(data.users);

@@ -1,5 +1,3 @@
-
-
 //send first ajax request to pass in the text from the course to the chatgpt client connection
 let question = window.test.text + "Now explain that to me in simpler terms."
 request1= $.ajax({
