@@ -1,72 +1,54 @@
-{% extends "base2.html.twig" %}
+{% extends "base.html.twig" %}
 
-
-
-
-
-{% block title %}TEST GPT!{% endblock %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('assets/css/Chat.css') }}">
+{% endblock  %}
+{% block title %}Chat{% endblock %}
+{% block jsdelivr %} {% endblock %}
 {% block body %}
-
-
-    <div class="container">
-
-
-        <div class="header">
-
-            <h1 class="title">Small Chat GPT</h1>
-
-
-
-            <span class="question" id="question">{{text}}</span>
-        </div>
-
-        <div class="gpt-response">
-
-
-
-            <span {{ stimulus_controller('symfony/ux-typed', {
-                strings: [text],
-                smartBackspace: true,
-                startDelay: 100,
-                backSpeed: 20,
-                backDelay: 100,
-                loop: false,
-                showCursor: true,
-                cursorChar: '✨'
-            }) }} class="stream"></span>
-        </div>
-
-        <div class="type">
-
-            <div class="input-div">
-
-                <form action="{{path('send_chat')}}" method="post">
-                    <div class="text-input">
-
-                        <input type="text" name="text"  id="text"  placeholder="" class="text">
-
+    {%  block header %} {{ parent() }}
+        {% block errors %} {% endblock %}
+    {% endblock %}
+    <link rel="stylesheet" href="{{ asset('assets/css/Chat.css') }}">
+    <div class="container app">
+        <div class="row app-one">
+            <div class="conversation">
+                <div class="row heading">
+                    <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+                        <div class="heading-avatar-icon">
+                                <img src="{{ asset('assets/images/defaultProfilePic.png') }}" alt="Missing Picture">
+                        </div>
                     </div>
-
-                    <button type="submit" class="btn">
-
-                    </button>
-
-                </form>
-
-
-
+                    <div class="col-sm-8 col-xs-7 heading-name">
+                        <a class="heading-name-meta" href="https://chat.openai.com/">ChatGPT!</a>
+                    </div>
+                </div>
+                <div class="row message" id="conversation" style="overflow-y: scroll; max-height: 350px;">
+                </div>
+                <div class="row reply">
+                    <div class="col-sm-9 col-xs-9 reply-main" id="replydiv" >
+                        <textarea class="form-control" style="-webkit-border-radius: 5px;-moz-border-radius: 5px;border-radius: 5px;" rows="1" id="reply" onkeydown="submitOnEnter(event)"></textarea>
+                    </div>
+                </div>
             </div>
-
-
-
-
-
         </div>
-
-
-
-
     </div>
+    <script>
+        window.test= {
+            text: `{{ text }}`
+        };
+    </script>
+    <script src="{{ asset('assets/js/chatGPT.js') }}"></script>
+    <script>
+        const eventSource = new EventSource("{{ mercure('testGPT')|escape('js') }}");
+        eventSource.onmessage = event => {
+            // Will be called every time an update is published by the server
+            const data = JSON.parse(event.data);
+            console.log(data);
+            //add chatGPT's response
+                add(data.response, "RECEIVER")
+        }
+    </script>
 
 {% endblock %}
