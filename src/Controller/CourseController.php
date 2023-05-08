@@ -43,7 +43,7 @@ class CourseController extends AbstractController
             $entityManager->getRepository(Question::class)->save($question, true);
             $this->addFlash('success', 'Question sent, pending answer.');
         }
-        else{
+        else if ($form->isSubmitted() && !$form->isValid()){
             $this->addFlash('error', 'The Question could not be sent.');
         }
         return $this->render('course/index.html.twig', [

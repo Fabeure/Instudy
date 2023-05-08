@@ -18,7 +18,7 @@ input.addEventListener("input",
     });
 
 function  add(users){
-    const ProfileList = document.getElementById("ProfileList") ;
+    let ProfileList = document.getElementById("ProfileList") ;
     let link="";
     let list = [];
     let element = "";
@@ -27,4 +27,5 @@ function  add(users){
         element = "<tr> <td id=\"profileName\" style=\"text-align: center;\"> <a href= \" " + link + "\">"+users[i]+" </a> </td> <td> </td> </tr>"
         list+=element;
     }
+    ProfileList.innerHTML = list;
 }

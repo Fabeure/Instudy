@@ -48,8 +48,6 @@
                                         <tbody id="ProfileList" >
                                         </tbody>
                                     </table>
-                                    <script src="{{ asset('assets/js/Hub.js') }}" type="text/javascript"></script>
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -87,6 +85,7 @@
         </div>
     </section>
     <footer> Need help? open a ticket here</footer>
+    <script src="{{ asset('assets/js/Hub.js') }}" type="text/javascript"></script>
     <script>
         const eventSource = new EventSource("{{ mercure(app.user.username)|escape('js') }}");
         eventSource.onmessage = event => {
