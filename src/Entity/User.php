@@ -16,6 +16,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 #[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serializable
 {
@@ -68,6 +69,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[Vich\UploadableField(mapping:"profile_pictures", fileNameProperty:'imageName')]
     private ?File $imageFile = null;
 
+    #[ORM\OneToMany(targetEntity: 'Cours', mappedBy: 'teacher')]
+    private Collection $cours;
+
+    #[ORM\OneToMany(targetEntity: 'Question', mappedBy: 'sender')]
+    private Collection $questions;
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $updatedAt= null;
     public function __construct()
@@ -80,7 +86,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     {
         return $this->id;
     }
+    public function getQuestions(): Collection{
+        return $this->questions;
+    }
 
+    public function setQuestions(Collection $questions): self{
+        $this->questions = $questions;
+        return $this;
+    }
+    public function getCours(): Collection
+    {
+        return $this->cours;
+
+    }
+
+    public function setCours(Collection $cours): self
+    {
+        $this->cours = $cours;
+        return $this;
+    }
     public function getEmail(): ?string
     {
         return $this->email;

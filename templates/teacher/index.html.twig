@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Teacher Panel{% endblock %}
+
+{% block body %}
+    {% block header %}
+        {{ parent() }}
+        {% block errors %} {% endblock %}
+        {% endblock %}
+    <section class="section caption main-banner" id="top" data-section="section1" style="color:white; background-image: url({{ asset('assets/images/choosing-bg.jpg') }}); ">
+        {# <img class="imgv3" src="{{ asset('assets/images/choosing-bg.jpg') }}" alt="INSAT 2.0" /> #}
+        <section class="section container" data-section="section3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <h1 class="text-center">Teacher Pannel</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 text-center" style="width:500px">
+
+                    <h5 class="text-center">Add Course</h5>
+                    {{ form_start(CourseForm) }}
+                    {{ form_row(CourseForm.courseFile) }}
+                    {{ form_row(CourseForm.nom) }}
+                    <button type="submit" class="btn btn-success">Add</button>
+                    {{ form_end(CourseForm) }}
+
+
+                <div class="col-md-4 " style="width: 600px">
+                    <h4>Users</h4>
+                    <div class="d-flex" style="height: 500px">
+                        <div class="overflow-auto">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+    </section>
+{% endblock %}

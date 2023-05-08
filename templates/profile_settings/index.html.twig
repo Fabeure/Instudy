@@ -18,7 +18,11 @@
             <div class="profile-tab-nav border-right">
                 <div class="p-4">
                     <div class="img-circle text-center mb-3">
+                        {%  if url %}
                         <img src="{{ asset(url) }}" alt="Image" class="shadow" />
+                        {% else %}
+                        <img src="{{ asset('assets/images/defaultProfilePic.png') }}" alt="Image" class="shadow" />
+                        {% endif %}
                     </div>
                     <h4 class="text-center" >{{ app.user.username }}</h4>
                 </div>
