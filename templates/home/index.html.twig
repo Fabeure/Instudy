@@ -3,32 +3,101 @@
     {{ parent() }}
     {% block stylesheets %}
         {{ parent() }}
-        <link rel="stylesheet" href="{{ asset('assets/css/Home.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/Home.css') }}"/>
     {% endblock %}
 {% endblock head %}
 {% block body %}
-    {%  block header %} {{ parent() }}
+    {% block header %} {{ parent() }}
         {% block errors %} {{ parent() }} {% endblock %}
     {% endblock %}
-<section class="section main-banner" id="top" data-section="section1">
-    <img
-            class="imgv3"
-            src="{{ asset('assets/images/background.jpg') }}"
-            alt="INSAT 2.0"
-    />
-    <div class="top">
-        <p class = "important">Welcome to INSTUDY - your ultimate studying platform! </p>
-        <p class="content">Are you tired of juggling between multiple apps and resources while trying to prepare for your exams?
-            INSTUDY is here to simplify your life and help you stay organized.</p>
-    </div>
+    <section class="section main-banner" id="top" data-section="section1">
+        <img
+                class="imgv3"
+                src="{{ asset('assets/images/background.jpg') }}"
+                alt="INSAT 2.0"
+        />
+        <div class="top">
+            <p class="important">Welcome to INSTUDY - your ultimate studying platform! </p>
+            <p class="content">Are you tired of juggling between multiple apps and resources while trying to prepare for
+                your exams?
+                INSTUDY is here to simplify your life and help you stay organized.</p>
+
+
+        </div>
+
+            <figure class="figure">
+                <img src="{{ asset('assets/images/th (1).jpg') }}" class="img-thumbnail" id="img" >
+            </figure>
+
+        <div class="Arrow">
+            <div class="row">
+            <div class="col-1" onclick="RightText()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            </div>
+            <div class="col-2" onclick="LeftText()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+            </svg>
+            </div>
+            </div>
+        </div>
+
+
         <div class="caption">
             <h2><em>INS</em>TUDY</h2>
             <div class="main-button">
                 <div class="scroll-to-section">
-                    <a href="{{path('app_register')}}">Start Now</a>
+                    <a href="{{ path('app_register') }}">Start Now</a>
                 </div>
             </div>
         </div>
-</section>
+    </section>
+
+    <script>
+
+        function RightText(){
+            const image1 = "http://127.0.0.1:8000/assets/images/th%20(1).jpg";
+
+            const image2 = "http://127.0.0.1:8000/assets/images/th%20(2).jpg";
+
+            const image3 = "http://127.0.0.1:8000/assets/images/th%20(3).jpg";
+
+            var ImgElem = document.getElementById("img");
+            var image = ImgElem.src;
+
+            if(image == image1) changeText(image2);
+            else if(image == image2) changeText(image3);
+            else if(image == image3) changeText(image1);
+            else changeText(image1);
+        }
+        function LeftText(){
+            const image1 = "http://127.0.0.1:8000/assets/images/th%20(1).jpg";
+
+            const image2 = "http://127.0.0.1:8000/assets/images/th%20(2).jpg";
+
+            const image3 = "http://127.0.0.1:8000/assets/images/th%20(3).jpg";
+
+            var ImgElem = document.getElementById("img");
+            var image = ImgElem.src;
+
+            if(image == image1) changeText(image3);
+            else if(image == image2) changeText(image1);
+            else if(image == image3) changeText(image2);
+            else changeText(image1);
+        }
+
+        function changeText(imageX) {
+            var Elem = document.getElementById("img");
+            Elem.setAttribute("src", imageX);
+        }
+    </script>
+
+
 {% endblock %}
 

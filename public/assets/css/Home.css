@@ -41,7 +41,7 @@ p {
   position: absolute;
   max-width: 800px;
   left: 35%;
-  top: 20%;
+  top: 10%;
   transform: translate(-50%, -50%);
 }
 .main-banner .top .important{
@@ -69,6 +69,29 @@ p {
   font-style: normal;
   color: #f52525;
   font-weight: 900;
+}
+ .figure {
+   width: 500px;
+   height: 300px;
+   position: absolute;
+   right: 110px;
+   top: 150px;
+   border: none;
+ }
+
+.Arrow{
+  width: 400px;
+  height: 400px;
+  position: absolute;
+  right: 0px;
+  top: 400px;
+  font-size: 7em;
+  color: aliceblue;
+
+}
+.col-1:hover ,.col-2:hover {
+  font-size: 102%;
+  color:#e12a2a;
 }
 
 @media screen and (max-width: 1180px) {
