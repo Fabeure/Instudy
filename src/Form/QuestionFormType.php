@@ -7,18 +7,15 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
-
-class CourseFormType extends AbstractType
+class QuestionFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
 
-            ->add('nom', TextType::class, [
+            ->add('content', TextType::class, [
                 'attr' => ['class' => 'form-control'],
-            ])
-            ->add('courseFile', VichFileType::class,[
-                'label' => 'Course'
+                'label' =>''
             ])
         ;
     }

@@ -25,9 +25,21 @@ class Matiere
     private ?User $teacher;
 
 
+    #[ORM\OneToMany(targetEntity: 'Question', mappedBy: 'matiere')]
+    private Collection $questions;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getQuestions(): Collection{
+        return $this->questions;
+    }
+
+    public function setQuestions(Collection $questions): self{
+        $this->questions = $questions;
+        return $this;
     }
 
     public function getTeacher(){
