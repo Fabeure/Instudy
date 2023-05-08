@@ -14,7 +14,7 @@
         {# course title #}
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1>Course : Fonctions de plusieurs variables reelles-Differentiabilite</h1>
+                <h1>Course : {{ cours.nom }}</h1>
             </div>
         </div>
 
@@ -25,6 +25,14 @@
                     No worries, just <a href="{{ asset(url) }}">click here to download the PDF file.</a>
                 </p>
             </object>
+            <script>
+                function getSelectedText() {
+                    var selection = window.getSelection();
+                    var selectedText = selection.toString();
+                    alert('Selected text: ' + selectedText);
+                }
+                document.addEventListener('mouseup', getSelectedText);
+            </script>
         </div>
         {# action buttons #}
         <div class="d-grid gap-2 col-6 mx-auto">
