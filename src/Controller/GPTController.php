@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use OpenAI;
+use Spatie\PdfToText\Pdf;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,12 +11,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GPTController extends AbstractController
 {
-    #[Route('/gpt', name: 'app_gpt')]
-    public function index( ? string $question, ? string $response): Response
+    #[Route('/gpt/{filePath}', name: 'app_gpt')]
+    public function index( $filePath, ? string $question, ? string $response): Response
     {
+        $Path = $this->getParameter('kernel.project_dir') . '/public/assets/files/course_files/' .$filePath;
+        $text = Pdf::getText($Path);
         return $this->render('ChatGPT/gpt.html.twig', [
-            'question' => $question,
-            'response' => $response
+            'text' => $text
         ]);
     }
 
@@ -43,7 +45,6 @@ class GPTController extends AbstractController
 
 
         return $this->forward('App\Controller\GPTController::index', [
-
             'question' => $question,
             'response' => $response
         ]);

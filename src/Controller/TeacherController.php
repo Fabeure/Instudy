@@ -28,7 +28,7 @@ class TeacherController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
 
             //get the subject the teacher teaches
-            $matiere = $entityManager->getRepository( Matiere::class)->findOneBy(['teach_id'=>$this->getUser()->getId()]);
+            $matiere = $entityManager->getRepository(Matiere::class)->findOneBy(['teacher'=>$this->getUser()->getId()]);
 
             //write course fields
             $course->setCourseFile($form->get('courseFile')->getData());

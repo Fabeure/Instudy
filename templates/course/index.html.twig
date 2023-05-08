@@ -25,18 +25,10 @@
                     No worries, just <a href="{{ asset(url) }}">click here to download the PDF file.</a>
                 </p>
             </object>
-            <script>
-                function getSelectedText() {
-                    var selection = window.getSelection();
-                    var selectedText = selection.toString();
-                    alert('Selected text: ' + selectedText);
-                }
-                document.addEventListener('mouseup', getSelectedText);
-            </script>
         </div>
         {# action buttons #}
         <div class="d-grid gap-2 col-6 mx-auto">
-            <button class="btn btn-secondary" type="button">show CheatSheet</button>
+            <button class="btn btn-secondary" type="button"><a href="{{ path('app_gpt', {'filePath' : cours.courseName}) }}"> Try Our AI integration!</a></button>
             <button class="btn btn-info" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" data-backdrop="static">Send a question</button>
 
 
