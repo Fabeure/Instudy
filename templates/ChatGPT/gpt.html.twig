@@ -1,0 +1,74 @@
+{% extends "base2.html.twig" %}
+
+
+
+
+
+{% block title %}TEST GPT!{% endblock %}
+
+{% block body %}
+
+
+    <div class="container">
+
+
+        <div class="header">
+
+            <h1 class="title">Small Chat GPT</h1>
+
+
+
+            <span class="question" id="question">{{question}}</span>
+        </div>
+
+        <div class="gpt-response">
+
+
+
+            <span {{ stimulus_controller('symfony/ux-typed', {
+                strings: [response],
+                smartBackspace: true,
+                startDelay: 100,
+                backSpeed: 20,
+                backDelay: 100,
+                loop: false,
+                showCursor: true,
+                cursorChar: '✨'
+            }) }} class="stream"></span>
+        </div>
+
+        <div class="type">
+
+            <div class="input-div">
+
+                <form action="{{path('send_chat')}}" method="post">
+                    <div class="text-input">
+
+                        <input type="text" name="text"  id="text"  placeholder="" class="text">
+
+                    </div>
+
+                    <button type="submit" class="btn">
+
+                        <img src="{{asset('/image/send.png')}}" alt="send" class="send">
+
+                    </button>
+
+                </form>
+
+
+
+            </div>
+
+
+
+
+
+        </div>
+
+
+
+
+    </div>
+
+{% endblock %}

@@ -1,4 +1,11 @@
 {
-    "controllers": [],
+    "controllers": {
+        "@symfony/ux-typed": {
+            "typed": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        }
+    },
     "entrypoints": []
 }
