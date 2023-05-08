@@ -16,7 +16,15 @@ class TeacherController extends AbstractController
     #[Route('/teacher', name: 'app_teacher')]
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
+        //handle access control
+        if(!$this->isGranted('ROLE_TEACHER')){
 
+            //add error flash message
+            $this->addFlash('error', 'Only teachers can access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_home');
+        }
         //create a new course
         $course = new Cours();
 

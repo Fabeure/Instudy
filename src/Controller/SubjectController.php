@@ -18,7 +18,21 @@ class SubjectController extends AbstractController
     #[Route('/subject', name: 'app_subject')]
     public function index(EntityManagerInterface $entityManager): Response
     {
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'Login to access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_home');
+        }
+
+
+        //get all available subjects and pass them to view
         $matieres = $entityManager->getRepository(Matiere::class)->findAll();
+
+
         return $this->render('subject/index.html.twig', [
             'matieres' => $matieres
         ]);

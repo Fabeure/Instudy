@@ -4,8 +4,10 @@ namespace App\Entity;
 
 use App\Repository\QuestionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: QuestionRepository::class)]
+#[UniqueEntity(fields: ['content'], message: 'This question already exists')]
 class Question
 {
     #[ORM\Id]
