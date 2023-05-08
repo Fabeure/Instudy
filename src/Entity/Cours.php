@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CoursRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -27,9 +28,34 @@ class Cours implements \Serializable
     #[ORM\JoinColumn(name: 'matiere_id', referencedColumnName: 'id')]
     private ?Matiere $matiere = null;
 
+    #[ORM\ManyToOne(targetEntity: 'User', inversedBy: 'cours')]
+    #[ORM\JoinColumn(name: 'teacher_id', referencedColumnName: 'id')]
+    private ?User $teacher = null;
+    #[ORM\Column(nullable: true)]
+    private ?DateTimeImmutable $updatedAt= null;
+
+    #[ORM\Column(nullable: true)]
+    private ?string $nom;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getNom(){
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom){
+        $this->nom = $nom;
+    }
+
+    public function getTeacher(){
+        return $this->teacher;
+    }
+
+    public function setTeacher(?User $teacher){
+        $this->teacher = $teacher;
     }
 
     public function getMatiere(): Matiere
@@ -42,6 +68,28 @@ class Cours implements \Serializable
         $this->matiere = $matiere;
         return $this;
     }
+
+    public function getCourseName(){
+        return $this->courseName;
+}
+    public function setCourseName($courseName){
+        $this->courseName = $courseName;
+    }
+
+    public function setCourseFile(?File $courseFile = null): void
+    {
+        $this->courseFile = $courseFile;
+
+        if (null !== $courseFile) {
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+    }
+
+    public function getCourseFile(): ?File
+    {
+        return $this->courseFile;
+    }
+
 
     public function serialize()
     {

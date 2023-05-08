@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Matiere;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -14,12 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SubjectController extends AbstractController
 {
-    #[Route('/Subject', name: 'app_subj')]
-    public function index(): Response
+    #[Route('/subject', name: 'app_subject')]
+    public function index(EntityManagerInterface $entityManager): Response
     {
-
-        return $this->render('course/list.html.twig', [
-            'controller_name' => 'SubjectController',
+        $matieres = $entityManager->getRepository(Matiere::class)->findAll();
+        return $this->render('subject/index.html.twig', [
+            'matieres' => $matieres
         ]);
     }
 }

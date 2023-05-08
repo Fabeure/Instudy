@@ -7,7 +7,7 @@
         {% block errors %} {% endblock %}
     {% endblock %}
 
-
+    {% set url = vich_uploader_asset(cours, 'courseFile') %}
 <section class="py-5 my-5" style="color:white; background-image: url({{ asset('assets/images/choosing-bg.jpg') }}); ">
     <div class="container">
 
@@ -20,9 +20,9 @@
 
         {# course pdf preview #}
         <div>
-            <object data="{{ asset('assets/pdf/test.pdf') }}"  type="application/pdf" width="100%" height="500px">
+            <object data="{{ asset(url) }}"  type="application/pdf" width="100%" height="500px">
                 <p>It appears your Web browser is not configured to display PDF files.
-                    No worries, just <a href="{{ asset('assets/pdf/test.pdf') }}">click here to download the PDF file.</a>
+                    No worries, just <a href="{{ asset(url) }}">click here to download the PDF file.</a>
                 </p>
             </object>
         </div>

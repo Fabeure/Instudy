@@ -3,9 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MatiereRepository;
-use Doctrine\Common\Collections\ArrayCollection;
+use \Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use phpDocumentor\Reflection\Types\Collection;
 
 #[ORM\Entity(repositoryClass: MatiereRepository::class)]
 class Matiere
@@ -15,21 +14,31 @@ class Matiere
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(targetEntity: 'Cours', mappedBy: 'matiere')]
-    private  $cours;
+    #[ORM\Column(nullable: true)]
+    private ?string $matiereName = null;
 
-    public function __construct()
-    {
-        $this->cours = new ArrayCollection();
-    }
+    #[ORM\OneToMany(targetEntity: 'Cours', mappedBy: 'matiere')]
+    private Collection $cours;
+
+    #[ORM\OneToOne(targetEntity: 'User')]
+    #[ORM\JoinColumn(name: 'teach_id', referencedColumnName: 'id')]
+    private ?User $teacher;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getTeacher(){
+    return $this->teacher;
+}
+
+    public function setTeacher(?User $teacher){
+        $this->teacher = $teacher;
+    }
     /**
-     * @return Collection<int, Cours>
+     * @return Collection
      */
     public function getCours(): Collection
     {
@@ -42,5 +51,16 @@ class Matiere
         $this->cours = $cours;
         return $this;
     }
+
+    public function getMatiereName(): ?string
+    {
+        return $this->matiereName;
+    }
+
+    public function setMatiereName(?string $matiereName)
+    {
+        $this->matiereName = $matiereName;
+    }
+
 
 }

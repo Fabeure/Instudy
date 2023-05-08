@@ -68,6 +68,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[Vich\UploadableField(mapping:"profile_pictures", fileNameProperty:'imageName')]
     private ?File $imageFile = null;
 
+    #[ORM\OneToMany(targetEntity: 'Cours', mappedBy: 'teacher')]
+    private Collection $cours;
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $updatedAt= null;
     public function __construct()
@@ -81,6 +83,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         return $this->id;
     }
 
+    public function getCours(): Collection
+    {
+        return $this->cours;
+
+    }
+
+    public function setCours(Collection $cours): self
+    {
+        $this->cours = $cours;
+        return $this;
+    }
     public function getEmail(): ?string
     {
         return $this->email;
