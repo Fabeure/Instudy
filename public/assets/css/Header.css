@@ -185,7 +185,8 @@ a:hover {
 }
 
 .main-header {
-    background-color: rgb(50, 34, 92);
+    background: rgb(38,58,109);
+background: linear-gradient(180deg, rgba(38,58,109,1) 0%, rgba(38,58,109,0.7148109243697479) 57%, rgba(38,58,109,0.35) 73%, rgba(38,58,109,0.05) 90%);
     height: 80px;
     position: fixed;
     z-index: 12;
@@ -304,7 +305,7 @@ a.menu-link {
 
 .main-nav li:hover a,
 .main-nav li.active a {
-    /* border: 2px solid #f52525; */
+    border: 2px solid #f52525;
 }
 
 @media (max-width: 950px) {

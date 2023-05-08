@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TicketController!{% endblock %}
+
+{% block title %}Ask for Help!{% endblock %}
+{% block stylesheets %} {{ parent() }}
+<link rel="stylesheet" href="{{ asset('assets/css/Tickets.css') }}" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+{% endblock %}
+
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {% block header %}
+        {{ parent() }}
+        {% block errors %} {% endblock %}
+        {% endblock %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/INSTUDY/src/Controller/TicketController.php'|file_link(0) }}">src/Controller/TicketController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/INSTUDY/templates/ticket/index.html.twig'|file_link(0) }}">templates/ticket/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <section id="contact" class="py-5 my-5 slider-thumb">
+        <div class="section-content">
+            <h1 class="section-header">Ask help<span class="content-header wow fadeIn " data-wow-delay="0.2s" data-wow-duration="2s"> From The Admin</span></h1>
+            <h3>If you need help in your education or you miss anthing during your hard work,
+             <br> Dont Hesitate and ask for help to our nice dear Admoune</h3>
+        </div>
+        <div class="contact-section">
+        <div class="container justify-content-center">
+            {{ form_start(form) }}
+                <div class=" p-2">
+                    {{ form_row(form.Object) }}
+                </div>
+                <div class="p-2">
+                    {{ form_row(form.Description) }}
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-default submit"><i class="fa fa-paper-plane" aria-hidden="true"></i>  Send Message</button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+        </div>
+    </section>
+    
 {% endblock %}
