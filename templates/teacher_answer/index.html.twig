@@ -5,34 +5,63 @@
     {{ parent() }}
     <link href="{{ asset('assets/css/SubmitWork.css') }}" rel="stylesheet">
 {% endblock  %}
-{% block title %}submit your work {% endblock %}
+{% block title %}Submit your work {% endblock %}
 {% block jsdelivr %} {% endblock %}
 {% block body %}
     {%  block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
-    <div class="container px-8">
-        <!--if there's some submitted answer -->
-        {% if homeworks %}
-            <div class="row gx-5" style="position:relative; left: 80px;">
-                <div class="col-6 col-md-11">
-                    <div class="shadow-sm p-3 mb-5 bg-body rounded">
-
-                        <!-- student answered list -->
-                        <div class="row">
-                            <div class="col-6 col-md-3">
-                                <ul class="list-group list-group-flush">
-                                    {% for homework in homeworks %}
-                                        <li class="list-group-item" >{{ homework.student.username }}</li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-
-                            <div class="col-6 col-md-8">
+    <div class="container">
+        <h1 class="mb-5">Students Work</h1>
+        <div class="bg-white shadow rounded-lg d-block d-sm-flex">
+            <div class="profile-tab-nav border-right">
+                <div
+                        class="nav flex-column nav-pills"
+                        id="v-pills-tab"
+                        role="tablist"
+                        aria-orientation="vertical"
+                >
+                    <br>
+                    <!--if there's some submitted answer -->
+                    {% if(true) %}
+                    <a
+                            class="nav-link"
+                            id="password-tab"
+                            data-toggle="pill"
+                            href="#mohamed"
+                            role="tab"
+                            aria-controls="password"
+                            aria-selected="false"
+                    >
+                        <i class="fa fa-home text-center mr-1"></i>
+                        Mohamed Hannachi
+                    </a>
+                    <br>
+                    <a
+                            class="nav-link"
+                            id="password-tab"
+                            data-toggle="pill"
+                            href="#Saber"
+                            role="tab"
+                            aria-controls="password"
+                            aria-selected="false"
+                    >
+                        <i class="fa fa-key text-center mr-1"></i>
+                        Azouzi Saber
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+                <div
+                        class="tab-pane fade "
+                        id="mohamed"
+                        role="tabpanel"
+                        aria-labelledby="password-tab"
+                >
                                 <!--the content of the answer that is opened after click in the name of the student -->
-                                <h3> ??'s homework  : </h3><br>
+                    <h3>Mohamed's homework  : </h3><br>
                                 <div>
-                                    <object data="{{ asset('assets/pdf/test.pdf')}}"  type="application/pdf" width="100%" height="500px">
+                                    <object data="{{ asset('assets/pdf/test.pdf')}}"  type="application/pdf" width="250%" height="500px">
                                         <p>It appears your Web browser is not configured to display PDF files.
                                             No worries, just <a href="{{ asset('assets/pdf/test.pdf') }}">click here to download the PDF file.</a>
                                         </p>
@@ -46,15 +75,44 @@
 
                                 <!-- add comments -->
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px;weight: 200%"></textarea>
                                     <label for="floatingTextarea2">add comments</label>
                                 </div>
                                 <br>
-                                <button type="button" class="btn btn-secondary btn-sm">submit</button>
+                                <button type="button" class="btn btn-secondary btn-sm">Submit</button>
                             </div>
+                <div
+                        class="tab-pane fade"
+                        id="Saber"
+                        role="tabpanel"
+                        aria-labelledby="password-tab"
+                >
+                    <!--the content of the answer that is opened after click in the name of the student -->
+                    <h3>Saber's homework : </h3><br>
+                    <div>
+                        <object data="{{ asset('assets/pdf/test.pdf')}}"  type="application/pdf" width="250%" height="500px">
+                            <p>It appears your Web browser is not configured to display PDF files.
+                                No worries, just <a href="{{ asset('assets/pdf/test.pdf') }}">click here to download the PDF file.</a>
+                            </p>
+                        </object>
+                    </div><br> <br>
 
+                    <!--homework assignment -->
+                    <label for="customRange3" class="form-label">assess the homework :</label>
+                    <input type="range" class="form-range" min="0" max="20" step="0.5" id="customRange3">
+                    <br> <br>
+
+                    <!-- add comments -->
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px;weight: 200%"></textarea>
+                        <label for="floatingTextarea2">add comments</label>
                     </div>
+                    <br>
+                    <button type="button" class="btn btn-secondary btn-sm">Submit</button>
                 </div>
+
+
+        </div>
 
 
 
@@ -64,10 +122,13 @@
                   homework assignments have played a significant role in reinforcing the concepts learned in class and helping student deepen theirs understanding. They provide an opportunity for them to practice and apply what they've learned, enabling them to solidify their knowledge and skills.
                 <br>
                 so do you like to add some homework ?
+                    </div>
+                </div>
                 {% endif %}
-            </div>
-
+        </div>
     </div>
+
+
 
 {% endblock %}
 
