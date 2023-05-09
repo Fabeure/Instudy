@@ -63,8 +63,18 @@ class TeacherController extends AbstractController
             $this->addFlash('error', "Couldn't add course.");
         }
 
+        //get the course im teaching
+        $cours = $entityManager->getRepository(Cours::class)->findBy(['teacher'=>$this->getUser()]);
         //get questions and pass them to view NEED TO MAKE QUERY THAT GETS ALL QUESTIONS BY TEACHER
-        $questions = $entityManager->getRepository(Question::class)->findBy(['id' =>'5']);
+
+
+        $allQuestions = [];
+
+        foreach ($cours as $cour) {
+            $questions = $entityManager->getRepository(Question::class)->findBy(['cours' => $cour]);
+            $allQuestions = array_merge($allQuestions, $questions);
+        }
+
 
 
         //get my courses and pass them to view
@@ -72,7 +82,7 @@ class TeacherController extends AbstractController
 
         return $this->render('teacher/index.html.twig', [
             'CourseForm' => $form->createView(),
-            'questions' => $questions,
+            'questions' => $allQuestions,
             'courses' => $courses
         ]);
     }

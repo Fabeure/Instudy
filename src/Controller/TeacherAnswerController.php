@@ -15,7 +15,7 @@ use App\Form\AssesHomeworkFormType;
 
 class TeacherAnswerController extends AbstractController
 {
-    #[Route('/teacher/answer/', name: 'app_teacher_answer_student')]
+    #[Route('/teacher/answer/', name: 'app_teacher_answer')]
     public function answerByStudent(EntityManagerInterface $entityManager, Request $request,HubInterface $hub): Response
     {
         //handle access control

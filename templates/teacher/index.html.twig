@@ -24,7 +24,7 @@
        {{ form_row(CourseForm.courseFile) }}
 
            <div class="forum">{{ form_row(CourseForm.nom) }}</div>
-           <button type = "submit" class="cssbuttons-io-button">
+           <button type = "submit" class="cssbuttons-io-button" style="position:relative;">
                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="none" d="M0 0h24v24H0z"></path><path fill="currentColor" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z"></path></svg>
                <span>Add</span>
            </button>
@@ -51,23 +51,20 @@
 
     <div class="column2">
         <h1>Student Questions</h1>
-        <div class="card2">
-            {% if questions %}
-            {% for question in questions %}
+        {% if questions %}
+        {% for question in questions %}
+        <li class="card2">
+
             <p class="qst">Question: <p> {{ question.content }}</p></p>
 
             {% endfor %}
             {% else %}
                 <p class="qst"> No Questions yet</p>
             {% endif %}
-        </div>
+        </li>
 
-        <div class="column3">
-            <h1>Review Student Work</h1>
-            <div class="card3">
-                <p>Stoura &nbsp;</p>
-                <p>td</p>
-            </div>
+        <div class="column3" style="position: relative">
+            <h1><a href="{{ path('app_teacher_answer') }}" style="color: black;">View Student Homework</a> </h1>
         </div>
     </div>
 {% endblock %}
