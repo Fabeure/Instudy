@@ -3,14 +3,24 @@
     width: 35%;
     position: absolute;
     top: 20%;
-    right: 60%;
+    right: 63%;
 }
 .column2 {
     float: left;
     width: 35%;
+    height: 400px;
     position: absolute;
     top: 20%;
-    right: 10%;
+    right: 26%;
+}
+.column3 {
+    float: left;
+    width: 25%;
+    height: 400px;
+    position: absolute;
+    top: 20%;
+    right: 0%;
+
 }
 
 
@@ -216,4 +226,33 @@ position: absolute;
     position: absolute;
     left: 10%;
     top: 10%;
+}
+
+.card3 {
+    box-sizing: border-box;
+    width: 300px;
+    height: 100px;
+    background: rgba(217, 217, 217, 0.58);
+    border: 1px solid white;
+    box-shadow: 12px 17px 51px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(6px);
+    border-radius: 17px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.5s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    font-weight: bolder;
+    color: black;
+}
+
+.card3:hover {
+    border: 1px solid black;
+    transform: scale(1.05);
+}
+
+.card3:active {
+    transform: scale(0.95) rotateZ(1.7deg);
 }
