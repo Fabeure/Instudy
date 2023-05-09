@@ -23,112 +23,59 @@
                 >
                     <br>
                     <!--if there's some submitted answer -->
-                    {% if(true) %}
+                    {% for content in contents %}
                     <a
                             class="nav-link"
                             id="password-tab"
                             data-toggle="pill"
-                            href="#mohamed"
+                            href="#{{ content.homework.student.username }}"
                             role="tab"
                             aria-controls="password"
                             aria-selected="false"
+                            style="text-decoration: none; color:black;"
                     >
                         <i class="fa fa-home text-center mr-1"></i>
-                        Mohamed Hannachi
+                        {{ content.homework.student.username }}
                     </a>
                     <br>
-                    <a
-                            class="nav-link"
-                            id="password-tab"
-                            data-toggle="pill"
-                            href="#Saber"
-                            role="tab"
-                            aria-controls="password"
-                            aria-selected="false"
-                    >
-                        <i class="fa fa-key text-center mr-1"></i>
-                        Azouzi Saber
-                    </a>
+                    {% endfor %}
                 </div>
             </div>
             <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+                {% for content in contents %}
+                {% set url = vich_uploader_asset(content.homework, 'homeworkFile') %}
                 <div
                         class="tab-pane fade "
-                        id="mohamed"
+                        id="{{content.homework.student.username}}"
                         role="tabpanel"
                         aria-labelledby="password-tab"
                 >
                                 <!--the content of the answer that is opened after click in the name of the student -->
-                    <h3>Mohamed's homework  : </h3><br>
+                    <h3>{{ content.homework.student.username }}'s homework  : </h3><br>
                                 <div>
-                                    <object data="{{ asset('assets/pdf/test.pdf')}}"  type="application/pdf" width="250%" height="500px">
+                                    <object data="{{ asset(url) }}"  type="application/pdf" width="250%" height="500px">
                                         <p>It appears your Web browser is not configured to display PDF files.
                                             No worries, just <a href="{{ asset('assets/pdf/test.pdf') }}">click here to download the PDF file.</a>
                                         </p>
                                     </object>
+
                                 </div><br> <br>
 
                                 <!--homework assignment -->
-                                <label for="customRange3" class="form-label">assess the homework :</label>
-                                <input type="range" class="form-range" min="0" max="20" step="0.5" id="customRange3">
+                    {{ form_start(content.form) }}
+                        {{ form_row(content.form.grade) }}
                                 <br> <br>
-
                                 <!-- add comments -->
                                 <div class="form-floating">
-                                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px;weight: 200%"></textarea>
-                                    <label for="floatingTextarea2">add comments</label>
+                                    {{ form_row(content.form.commentaire) }}
                                 </div>
                                 <br>
-                                <button type="button" class="btn btn-secondary btn-sm">Submit</button>
+                                {{ form_row(content.form.submit) }}
+                    {{ form_end(content.form)}}
                             </div>
-                <div
-                        class="tab-pane fade"
-                        id="Saber"
-                        role="tabpanel"
-                        aria-labelledby="password-tab"
-                >
-                    <!--the content of the answer that is opened after click in the name of the student -->
-                    <h3>Saber's homework : </h3><br>
-                    <div>
-                        <object data="{{ asset('assets/pdf/test.pdf')}}"  type="application/pdf" width="250%" height="500px">
-                            <p>It appears your Web browser is not configured to display PDF files.
-                                No worries, just <a href="{{ asset('assets/pdf/test.pdf') }}">click here to download the PDF file.</a>
-                            </p>
-                        </object>
-                    </div><br> <br>
 
-                    <!--homework assignment -->
-                    <label for="customRange3" class="form-label">assess the homework :</label>
-                    <input type="range" class="form-range" min="0" max="20" step="0.5" id="customRange3">
-                    <br> <br>
-
-                    <!-- add comments -->
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px;weight: 200%"></textarea>
-                        <label for="floatingTextarea2">add comments</label>
-                    </div>
-                    <br>
-                    <button type="button" class="btn btn-secondary btn-sm">Submit</button>
-                </div>
-
-
-        </div>
-
-
-
-            <!-- if there isn't any homework -->
-            {% else %}
-                <h1> there's no homework !</h1>
-                  homework assignments have played a significant role in reinforcing the concepts learned in class and helping student deepen theirs understanding. They provide an opportunity for them to practice and apply what they've learned, enabling them to solidify their knowledge and skills.
-                <br>
-                so do you like to add some homework ?
-                    </div>
-                </div>
-                {% endif %}
-        </div>
-    </div>
-
-
+{% endfor %}
+            </div>
 
 {% endblock %}
 
