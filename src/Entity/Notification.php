@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NotificationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
 class Notification
@@ -44,12 +45,12 @@ class Notification
         $this->content = $content;
         return $this;
     }
-    public function getUpdatedAt(): ?string
+    public function getUpdatedAt(): ?DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?string $updatedAt): self
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 

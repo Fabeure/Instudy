@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Notification;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -28,6 +29,12 @@ class NotificationRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+    public function addNotification(Notification $entity, ?User $sender, ?User $recipient, string $content){
+        $entity->setContent($content." from:  ".$sender->getUsername());
+        $entity->setNotifSender($sender);
+        $entity->setUpdatedAt(new \DateTimeImmutable());
+        $entity->setNotifRecipient($recipient);
     }
 
     public function remove(Notification $entity, bool $flush = false): void

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Cours;
 use App\Entity\Homework;
 use App\Entity\Matiere;
+use App\Entity\Notification;
 use App\Entity\User;
 use App\Form\CourseFormType;
 use App\Form\HomeworkFormType;
@@ -38,17 +39,22 @@ class SubmitWorkController extends AbstractController
 
         //get form data and persist course to database
         if ($form->isSubmitted() && $form->isValid()){
-
-            //get the subject the teacher teaches
-
             //write homework fields
             $homework->setTeacher($form->get('teacher')->getData());
             $homework->setStudent($this->getUser());
             $homework->setCommentaire($form->get('commentaire')->getData());
             $homework->setHomeworkFile($form->get('homeworkFile')->getData());
 
-            //save course
+            //create new notification
+            $notif = new Notification();
+
+
+            //add new notification
+            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $form->get('teacher')->getData(), "New Homework");
+
+            //persist everything to database
             $entityManager->getRepository(Homework::class)->save($homework, true);
+            $entityManager->getRepository(Notification::class)->save($notif, true);
             $this->addFlash('success', 'Homework sent.');
         }
 
@@ -68,6 +74,7 @@ class SubmitWorkController extends AbstractController
                 'homeworkName' => $homework->getHomeworkName()
             ];
         }, $uploaded);
+
 
         return $this->render('submit_work/index.html.twig', [
             'HomeworkForm' => $form->createView(),

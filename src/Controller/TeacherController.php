@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cours;
 use App\Entity\Matiere;
+use App\Entity\Notification;
 use App\Entity\Question;
 use App\Form\CourseFormType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,8 +46,14 @@ class TeacherController extends AbstractController
             $course->setTeacher($this->getUser());
             $course->setMatiere($matiere);
 
-            //save course
+            //create new notification
+            $notif = new Notification();
+            //add notification
+            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), null, "New Course");
+
+            //perisst everything to database
             $entityManager->getRepository(Cours::class)->save($course, true);
+            $entityManager->getRepository(Notification::class)->save($notif, true);
             $this->addFlash('success', 'Course added.');
             }
 

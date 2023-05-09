@@ -23,7 +23,12 @@ class NotificationListener implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event): void
     {
         $user = $this->security->getUser();
-        $notifications = $this->notificationRepository->findBy(['notif_recipient'=>$user]);
+        $notifications = $this->notificationRepository->createQueryBuilder('n')
+            ->where('n.notif_recipient = :user OR n.notif_recipient IS NULL')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+
 
         $event->getRequest()->attributes->set('_notifications', $notifications);
     }

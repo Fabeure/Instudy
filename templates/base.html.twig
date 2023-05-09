@@ -61,7 +61,7 @@
                         <li>  <a href="{{ path('app_profile',{'username':app.user.username}) }}"> {{ app.user.username }} </a> </li>
                         <li><a type="button" class="icon-button">
                                 <span class="material-icons">notifications</span>
-                                <span class="icon-button__badge">2</span>
+                                <span class="icon-button__badge">{{ app.request.attributes.get('_notifications')|length }}</span>
                                 <div class="notification-menu">
                                     {% for notification in app.request.attributes.get('_notifications')  %}
                                     <div class="notification-menu-item">
