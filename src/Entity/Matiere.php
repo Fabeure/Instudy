@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\MatiereRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use \Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +24,11 @@ class Matiere
     #[ORM\OneToOne(targetEntity: 'User')]
     #[ORM\JoinColumn(name: 'teach_id', referencedColumnName: 'id')]
     private ?User $teacher;
+
+    public function __construct()
+    {
+        $this->cours = new ArrayCollection();
+    }
 
 
 
@@ -64,6 +70,28 @@ class Matiere
     public function setMatiereName(?string $matiereName)
     {
         $this->matiereName = $matiereName;
+    }
+
+    public function addCour(Cours $cour): self
+    {
+        if (!$this->cours->contains($cour)) {
+            $this->cours->add($cour);
+            $cour->setMatiere($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCour(Cours $cour): self
+    {
+        if ($this->cours->removeElement($cour)) {
+            // set the owning side to null (unless already changed)
+            if ($cour->getMatiere() === $this) {
+                $cour->setMatiere(null);
+            }
+        }
+
+        return $this;
     }
 
 

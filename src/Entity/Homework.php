@@ -113,4 +113,28 @@ class Homework
     {
         $this->id = $data['id'];
     }
+
+    public function getGrade(): ?int
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(?int $grade): self
+    {
+        $this->grade = $grade;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
 }

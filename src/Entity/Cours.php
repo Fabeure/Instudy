@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CoursRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
@@ -40,6 +41,11 @@ class Cours implements \Serializable
 
     #[ORM\OneToMany(targetEntity: 'Question', mappedBy: 'cours')]
     private Collection $questions;
+
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,5 +130,39 @@ class Cours implements \Serializable
     public function __unserialize(array $data): void
     {
         $this->id = $data['id'];
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setCours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getCours() === $this) {
+                $question->setCours(null);
+            }
+        }
+
+        return $this;
     }
 }

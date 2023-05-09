@@ -74,4 +74,16 @@ class Question
 
         return $this;
     }
+
+    public function getCours(): ?Cours
+    {
+        return $this->cours;
+    }
+
+    public function setCours(?Cours $cours): self
+    {
+        $this->cours = $cours;
+
+        return $this;
+    }
 }

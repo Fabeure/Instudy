@@ -63,12 +63,11 @@
                                 <span class="material-icons">notifications</span>
                                 <span class="icon-button__badge">2</span>
                                 <div class="notification-menu">
+                                    {% for notification in app.request.attributes.get('_notifications')  %}
                                     <div class="notification-menu-item">
-                                        <p>hello</p>
+                                        <p>{{ notification.content }}</p>
                                     </div>
-                                    <div class="notification-menu-item">
-                                        <p>hello</p>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </a></li>
                         <li><a href="{{ path('app_logout') }}">Logout</a></li>
