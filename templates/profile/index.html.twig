@@ -14,9 +14,10 @@
                 <h1 class="mb-5">{{ username }}'s account</h1>
             </div>
             <div class="col-2">
+               {% if (user.id == app.user.id) %}
                 <div class="row">
                     <div class="col">
-                        {%  if((user.id == app.user.id) and (user.allNotNull)) %}
+                        {%  if(user.allNotNull) %}
                             <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings',{'username' : app.user.username}) }}';">  edit  profile </button>
                         {% endif %}
                     </div>
@@ -38,11 +39,16 @@
                 </div>
                     <br>
                 {% endif %}
+                {% else%}
+                <button  class="btn btn-secondary" onclick="location.href='{{ path('app_newConversations',{'username' : username}) }}'">
+                    <p class="fw-bolder">chat</p>
+                </button>
+                {% endif %}
             </div>
         </div>
         <br>
         <div class="row justify-content-around">
-            <div class="col-md-3">
+            <div class="col-md-2">
                     {% if user.imageFile %}
                         {% set url = vich_uploader_asset(user, 'imageFile') %}
                         <img src="{{ asset(url) }}" class="rounded-circle shadow rounded-lg d-block d-sm-flex" width="236" height="236" />
@@ -53,11 +59,6 @@
                 <div class="text-center">
                     {{ user.bio }}
                 </div>
-                {% if ((app.user.username) != ( username )) %}
-                <div class="text-center">
-                    <a href="{{ path('app_newConversations',{'username' : username}) }}"> Chat ! </a>
-                </div>
-                {% endif %}
 
             </div>
             <div class="col-md-7">
@@ -101,7 +102,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> <br>
         {% if(not(user.allNotNull) and (user.id == app.user.id)) %}
         <div class="row">
             <div class="alert alert-danger col-md-4">
