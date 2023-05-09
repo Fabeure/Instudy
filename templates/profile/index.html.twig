@@ -9,16 +9,38 @@
         {% block errors %} {% endblock %}
     {% endblock %}
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-around">
             <div class="col-md-10">
                 <h1 class="mb-5">{{ username }}'s account</h1>
             </div>
-            <div class="col-md-2">
-                   {%  if(user.id == app.user.id) %}
-                    <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings',{'username' : app.user.username}) }}';"> edit profile </button>
-                    {% endif %}
+            <div class="col-2">
+                <div class="row">
+                    <div class="col">
+                        {%  if((user.id == app.user.id) and (user.allNotNull)) %}
+                            <button  class="btn btn-secondary" onclick="location.href='{{ path('app_profile_settings',{'username' : app.user.username}) }}';">  edit  profile </button>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                {%  if( "ROLE_TEACHER" in app.user.roles) %}
+                <div class="row">
+                    <div class="col">
+                    <button  class="btn btn-secondary" onclick="location.href='{{ path('app_teacher') }}';"> teacher Panel </button>
+                    </div>
+                </div>
+                    <br>
+                {% endif %}
+                {%  if( "ROLE_ADMIN" in app.user.roles) %}
+                <div class="row">
+                    <div class="col">
+                            <button  class="btn btn-secondary" onclick="location.href='{{ path('app_teacher') }}';"> admin Panel </button>
+                    </div>
+                </div>
+                    <br>
+                {% endif %}
             </div>
         </div>
+        <br>
         <div class="row justify-content-around">
             <div class="col-md-3">
                     {% if user.imageFile %}
@@ -38,7 +60,7 @@
                 {% endif %}
 
             </div>
-            <div class="col-md-5">
+            <div class="col-md-7">
                 <div class="bg-white shadow rounded-lg d-block d-sm-flex">
                     <div class="tab-content p-4 p-md-5" >
                         <div class="tab-pane fade show active">
