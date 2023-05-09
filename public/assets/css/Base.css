@@ -330,7 +330,7 @@ p {
     line-height: 22px;
 }
 
-.slider-thumb::before {
+.slider-thumb1::before{
     position: absolute;
     content: "";
     left: 3%;
@@ -341,6 +341,68 @@ p {
     border-radius: 62% 47% 82% 35% / 45% 45% 80% 66%;
     will-change: border-radius, transform, opacity;
     animation: sliderShape 5s linear infinite;
+    display: block;
+    z-index: -1;
+    -webkit-animation: sliderShape 5s linear infinite;
+}
+.slider-thumb2::before{
+    position: absolute;
+    content: "";
+    width: 450px;
+    height: 650px;
+    background: #146C94;
+    will-change: border-radius, transform, opacity;
+    border-radius: 80% 20% 60% 40% / 40% 60% 20% 80%; /* Customize the border-radius values to create a more irregular shape */
+    left: 70%; /* Change the horizontal position to the right */
+    top: 6%; /* Change the vertical position to be lower */
+    animation: sliderShape 5s linear infinite; /* Keep the same animation duration and timing */
+    display: block;
+    z-index: -1;
+    -webkit-animation: sliderShape 5s linear infinite;
+}
+.slider-thumb3::before{
+    position: absolute;
+    content: "";
+    width: 450px;
+    height: 650px;
+    background: #146C94;
+    will-change: border-radius, transform, opacity;
+    border-radius: 50% 50% 30% 70% / 30% 70% 50% 50%; /* Modify the border-radius values to create a unique shape */
+    left: 60%; /* Change the horizontal position to the left */
+    top: 5%; /* Change the vertical position to be higher */
+    animation: sliderShape 5s linear infinite; /* Keep the same animation duration and timing */
+    display: block;
+    z-index: -1;
+    -webkit-animation: sliderShape 5s linear infinite;
+}
+.slider-thumb4::before{
+    position: absolute;
+    content: "";
+    width: 450px;
+    height: 650px;
+    background: #146C94;
+    will-change: border-radius, transform, opacity;
+    border-radius: 30% 45% 45% 30% / 45% 45% 45% 45%; /* Customize the border-radius values */
+    transform: rotate(90deg); /* Rotate the shape 90 degrees clockwise */
+    left: 15%; /* Change the horizontal position to the left */
+    top: 5%; /* Change the vertical position to be higher */
+    animation: sliderShape 5s linear infinite; /* Keep the same animation duration and timing */
+    display: block;
+    z-index: -1;
+    -webkit-animation: sliderShape 5s linear infinite;
+}
+.slider-thumb5::before{
+    position: absolute;
+    content: "";
+    width: 450px;
+    height: 650px;
+    background: #146C94;
+    will-change: border-radius, transform, opacity;
+    border-radius: 1% 50% 0 0 / 30% 60% 0 0; /* Customize the border-radius values */
+    transform: rotate(90deg); /* Rotate the shape 90 degrees clockwise */
+    left: 30%; /* Change the horizontal position to the left */
+    top: 5%; /* Change the vertical position to be higher */
+    animation: sliderShape 5s linear infinite; /* Keep the same animation duration and timing */
     display: block;
     z-index: -1;
     -webkit-animation: sliderShape 5s linear infinite;
