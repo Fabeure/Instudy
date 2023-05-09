@@ -22,9 +22,9 @@ class Question
     #[ORM\JoinColumn(name: 'sender_id', referencedColumnName: 'id')]
     private ?User $sender = null;
 
-    #[ORM\ManyToOne(targetEntity: 'Matiere', inversedBy: 'questions')]
+    #[ORM\ManyToOne(targetEntity: 'Cours', inversedBy: 'questions')]
     #[ORM\JoinColumn(name: 'course_id', referencedColumnName: 'id')]
-    private ?Matiere $matiere = null;
+    private ?Cours $cours = null;
 
     #[ORM\Column(nullable:true)]
     private ?string $response=null;
@@ -53,13 +53,13 @@ class Question
         $this->sender = $sender;
         return $this;
     }
-    public function getMatiere(){
-        return $this->matiere;
+    public function getCourse(){
+        return $this->cours;
     }
 
-    public function setMatiere(?Matiere $matiere): self
+    public function setCourse(?Cours $cours): self
     {
-        $this->matiere = $matiere;
+        $this->cours = $cours;
         return $this;
     }
 

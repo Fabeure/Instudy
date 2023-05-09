@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Cours;
 use App\Entity\Matiere;
+use App\Entity\Question;
 use App\Form\CourseFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,9 +47,25 @@ class TeacherController extends AbstractController
 
             //save course
             $entityManager->getRepository(Cours::class)->save($course, true);
+            $this->addFlash('success', 'Course added.');
             }
+
+        //if there is an uploading error:
+        else if ($form->isSubmitted() && !$form->isValid()){
+            $this->addFlash('error', "Couldn't add course.");
+        }
+
+        //get questions and pass them to view NEED TO MAKE QUERY THAT GETS ALL QUESTIONS BY TEACHER
+        $questions = $entityManager->getRepository(Question::class)->findBy(['id' =>'5']);
+
+
+        //get my courses and pass them to view
+        $courses = $entityManager->getRepository(Cours::class)->findBy(['teacher'=>$this->getUser()]);
+
         return $this->render('teacher/index.html.twig', [
-            'CourseForm' => $form->createView()
+            'CourseForm' => $form->createView(),
+            'questions' => $questions,
+            'courses' => $courses
         ]);
     }
 }

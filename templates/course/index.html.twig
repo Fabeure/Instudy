@@ -56,37 +56,26 @@
 
         {# course Q&A #}
         <div class="my-4">
+            {% for question in questions %}
             <div class="card my-1" width="500px">
                 <div class="card-header">
-                    the question is here
+                    {{ question.content }}
                 </div>
                 <div class="card-body">
                     <blockquote class="blockquote mb-0">
-                    <p>the answer response is here</p>
-                    </blockquote>
-                </div>
-            </div>
+                    {% if question.response %}
+                        <p>
+                        {{ question.response }}
+                    </p>
+                        {% else %}
+                        <p>
+                            No response yet
+                        </p>
+                        {% endif %}
 
-            <div class="card my-1">
-                <div class="card-header">
-                    the question is here
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                    <p>the answer response is here</p>
                     </blockquote>
                 </div>
-            </div>
-
-            <div class="card my-1">
-                <div class="card-header">
-                    the question is here
-                </div>
-                <div class="card-body">
-                    <blockquote class="blockquote mb-0">
-                    <p>the answer response is here</p>
-                    </blockquote>
-                </div>
+                {% endfor %}
             </div>
         </div>
         

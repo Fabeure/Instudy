@@ -38,7 +38,7 @@ class CourseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $question->setContent($form->get('content')->getData());
             $question->setSender($this->getUser());
-            $question->setMatiere($course->getMatiere());
+            $question->setCourse($course);
 
             $entityManager->getRepository(Question::class)->save($question, true);
             $this->addFlash('success', 'Question sent, pending answer.');
@@ -46,9 +46,40 @@ class CourseController extends AbstractController
         else if ($form->isSubmitted() && !$form->isValid()){
             $this->addFlash('error', 'The Question could not be sent.');
         }
+
+        $questions = $entityManager->getRepository(Question::class)->findBy(['cours' => $course]);
+
+
         return $this->render('course/index.html.twig', [
+            'questions' => $questions,
             'cours' => $course,
             'QuestionForm' => $form->createView()
         ]);
+    }
+
+    #[Route('/course/remove/{courseName}', name: 'app_remove_course')]
+    public function removeDem($courseName, EntityManagerInterface $entityManager): Response
+    {
+        //handle access control
+        if(!$this->isGranted('ROLE_TEACHER')){
+
+            //add error flash message
+            $this->addFlash('error', 'Only teachers can access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_home');
+        }
+
+
+        //get course by id
+        $course = $entityManager->getRepository(Cours::class)->findOneBy(['courseName' => $courseName]);
+
+        //remove course from database
+        $entityManager->remove($course);
+        $entityManager->flush();
+
+
+        return $this->redirectToRoute('app_teacher');
+
     }
 }

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CoursRepository;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -37,9 +38,20 @@ class Cours implements \Serializable
     #[ORM\Column(nullable: true)]
     private ?string $nom;
 
+    #[ORM\OneToMany(targetEntity: 'Question', mappedBy: 'cours')]
+    private Collection $questions;
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+    public function getQuestions(): Collection{
+        return $this->questions;
+    }
+
+    public function setQuestions(Collection $questions): self{
+        $this->questions = $questions;
+        return $this;
     }
 
     public function getNom(){

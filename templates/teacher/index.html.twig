@@ -29,26 +29,33 @@
        </div>
        <p>&nbsp;</p>
        <p>&nbsp;</p>
-       <li class="card">
-           <button class="noselect"><span class="text">Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button>
-         <p class="course">Analyse</p>
-           <p class="course"> view </p>
+       <br>
+       <br>
+
+       {% if courses %}
+       {% for cours in courses %}
+       <li class="card" onClick='window.location.href="{{ path('app_course', {'courseName' : cours.courseName}) }}"'>
+           <button class="noselect"><span class="text" onClick='window.location.href="{{ path('app_remove_course', {'courseName' : cours.courseName}) }}"'>Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button>
+         <p class="course">{{ cours.nom }}</p>
        </li>
-       <p>&nbsp;</p>
-       <li class="card">
-           <button class="noselect"><span class="text">Delete</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button>
-       </li>
+       {% endfor %}
+       {% else %}
+       <p>You haven't uploaded any courses</p>
+       {% endif %}
    </div>
     </div>
 
     <div class="column2">
         <h1>Student Questions</h1>
         <div class="card2">
-            <p class="qst">Question 1</p>
+            {% if questions %}
+            {% for question in questions %}
+            <p class="qst">Question: <p> {{ question.content }}</p></p>
 
-            <input type="text" name="text" class="input" placeholder="Put Answer here">
-
+            {% endfor %}
+            {% else %}
+                <p class="qst"> No Questions yet</p>
+            {% endif %}
         </div>
-
     </div>
 {% endblock %}

@@ -8,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SubmitWorkController extends AbstractController
 {
-    #[Route('/submit/work', name: 'app_submit_work')]
+    #[Route('/submit', name: 'app_submit_work')]
     public function index(): Response
     {
         return $this->render('submit_work/index.html.twig', [
