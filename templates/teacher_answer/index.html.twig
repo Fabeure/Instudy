@@ -13,7 +13,7 @@
     {% endblock %}
     <div class="container px-8">
         <!--if there's some submitted answer -->
-        {% if(true) %}
+        {% if homeworks %}
             <div class="row gx-5" style="position:relative; left: 80px;">
                 <div class="col-6 col-md-11">
                     <div class="shadow-sm p-3 mb-5 bg-body rounded">
@@ -22,18 +22,15 @@
                         <div class="row">
                             <div class="col-6 col-md-3">
                                 <ul class="list-group list-group-flush">
-
-                                    <li class="list-group-item" >naouress</li>
-                                    <li class="list-group-item">saber</li>
-                                    <li class="list-group-item">mohamed</li>
-                                    <li class="list-group-item">idriss</li>
-                                    <li class="list-group-item">broo</li>
+                                    {% for homework in homeworks %}
+                                        <li class="list-group-item" >{{ homework.student.username }}</li>
+                                    {% endfor %}
                                 </ul>
                             </div>
 
                             <div class="col-6 col-md-8">
                                 <!--the content of the answer that is opened after click in the name of the student -->
-                                <h3>naoures's homework  : </h3><br>
+                                <h3> ??'s homework  : </h3><br>
                                 <div>
                                     <object data="{{ asset('assets/pdf/test.pdf')}}"  type="application/pdf" width="100%" height="500px">
                                         <p>It appears your Web browser is not configured to display PDF files.
