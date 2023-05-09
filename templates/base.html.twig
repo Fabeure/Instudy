@@ -44,12 +44,12 @@
             </div>
             <nav id="menu" class="main-nav" role="navigation">
                 {% for flash_message in app.flashes('error') %}
-                    <div class="alert alert-danger d-inline-block">
+                    <div class="alert alert-danger d-inline-block" style="max-width: 300px;">
                         {{ flash_message }}
                     </div>
                 {% endfor %}
                 {% for flash_message in app.flashes('success') %}
-                    <div class="alert alert-success d-inline-block">
+                    <div class="alert alert-success d-inline-block" style="max-width: 300px">
                         {{ flash_message }}
                     </div>
                 {% endfor %}

@@ -72,6 +72,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
     #[ORM\OneToMany(targetEntity: 'Cours', mappedBy: 'teacher')]
     private Collection $cours;
 
+    #[ORM\OneToMany(targetEntity: 'Homework', mappedBy: 'student')]
+    private Collection $homework;
+
     #[ORM\OneToMany(targetEntity: 'Question', mappedBy: 'sender')]
     private Collection $questions;
     #[ORM\Column(nullable: true)]
@@ -92,6 +95,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
     public function setQuestions(Collection $questions): self{
         $this->questions = $questions;
+        return $this;
+    }
+    public function getHomework(): Collection
+    {
+        return $this->homework;
+
+    }
+
+    public function setHomework(Collection $homework): self
+    {
+        $this->homework = $homework;
         return $this;
     }
     public function getCours(): Collection
