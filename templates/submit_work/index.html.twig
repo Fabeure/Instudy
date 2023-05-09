@@ -20,7 +20,6 @@
                 <div class="shadow-sm p-3 mb-5 bg-body rounded">
                     <h2> yours homework : </h2>
                     <ol class="list-group list-group-numbered">
-                        {% if homeworks %}
                         {% for homework in homeworks %}
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto">
@@ -59,10 +58,6 @@
         </div>
 
             <!-- if there isn't any homework -->
-    {% else %}
-        <h1> there's no homework !</h1>
-        Congratulations on having a homework-free day! This is a wonderful opportunity to take a breath and enjoy a moment of freedom from academic responsibilities. Embrace this time to engage in activities that inspire and energize you :)
-    {% endif %}
     </div>
 
 {% endblock %}

@@ -61,14 +61,13 @@
                         <li>  <a href="{{ path('app_profile',{'username':app.user.username}) }}"> {{ app.user.username }} </a> </li>
                         <li><a type="button" class="icon-button">
                                 <span class="material-icons">notifications</span>
-                                <span class="icon-button__badge">2</span>
-                                <div class="notification-menu">
+                                <span class="icon-button__badge" id="NotifCount">{{ app.request.attributes.get('_notifications')|length }}</span>
+                                <div class="notification-menu" id="notifMenu">
+                                    {% for notification in app.request.attributes.get('_notifications')  %}
                                     <div class="notification-menu-item">
-                                        <p>hello</p>
+                                        <p>{{ notification.content }}</p>
                                     </div>
-                                    <div class="notification-menu-item">
-                                        <p>hello</p>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </a></li>
                         <li><a href="{{ path('app_logout') }}">Logout</a></li>
@@ -123,4 +122,16 @@
 </section>
 {% endblock %}
 </body>
+{% if app.user %}
+    <script src="{{ asset('assets/js/Notification.js') }}"></script>
+    <script>
+    const NotifEventSource = new EventSource("{{ mercure(app.user.userIdentifier)|escape('js') }}");
+    NotifEventSource.onmessage = event => {
+        // Will be called every time an update is published by the server
+        const data = JSON.parse(event.data);
+
+        addNotif(data['content']);
+    }
+</script>
+{% endif %}
 </html>

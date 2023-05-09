@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Conversation;
 use App\Entity\Message;
+use App\Entity\Notification;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Exception\ORMException;
@@ -11,6 +12,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends AbstractController
@@ -21,8 +23,13 @@ class MessageController extends AbstractController
      * @throws ORMException
      */
     #[Route('/newMessage', name: 'app_newMessage')]
-    public function newMessage(Request $request, EntityManagerInterface $entityManager)
+    public function newMessage(Request $request, EntityManagerInterface $entityManager, HubInterface $hub)
     {
+
+        //get my id
+        $my_id = $this->getUser()->getId();
+
+
         //get contents of request
         $content = $request->request->get('value', null);
         $author = $request->request->get('sender');
@@ -42,10 +49,23 @@ class MessageController extends AbstractController
         $conversation->addMessage($message);
         $conversation->setLastMessage($message);
 
+        //create new notification
+        $notif = new Notification();
 
-        //save message
+        //fetch second user from conversation to send the notification to
+        $participant_ids = $entityManager->getRepository(User::class)->getUserIdsForConversation($conversation_id);
+        $other_id = ($my_id == $participant_ids[0]['id']) ? $participant_ids[1]['id'] : $participant_ids[0]['id'];
+        $other_user = $entityManager->getRepository(User::class)->findOneBy(['id'=>$other_id]);
+
+        //add notification
+        $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $other_user, "New Message", $hub);
+
+
+        //persist everything to database
         $entityManager->getRepository(Message::class)->save($message, true);
         $entityManager->getRepository(Conversation::class)->save($conversation, true);
+        $entityManager->getRepository(Notification::class)->save($notif, true);
+
 
         //success message for debugging
         return new Response('published!');

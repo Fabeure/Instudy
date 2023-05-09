@@ -77,12 +77,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
 
     #[ORM\OneToMany(targetEntity: 'Question', mappedBy: 'sender')]
     private Collection $questions;
+
+    #[ORM\OneToMany(targetEntity: 'Notification', mappedBy: 'notif_sender' )]
+    private Collection $sent_notifications;
+
+    #[ORM\OneToMany(targetEntity: 'Notification', mappedBy: 'notif_recipient' )]
+    private Collection $received_notifications;
+
+
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $updatedAt= null;
     public function __construct()
     {
         $this->participants = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->cours = new ArrayCollection();
+        $this->homework = new ArrayCollection();
+        $this->questions = new ArrayCollection();
+        $this->sent_notifications = new ArrayCollection();
+        $this->received_notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -382,5 +395,143 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, \Serial
         $this->email = $data['email'];
         $this->password = $data['password'];
         // .....
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function addCour(Cours $cour): self
+    {
+        if (!$this->cours->contains($cour)) {
+            $this->cours->add($cour);
+            $cour->setTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCour(Cours $cour): self
+    {
+        if ($this->cours->removeElement($cour)) {
+            // set the owning side to null (unless already changed)
+            if ($cour->getTeacher() === $this) {
+                $cour->setTeacher(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addHomework(Homework $homework): self
+    {
+        if (!$this->homework->contains($homework)) {
+            $this->homework->add($homework);
+            $homework->setStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHomework(Homework $homework): self
+    {
+        if ($this->homework->removeElement($homework)) {
+            // set the owning side to null (unless already changed)
+            if ($homework->getStudent() === $this) {
+                $homework->setStudent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addQuestion(Question $question): self
+    {
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestion(Question $question): self
+    {
+        if ($this->questions->removeElement($question)) {
+            // set the owning side to null (unless already changed)
+            if ($question->getSender() === $this) {
+                $question->setSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getSentNotifications(): Collection
+    {
+        return $this->sent_notifications;
+    }
+
+    public function addSentNotification(Notification $sentNotification): self
+    {
+        if (!$this->sent_notifications->contains($sentNotification)) {
+            $this->sent_notifications->add($sentNotification);
+            $sentNotification->setNotifSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSentNotification(Notification $sentNotification): self
+    {
+        if ($this->sent_notifications->removeElement($sentNotification)) {
+            // set the owning side to null (unless already changed)
+            if ($sentNotification->getNotifSender() === $this) {
+                $sentNotification->setNotifSender(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Notification>
+     */
+    public function getReceivedNotifications(): Collection
+    {
+        return $this->received_notifications;
+    }
+
+    public function addReceivedNotification(Notification $receivedNotification): self
+    {
+        if (!$this->received_notifications->contains($receivedNotification)) {
+            $this->received_notifications->add($receivedNotification);
+            $receivedNotification->setNotifRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedNotification(Notification $receivedNotification): self
+    {
+        if ($this->received_notifications->removeElement($receivedNotification)) {
+            // set the owning side to null (unless already changed)
+            if ($receivedNotification->getNotifRecipient() === $this) {
+                $receivedNotification->setNotifRecipient(null);
+            }
+        }
+
+        return $this;
     }
 }
