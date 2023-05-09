@@ -13,12 +13,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SubmitWorkController extends AbstractController
 {
     #[Route('/submit', name: 'app_submit_work')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager,HubInterface $hub): Response
     {
         //handle access control
         if(!$this->isGranted('ROLE_USER')){
@@ -50,7 +51,7 @@ class SubmitWorkController extends AbstractController
 
 
             //add new notification
-            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $form->get('teacher')->getData(), "New Homework");
+            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $form->get('teacher')->getData(), "New Homework", $hub);
 
             //persist everything to database
             $entityManager->getRepository(Homework::class)->save($homework, true);

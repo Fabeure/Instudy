@@ -12,6 +12,7 @@ use Doctrine\ORM\OptimisticLockException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class MessageController extends AbstractController
@@ -22,7 +23,7 @@ class MessageController extends AbstractController
      * @throws ORMException
      */
     #[Route('/newMessage', name: 'app_newMessage')]
-    public function newMessage(Request $request, EntityManagerInterface $entityManager)
+    public function newMessage(Request $request, EntityManagerInterface $entityManager, HubInterface $hub)
     {
 
         //get my id
@@ -57,7 +58,7 @@ class MessageController extends AbstractController
         $other_user = $entityManager->getRepository(User::class)->findOneBy(['id'=>$other_id]);
 
         //add notification
-        $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $other_user, "New Message");
+        $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $other_user, "New Message", $hub);
 
 
         //persist everything to database

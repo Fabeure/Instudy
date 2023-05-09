@@ -6,6 +6,8 @@ use App\Entity\Notification;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Mercure\HubInterface;
+use Symfony\Component\Mercure\Update;
 
 /**
  * @extends ServiceEntityRepository<Notification>
@@ -18,8 +20,10 @@ use Doctrine\Persistence\ManagerRegistry;
 class NotificationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
+
     {
         parent::__construct($registry, Notification::class);
+
     }
 
     public function save(Notification $entity, bool $flush = false): void
@@ -30,11 +34,21 @@ class NotificationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function addNotification(Notification $entity, ?User $sender, ?User $recipient, string $content){
+    public function addNotification(Notification $entity, ?User $sender, ?User $recipient, string $content, $hub){
         $entity->setContent($content." from:  ".$sender->getUsername());
         $entity->setNotifSender($sender);
         $entity->setUpdatedAt(new \DateTimeImmutable());
         $entity->setNotifRecipient($recipient);
+
+        //create the new update that will be passed to the mercure HUB
+        $update = new Update(
+            $recipient->getUserIdentifier(),
+            json_encode(['content' => $entity->getContent()] )
+        );
+
+
+        //publish update to the mercure HUB
+        $hub->publish($update);
     }
 
     public function remove(Notification $entity, bool $flush = false): void

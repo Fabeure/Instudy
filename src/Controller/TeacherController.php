@@ -11,12 +11,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TeacherController extends AbstractController
 {
     #[Route('/teacher', name: 'app_teacher')]
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, HubInterface $hub): Response
     {
         //handle access control
         if(!$this->isGranted('ROLE_TEACHER')){
@@ -49,7 +50,7 @@ class TeacherController extends AbstractController
             //create new notification
             $notif = new Notification();
             //add notification
-            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), null, "New Course");
+            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), null, "New Course", $hub);
 
             //perisst everything to database
             $entityManager->getRepository(Cours::class)->save($course, true);

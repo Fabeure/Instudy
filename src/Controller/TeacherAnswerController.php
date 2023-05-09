@@ -9,13 +9,14 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mercure\HubInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\AssesHomeworkFormType;
 
 class TeacherAnswerController extends AbstractController
 {
     #[Route('/teacher/answer/', name: 'app_teacher_answer_student')]
-    public function answerByStudent(EntityManagerInterface $entityManager, Request $request): Response
+    public function answerByStudent(EntityManagerInterface $entityManager, Request $request,HubInterface $hub): Response
     {
         //handle access control
         if(!$this->isGranted('ROLE_TEACHER')){
@@ -42,7 +43,7 @@ class TeacherAnswerController extends AbstractController
 
                 // Create and save the notification
                 $notification = new Notification();
-                $entityManager->getRepository(Notification::class)->addNotification($notification, $this->getUser(), $homework->getStudent(), "Homework graded");
+                $entityManager->getRepository(Notification::class)->addNotification($notification, $this->getUser(), $homework->getStudent(), "Homework graded", $hub);
 
                 $entityManager->getRepository(Notification::class)->save($notification, true);
                 $entityManager->flush();
