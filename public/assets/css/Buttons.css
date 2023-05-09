@@ -1,5 +1,4 @@
 .main-button a {
-    background-color: #f52525;
     color: #fff;
     font-size: 13px;
     text-transform: uppercase;
@@ -9,14 +8,13 @@
     display: inline-block;
     outline: none;
 }
-.signin-form a.a2 {
-    color: #fff;
-    text-decoration: none;
-}
 
+.signin-form a.a2{
+    border: none;
+}
 .signin-form a.a2:hover {
     background: transparent;
-    color: #aaa;
+    color: #f52525;
     border-radius: 5px;
 }
 
@@ -73,7 +71,6 @@ a.menu-link {
     }
     nav[role="navigation"] li:hover a,
     nav[role="navigation"] li.active a {
-        color: #f52525;
     }
 
     @media screen and (min-width: 951px) {

@@ -2,11 +2,12 @@
 {% extends "base.html.twig" %}
 
 {% block title %}Hello ProfileController!{% endblock %}
+{% block stylesheets %} {{ parent() }}
+{% endblock %}
 {% block body %}
     {%  block header %} {{ parent() }}
         {% block errors %} {% endblock %}
     {% endblock %}
-<section class="py-5 my-5">
     <div class="container">
         <div class="row">
             <div class="col-md-10">
@@ -93,8 +94,5 @@
         </div>
         {% endif %}
     </div>
-</section>
 
-</body>
-</html>
 {% endblock %}

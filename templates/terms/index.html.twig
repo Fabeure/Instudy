@@ -10,7 +10,9 @@
         {% block errors %} {% endblock %}
     {% endblock %}
 
-    <section class="section main-banner" id="top" data-section="section1" style="color:white">
+    {% block section1 %}
+        <section class="section main-banner" id="top" data-section="section1"  style="color:white">
+    {% endblock %}
         <section class="section coming-soon caption" data-section="section3">
             <div class="col-md-12 mt-5">
                 <div class="top-content">
@@ -43,5 +45,7 @@
         <div class="container">
 
         </div>
-    </section>
+    {% block section2 %}
+        </section>
+    {% endblock %}
 {% endblock %}
