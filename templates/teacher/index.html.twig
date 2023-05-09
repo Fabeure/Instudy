@@ -12,7 +12,11 @@
         {{ parent() }}
         {% block errors %} {% endblock %}
         {% endblock %}
-    <div class="container-fluid pb-lg-4">
+
+
+
+    <div class="container">
+
    <div class ="column">
        <h1>Your Published Courses</h1>
        <div>
@@ -43,7 +47,7 @@
        <p>You haven't uploaded any courses</p>
        {% endif %}
    </div>
-    </div>
+
 
     <div class="column2">
         <h1>Student Questions</h1>
@@ -56,6 +60,14 @@
             {% else %}
                 <p class="qst"> No Questions yet</p>
             {% endif %}
+        </div>
+
+        <div class="column3">
+            <h1>Review Student Work</h1>
+            <div class="card3">
+                <p>Stoura &nbsp;</p>
+                <p>td</p>
+            </div>
         </div>
     </div>
 {% endblock %}

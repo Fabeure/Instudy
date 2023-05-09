@@ -14,6 +14,7 @@
                   crossorigin="anonymous"
             />
             {% endblock %}
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="{{ asset('assets/css/Images.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/Base.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/css/Buttons.css') }}" />
@@ -53,10 +54,23 @@
                     </div>
                 {% endfor %}
                 <ul class="main-menu">
+
                     <li><a href="{{ path('app_home') }}">Home</a></li>
                     <li><a href="{{ path('app_hub') }}">Hub</a></li>
                     {% if not(app.user == '') %}
                         <li>  <a href="{{ path('app_profile',{'username':app.user.username}) }}"> {{ app.user.username }} </a> </li>
+                        <li><a type="button" class="icon-button">
+                                <span class="material-icons">notifications</span>
+                                <span class="icon-button__badge">2</span>
+                                <div class="notification-menu">
+                                    <div class="notification-menu-item">
+                                        <p>hello</p>
+                                    </div>
+                                    <div class="notification-menu-item">
+                                        <p>hello</p>
+                                    </div>
+                                </div>
+                            </a></li>
                         <li><a href="{{ path('app_logout') }}">Logout</a></li>
                     {% endif %}
                     {% if (app.user =='') %}
@@ -96,6 +110,8 @@
                                 </form>
                                 <p>Don't have an account? <a href="{{ path('app_register') }}" class="a2" id="signup-link">Sign up!</a></p>
                             </div></li>
+
+
                     {% endif %}
                 </ul>
             </nav>

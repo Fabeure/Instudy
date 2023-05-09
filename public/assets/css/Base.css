@@ -363,3 +363,63 @@ p {
         transform: translate3d(0, -3px, 0) rotateZ(0.01deg);
     }
 }
+
+/*Notifaction*/
+
+.icon-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    color: #333333;
+    background: #dddddd;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+}
+
+.icon-button:hover {
+    cursor: pointer;
+}
+
+.icon-button:active {
+    background: #cccccc;
+}
+
+.icon-button__badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+.notification-menu {
+    position: absolute;
+    top: 40px;
+    left: -100px;
+    width: 200px;
+    background: linear-gradient(90deg,#AFD3E2, #AFD3E2 );
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    padding: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.icon-button:hover .notification-menu {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification-menu-item {
+    padding: 20px;
+}
