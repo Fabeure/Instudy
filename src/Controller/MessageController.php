@@ -25,6 +25,15 @@ class MessageController extends AbstractController
     #[Route('/newMessage', name: 'app_newMessage')]
     public function newMessage(Request $request, EntityManagerInterface $entityManager, HubInterface $hub)
     {
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'Login to access this page.');
+
+            //return to profile
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
+        }
 
         //get my id
         $my_id = $this->getUser()->getId();

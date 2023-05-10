@@ -26,7 +26,7 @@ class ChatController extends AbstractController
             //add error flash message
             $this->addFlash('error', 'You cannot view this page.');
 
-            //return to home
+            //return to profile
             return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
         }
 

@@ -23,8 +23,8 @@ class GPTController extends AbstractController
             //add error flash message
             $this->addFlash('error', 'Login to access this page.');
 
-            //return to home
-            return $this->redirectToRoute('app_home');
+            //return to profile
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
         }
 
         //get the course file path

@@ -18,7 +18,7 @@ class ProfileSettingsController extends AbstractController
     public function index($username , Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $userPasswordHasher): Response
     {
         //handle access control
-        if(!$this->isGranted('ROLE_USER')){
+        if(!$this->isGranted('ROLE_USER')) {
 
             //add error message for unauthorised access
             $this->addFlash('error', 'Login to access this page.');
@@ -29,8 +29,8 @@ class ProfileSettingsController extends AbstractController
 
 
         //get current user
-        $user = $this->getUser();
-        $current_user = $entityManager->getRepository(User::class)->findOneBy(['email'=>$user->getUserIdentifier()]);
+        $current_user = $this->getUser();
+
 
 
         //get current user id
@@ -56,10 +56,10 @@ class ProfileSettingsController extends AbstractController
 
 
         //create info form
-        $form = $this->createForm(ProfileSettingsFormType::class, $user);
+        $form = $this->createForm(ProfileSettingsFormType::class, $current_user);
 
         //create password change form
-        $form2 = $this->createForm(ProfileSettingsPasswordFormType::class, $user);
+        $form2 = $this->createForm(ProfileSettingsPasswordFormType::class, $current_user);
 
         //handle forms
         $form->handleRequest($request);
@@ -84,7 +84,7 @@ class ProfileSettingsController extends AbstractController
             //add success message
             $this->addFlash('success', 'Your profile has been updated.');
             //return to home
-            return $this->redirectToRoute('app_profile_settings', ['username'=>$user->getUsername()]);
+            return $this->redirectToRoute('app_profile_settings', ['username'=>$current_user->getUsername()]);
         }
 
         //modify password
@@ -98,7 +98,7 @@ class ProfileSettingsController extends AbstractController
             else {
 
                 //set new password
-                $user->setPassword($userPasswordHasher->hashPassword($current_user, $form2->get('NewPlainPassword')->getData()));
+                $current_user->setPassword($userPasswordHasher->hashPassword($current_user, $form2->get('NewPlainPassword')->getData()));
 
                 //save user
                 $entityManager->getRepository(User::class)->save($current_user, true);

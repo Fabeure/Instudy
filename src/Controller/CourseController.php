@@ -16,13 +16,15 @@ class CourseController extends AbstractController
     #[Route('/course/{courseName}', name: 'app_course')]
     public function index($courseName, EntityManagerInterface $entityManager, Request $request): Response
     {
+
+        //handle access control
         if(!$this->isGranted('ROLE_USER')){
 
             //add error flash message
             $this->addFlash('error', 'Login to access this page.');
 
             //return to home
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
         }
         //get course you are trying to see
         $course = $entityManager->getRepository(Cours::class)->findOneBy(['courseName' => $courseName]);
