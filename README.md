@@ -39,9 +39,13 @@ install and run the docker with mercure and mailer container
     docker-compose up
 ```
 
-make all the migrations and create the database and update its schema then run the symfony server
+create the database and make all the migrations update its schema <br> then run the symfony server
 
 ```
+    php bin/console doctrine:database:create
+        // make the entities 
+    php bin/console make:migration
+    php bin/console doctrine:migrations:migrate
     symfony serve
 ```
 
