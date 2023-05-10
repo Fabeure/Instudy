@@ -35,6 +35,10 @@ class MessageController extends AbstractController
             return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
         }
 
+
+        //adding new message to the database
+
+
         //get my id
         $my_id = $this->getUser()->getId();
 
@@ -65,10 +69,14 @@ class MessageController extends AbstractController
         $other_user = $entityManager->getRepository(User::class)->findOneBy(['id'=>$other_id]);
 
 
-        //create new notification
+        //create new notification for that message
         $notif = new Notification();
+
+
         //create the url attached to the notification
         $url = "/chat/".$conversation_id;
+
+
         //add notification
         $entityManager->getRepository(Notification::class)->addNotification($url, $notif, $this->getUser(), $other_user, "New Message", $hub);
 

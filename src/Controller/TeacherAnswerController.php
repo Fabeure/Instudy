@@ -30,8 +30,12 @@ class TeacherAnswerController extends AbstractController
 
         //fetch all homeworks that were sent to me
         $homeworks = $entityManager->getRepository(Homework::class)->findBy(['teacher' => $this->getUser()]);
-        $forms = [];
 
+
+        //very ugly code ahead :( :(
+
+        //create a seperate form for EACH homework, and pass it to view
+        $forms = [];
         foreach ($homeworks as $index => $homework) {
             $forms[$index] = $this->createForm(AssesHomeworkFormType::class, $homework);
             $forms[$index]->handleRequest($request);
@@ -57,12 +61,15 @@ class TeacherAnswerController extends AbstractController
             }
         }
 
+        //pass homework-form pairs to view
         $content = [];
         foreach ($homeworks as $index => $homework) {
             $content[$index]['homework'] = $homework;
             $content[$index]['form'] = $forms[$index]->createView();
         }
 
+
+        //render view
         return $this->render('teacher_answer/index.html.twig', [
             'contents' => $content
         ]);

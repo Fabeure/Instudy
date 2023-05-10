@@ -46,26 +46,20 @@ class NotificationRepository extends ServiceEntityRepository
         //create the new update that will be passed to the mercure HUB
 
         if (!$recipient){
-            $update = new Update(
-                'PUBLIC',
-                json_encode(['content' => $entity->getContent(),
-                    'url' => $entity->getUrl(),
-                    'id' => $entity->getIdentifier()])
-            );
+            Utils::Realtime('PUBLIC',
+                ['content' => $entity->getContent(),
+                'url' => $entity->getUrl(),
+                'id' => $entity->getIdentifier()],
+                $hub );
         }
         else{
-            $update = new Update(
-                $recipient->getUserIdentifier(),
-                json_encode(['content' => $entity->getContent(),
-                    'url' => $entity->getUrl(),
-                    'id' => $entity->getIdentifier()])
-            );
+
+            Utils::Realtime($recipient->getUserIdentifier(),
+                ['content' => $entity->getContent(),
+                'url' => $entity->getUrl(),
+                'id' => $entity->getIdentifier()],
+            $hub);
         }
-
-
-
-        //publish update to the mercure HUB
-        $hub->publish($update);
     }
 
     public function remove(Notification $entity, bool $flush = false): void

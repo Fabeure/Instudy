@@ -17,7 +17,15 @@ class NotificationController extends AbstractController
     #[Route('/removeNotification', name: 'app_remove_notif')]
     public function removeDem(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'User tried to access a page without having ROLE_ADMIN');
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'Login to access this page.');
+
+            //return to profile
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
+        }
 
 
         //get notification by id

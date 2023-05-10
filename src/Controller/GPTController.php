@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Utils\Utils;
 use OpenAI;
 use Spatie\PdfToText\Pdf;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,7 +41,7 @@ class GPTController extends AbstractController
     }
 
 
-    //handle incoming prompt requests
+    //handle incoming prompt requests for real time responses
     #[Route('/gptChat', name: 'send_chat', methods:"POST")]
     public function chat(Request $request, HubInterface $hub): Response
     {
@@ -66,16 +67,8 @@ class GPTController extends AbstractController
         //get the top#1 result content
         $response=$result->choices[0]->message->content;
 
-
         //create a new update containing chatGPT's response in raw text format
-        $update = new Update(
-            "testGPT",
-            json_encode(['response' => $response] )
-        );
-
-
-        //publish update to the mercure HUB
-        $hub->publish($update);
+        Utils::Realtime("testGPT",['response' => $response], $hub );
         return new Response('success');
     }
 

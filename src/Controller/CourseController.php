@@ -49,9 +49,11 @@ class CourseController extends AbstractController
             $this->addFlash('error', 'The Question could not be sent.');
         }
 
+        //get the questions relating to the specific course we are looking at
         $questions = $entityManager->getRepository(Question::class)->findBy(['cours' => $course]);
 
 
+        //render view and pass parametres
         return $this->render('course/index.html.twig', [
             'questions' => $questions,
             'cours' => $course,
@@ -59,6 +61,8 @@ class CourseController extends AbstractController
         ]);
     }
 
+
+    //route to handle course removal
     #[Route('/course/remove/{courseName}', name: 'app_remove_course')]
     public function removeDem($courseName, EntityManagerInterface $entityManager): Response
     {
@@ -80,7 +84,7 @@ class CourseController extends AbstractController
         $entityManager->remove($course);
         $entityManager->flush();
 
-
+        //redirect to teacher panel
         return $this->redirectToRoute('app_teacher');
 
     }

@@ -18,7 +18,7 @@ class AdminPanelController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
         //handle access control
-        if(!$this->isGranted('ROLE_ADMIN')){
+        if (!$this->isGranted('ROLE_ADMIN')) {
 
             //add error flash message
             $this->addFlash('error', 'You need to be an admin to visit this page.');
@@ -37,7 +37,7 @@ class AdminPanelController extends AbstractController
         $form->handleRequest($request);
 
         //saving a new user to the pre-registration database
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
             //set fields for new user email
 
@@ -74,9 +74,11 @@ class AdminPanelController extends AbstractController
             }, $fetched_emails);
 
         }
+
+
         //fetch all tickets and pass them to view
         $fetched_tickets = $entityManager->getRepository(Ticket::class)->findAll();
-        $tickets = array_map(function($ticket) use($entityManager) {
+        $tickets = array_map(function ($ticket) use ($entityManager) {
 
             //fetch user that made the ticket by using the AuthorID field
             $author = $entityManager->getRepository(User::class)->find($ticket->getAuthorID());
@@ -89,6 +91,8 @@ class AdminPanelController extends AbstractController
             ];
         }, $fetched_tickets);
 
+
+        //render template and pass parametres
         return $this->render('admin_pannel/index.html.twig', [
             'controller_name' => 'AdminPanelController',
             'data' => [
@@ -97,60 +101,6 @@ class AdminPanelController extends AbstractController
             ],
             'PreRegisterForm' => $form->createView()
         ]);
-    }
-
-    // remove a user from the user database and deactivate his email from the pre-registration database
-    #[Route('/adminPanel/removeUser/{id}', name: 'app_remove_user')]
-    public function removeUser($id, EntityManagerInterface $entityManager): Response
-    {
-        //handle access control
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
-
-        //get user by id
-        $user = $entityManager->getRepository(User::class)->find($id);
-
-        //get email by user email
-        $email = $entityManager->getRepository(RegisteredEmails::class)->findOneBy(['email' => $user->getEmail()]);
-
-        //remove user
-        $entityManager->remove($user);
-        $entityManager->flush();
-
-        //deactivate email
-        $email->setActif(false);
-
-        //save modifications to email
-        $entityManager->getRepository(RegisteredEmails::class)->save($email, true);
-
-        //reroute to adminPanel
-        return $this->redirectToRoute('app_admin_panel');
-    }
-
-    //app_remove_dem
-    #[Route('/adminPanel/removeDem/{id}', name: 'app_remove_dem')]
-    public function removeDem($id, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'User tried to access a page without having ROLE_ADMIN');
-
-
-        //get ticket by id
-        $ticket = $entityManager->getRepository(Ticket::class)->find($id);
-
-        //remove ticket
-        $entityManager->remove($ticket);
-        $entityManager->flush();
-
-        // $entityManager->flush();
-
-        return $this->redirectToRoute('app_admin_panel');
-
-    }
-    #[Route('/adminPanel/makeTeacher/{id}', name: 'app_make_teacher')]
-    public function makeTeacher($id, EntityManagerInterface $entityManager){
-        $user = $entityManager->getRepository(User::class)->findOneBy(["id"=>$id]);
-        $user->setRoles(['ROLE_TEACHER']);
-        $entityManager->getRepository(User::class)->save($user, true);
-        return $this->redirectToRoute('app_admin_panel');
     }
 
 }
