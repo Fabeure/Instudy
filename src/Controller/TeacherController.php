@@ -28,7 +28,6 @@ class TeacherController extends AbstractController
            //return to hub
            return $this->redirectToRoute('app_hub');
        }
-
         //create a new course
         $course = new Cours();
 
@@ -84,8 +83,6 @@ class TeacherController extends AbstractController
             $questions = $entityManager->getRepository(Question::class)->findBy(['cours' => $cour]);
             $allQuestions = array_merge($allQuestions, $questions);
         }
-
-
 
         //get my courses and pass them to view
         $courses = $entityManager->getRepository(Cours::class)->findBy(['teacher'=>$this->getUser()]);
