@@ -1,0 +1,30 @@
+
+{% extends "base.html.twig" %}
+
+{% block title %}Add New Course!{% endblock %}
+{% block body %}
+    {%  block header %} {{ parent() }}
+        {% block errors %} {% endblock %}
+    {% endblock %}
+
+
+<section class="py-5 my-5" style="color:white; background-image: url({{ asset('assets/images/choosing-bg.jpg') }}); ">
+    <div class="container">
+        <form action="{{ path('app_create_course') }}" method="post">
+            <div class="mb-3">
+                <label for="CourseTitle" class="form-label">Title</label>
+                <input class="form-control" type="text" placeholder="Course Title" aria-label="Title" id="CourseTitle">
+            </div>
+            
+            <div class="mb-3">
+                <label for="CoursePDF" class="form-label">PDF</label>
+                <input class="form-control" type="file" id="CoursePDF" placeholder="Upload a pdf" >
+            </div>
+            
+
+            <button type="submit" class="btn btn-dark">Submit</button>
+        <form>
+
+    </div>
+</section>
+{% endblock %}
