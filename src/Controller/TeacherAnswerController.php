@@ -43,7 +43,10 @@ class TeacherAnswerController extends AbstractController
 
                 // Create and save the notification
                 $notification = new Notification();
-                $entityManager->getRepository(Notification::class)->addNotification($notification, $this->getUser(), $homework->getStudent(), "Homework graded", $hub);
+
+                //make url for the notification
+                $url = '/view/work/';
+                $entityManager->getRepository(Notification::class)->addNotification($url, $notification, $this->getUser(), $homework->getStudent(), "Homework graded", $hub);
 
                 $entityManager->getRepository(Notification::class)->save($notification, true);
                 $entityManager->flush();

@@ -1,0 +1,1 @@
+symfony console doctrine:schema:update --force

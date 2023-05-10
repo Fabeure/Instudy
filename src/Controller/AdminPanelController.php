@@ -83,7 +83,7 @@ class AdminPanelController extends AbstractController
             return [
                 'id' => $ticket->getId(),
                 'username' => $author->getUsername(),
-                'date' => $ticket->getDate(),
+                'date' => $ticket->getDate()->format('d-m-y'),
                 'title' => $ticket->getTitle(),
                 'description' => $ticket->getDescription()
             ];

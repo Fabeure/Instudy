@@ -3,7 +3,8 @@
     {{ parent() }}
     {% block stylesheets %}
         {{ parent() }}
-        <link rel="stylesheet" href="{{ asset('assets/css/Home.css') }}"/>
+        <link href="{{ asset('assets/css/Home.css') }}" rel="stylesheet">
+
     {% endblock %}
     {% block section1 %}{% endblock %}
     {% block section2 %} {% endblock %}
@@ -12,32 +13,41 @@
     {% block header %} {{ parent() }}
         {% block errors %} {{ parent() }} {% endblock %}
     {% endblock %}
-    <section class="section main-banner" id="top" data-section="section1">
+    <div class="z-2 position-absolute p-0 d-block w-100">
         <img
                 class="imgv3"
                 src="{{ asset('assets/images/background.jpg') }}"
                 alt="INSAT 2.0"
         />
-        <div class="top">
-            <p class="important">INSTUDY <br>- your ultimate studying platform! </p>
-            <p class="content">Are you tired of juggling between multiple apps and resources while trying to prepare for
-                your exams? <br>
-                INSTUDY is here to simplify your life and help you stay organized.</p>
+    </div>
+    <div class="z-3 position-absolute p-5 text-light">
+        <br><br><br>
+
+        <div class="row">
+            <div class="col-12">
+                <h1 class="title"><a style="color: #e12a2a">INS</a>TUDY </h1>
+            </div>
+            <h1 class="col-12">
+                <p class="important">your ultimate studying platform! </p>
+            </h1>
+            <div class="col-12">
+                <p class="content">Are you tired of juggling between multiple apps and resources while trying to prepare
+                    for your exams?
+                    <br>
+                    INSTUDY is here to simplify your life and help you stay organized.
+                    <br></p>
+            </div>
         </div>
         <!-- le text -->
-        <div class="main">
-            <div class="text-center">
+        <div class="row  content text-center">
+            <br><br>
                 Welcome to InStudy, the all-in-one web application designed exclusively for students of INSAT. Our
                 platform is dedicated to enhancing your learning experience and empowering you to reach your academic
                 goals. With InStudy, we bring your courses, resources, communication, and collaboration all in one
                 place.
-            </div>
             <br> <br> <br> <br>
 
-
-            <div class="row">
                 <div class="col-md-6 col-lg-6 ">
-                    <div class="text-center">
                         <!--icon-->
                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
                              class="bi bi-book" viewBox="0 0 16 16">
@@ -48,11 +58,9 @@
                         <h2 class="fw-bold"> Courses Made Simple: </h2>
                         Access your courses effortlessly through InStudy. We've streamlined the process to ensure easy
                         navigation and quick access to all your subjects.
-                    </div>
                 </div>
 
                 <div class="col-md-6 col-lg-6 ">
-                    <div class="text-center">
                         <!--icon-->
                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
                              class="bi bi-list-task" viewBox="0 0 16 16">
@@ -66,16 +74,10 @@
 
                         <h2 class="fw-bold"> Resume Building: </h2>
                         InStudy goes beyond academics by offering a resume-building feature. Showcase your achievements,
-                        extracurricular activities, and skills to create an impressive and comprehensive resume.
-                    </div>
+                        extracurricular activities, and skills to create an impressive and comprehensive resume.<br>
                 </div>
-            </div>
-            <br><br><br>
 
-
-            <div class="row">
                 <div class="col-md-6 col-lg-6 ">
-                    <div class="text-center">
                         <!--icon-->
                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
                              class="bi bi-chat-left-dots" viewBox="0 0 16 16">
@@ -87,11 +89,10 @@
                         <h2 class="fw-bold"> Connect with Teachers: </h2>
                         Our platform provides a dedicated space where you can interact with your teachers, ask
                         questions, seek clarification, and receive guidance.
-                    </div>
                 </div>
 
+
                 <div class="col-md-6 col-lg-6 ">
-                    <div class="text-center">
                         <!--icon-->
                         <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor"
                              class="bi bi-wechat" viewBox="0 0 16 16">
@@ -104,24 +105,21 @@
                         Collaboration is key to a successful learning environment. InStudy enables you to connect and
                         chat with your peers, fostering a supportive community.
                     </div>
-                </div>
-            </div>
-            <br> <br> <br><br>
 
-
-            <div class="text-center">
+            <div class="col-12">
+                <br>
                 Join the exclusive community of INSAT students who are leveraging our platform to excel academically,
                 build their resumes, and engage in meaningful interactions.
                 <br>
                 Take advantage of this powerful tool to optimize your learning experience and set yourself up for future
                 success.
-                <br> <br> <br>
+                <br>
                 Register or log in now to unlock the full potential of InStudy. We're excited to embark on this
                 educational journey with you!
             </div>
         </div>
 
-        <div class="caption">
+        <div class="row caption text-center">
             <h2><em>INS</em>TUDY</h2>
             <div class="main-button">
                 <div class="scroll-to-section">
@@ -129,7 +127,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </div>
     <script>
         function RightImg() {
             const image1 = "url(\"http://127.0.0.1:8000/assets/images/th%20(1).jpg\")";

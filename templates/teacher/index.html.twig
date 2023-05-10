@@ -35,7 +35,7 @@
        <p>&nbsp;</p>
        <br>
        <br>
-
+        <div style="max-height: 300px; overflow-y: auto;">
        {% if courses %}
        {% for cours in courses %}
        <li class="card" onClick='window.location.href="{{ path('app_course', {'courseName' : cours.courseName}) }}"'>
@@ -43,6 +43,7 @@
          <p class="course">{{ cours.nom }}</p>
        </li>
        {% endfor %}
+        </div>
        {% else %}
        <p>You haven't uploaded any courses</p>
        {% endif %}
@@ -51,23 +52,18 @@
 
     <div class="column2">
         <h1>Student Questions</h1>
+        <div style="max-height: 600px; overflow-y: auto;">
         {% if questions %}
         {% for question in questions %}
-        <li class="card2">
+        <div class="card2">
 
             <p class="qst">Question: <p> {{ question.content }}</p></p>
-
+        </div>
             {% endfor %}
+        </div>
             {% else %}
                 <p class="qst"> No Questions yet</p>
             {% endif %}
         </li>
-
-        <div class="column3" >
-            <button class="btn" >View Student Homework
-                <span class="icon-right"></span>
-                <span class="icon-right after"></span>
-            </button>
-        </div>
     </div>
 {% endblock %}

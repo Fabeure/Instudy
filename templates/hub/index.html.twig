@@ -68,8 +68,14 @@
                 <div class="col-md-6 col-lg-4  " >
                     <div class="icon-box">
                         <div class="icon"><i class="ri-command-line"></i></div>
+                                {% if not isTeacher %}
                                 <h4 class="title"><a href="{{ path('app_submit_work') }}">Submit Work</a></h4>
-                                <p class="description">Send your work to one of our teachers, and get feedback!</p>
+                                <p class="description">Send your work to one of your teachers, and get feedback!</p>
+                                {% else %}
+                                <h4 class="title"><a href="{{ path('app_teacher_answer') }}">Review Works</a></h4>
+                                <p class="description">Review your students' work and give them feedback!</p>
+                                {% endif %}
+
                     </div>
                 </div>
 
@@ -82,7 +88,7 @@
                 </div>
             </div>
         </div>
-    <footer> Need help? open a ticket here</footer>
+    <footer> Need help? open a ticket <a href="{{ path('app_ticket') }}">here</a></footer>
     <script src="{{ asset('assets/js/Hub.js') }}" type="text/javascript"></script>
     <script>
         const eventSource = new EventSource("{{ mercure(app.user.username)|escape('js') }}");

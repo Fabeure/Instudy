@@ -27,7 +27,9 @@ class HubController extends AbstractController
             //return to home
             return $this->redirectToRoute('app_home');
         }
-        return $this->render('hub/index.html.twig');
+        return $this->render('hub/index.html.twig',[
+            'isTeacher' => $this->isGranted('ROLE_TEACHER')
+        ]);
     }
 
     #[Route('/hub/search', name: 'app_hub_search')]

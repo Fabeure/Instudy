@@ -1,0 +1,41 @@
+composer : 
+used to istal php packages 
+package manager mte3 il php 
+i5alina intitaliyou cmds 
+i5alina injibou il dependences illi 7achetna bihoum ki njibou sthg mel github w jawhoum a7la jaw  
+
+symfony CLI : 
+command line interface 
+executer les commande 
+
+scoope: 
+command line installer itelechargili illi 7achti bih w jawou behyy 
+
+pour tester 3endik composer welle : 
+composer about 
+
+pour tester 3endik il symfony : 
+symfony 
+
+pour tester symfony jawou behy w koll chey masboub : 
+symfony check:requirements
+
+--------------------------
+tawa bech inrani symfony project : 
+pointer 3el dossier ou on va n7outou il sumfony project 
+
+create symfony application 
+symfony new my_project_directory --version="6.2*" --webapp 
+
+
+----------------------
+composer create-project symfony/skeleton my-project 
+
+cd my-project
+symfony server:start  
+
+-----------------------
+doc.env : ensemble des variable d'environnement 
+----------------------
+
+
