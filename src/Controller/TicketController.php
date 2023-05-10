@@ -19,13 +19,13 @@ class TicketController extends AbstractController
     {
 
         //handle access control
-        if(!$this->isGranted('ROLE_USER')){
+        if(!($this->isGranted('ROLE_USER') and !$this->isGranted('ROLE_ADMIN'))){
 
             //add error flash message
-            $this->addFlash('error', 'Login to access this page.');
+            $this->addFlash('error', 'an admin cannot access this page.');
 
             //return to home
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
         }
 
 
@@ -44,9 +44,12 @@ class TicketController extends AbstractController
             $ticket->setDescription($form->get('Description')->getData());
             $ticket->setDate(new \DateTime());
 
-            $entityManager->persist($ticket);
-            $entityManager->flush();
-
+            $entityManager->getRepository(Ticket::class)->save($ticket, true);
+            $this->addFlash('success', 'Ticket sent, and admin will contact you soon.');
+            return $this->redirectToRoute('app_ticket');
+        }
+        else if ($form->isSubmitted() && !$form->isValid()){
+            $this->addFlash('error', 'Error sending ticket. Please try again');
             return $this->redirectToRoute('app_ticket');
         }
 

@@ -53,6 +53,15 @@
    background-repeat: no-repeat;
    border: 2px solid #000; /* Set the border style */
  }
+.Arrow{
+  width: 100px;
+  height: 50px;
+  position: absolute;
+  right: 60%;
+  top: 33%;
+  font-size: 7em;
+  color: aliceblue;
+}
 .col-1:hover ,.col-2:hover {
   font-size: 102%;
   color:#e12a2a;

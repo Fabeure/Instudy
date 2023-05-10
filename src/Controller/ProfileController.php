@@ -25,13 +25,18 @@ class ProfileController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
+
+        //get the user who's profile we want to see
         $user = $userRepository->findOneBy(['username' => $username]);
 
-        //if there's no user with this username
+        //if there's no user with this username, return to hub
         if (!$user) {
             $this->addFlash('error', $username . ' user does not exist !');
-            return $this->render('home/index.html.twig');
-        } else {
+            return $this->redirectToRoute('app_hub');
+        }
+
+        //if the user exists, show his profile
+        else {
             return $this->render('profile/index.html.twig', [
                 'user' => $user,
                 'username' => $username,

@@ -49,7 +49,7 @@ class ProfileSettingsController extends AbstractController
             $this->addFlash('error', 'You are not allowed to access this page.');
 
             //return to home
-            return $this->redirectToRoute('app_profile', array('username'=>($current_user->getUsername())));
+            return $this->redirectToRoute('app_hub');
         }
 
 

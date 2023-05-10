@@ -20,14 +20,15 @@ class TeacherController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager, HubInterface $hub): Response
     {
         //handle access control
-        if(!$this->isGranted('ROLE_TEACHER')){
+       if(!$this->isGranted('ROLE_TEACHER')) {
 
-            //add error flash message
-            $this->addFlash('error', 'Only teachers can access this page.');
+           //add error flash message
+           $this->addFlash('error', 'Only teachers can access this page.');
 
-            //return to profile
-            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
-        }
+           //return to hub
+           return $this->redirectToRoute('app_hub');
+       }
+
         //create a new course
         $course = new Cours();
 
@@ -47,6 +48,8 @@ class TeacherController extends AbstractController
             $course->setTeacher($this->getUser());
             $course->setMatiere($matiere);
 
+
+            //save course
             $entityManager->getRepository(Cours::class)->save($course, true);
 
             //create new notification
@@ -54,6 +57,7 @@ class TeacherController extends AbstractController
 
             //make notification url
             $url = "/course/".$course->getCourseName();
+
             //add notification
             $entityManager->getRepository(Notification::class)->addNotification($url,$notif, $this->getUser(), null, "New Course", $hub);
 
@@ -73,6 +77,7 @@ class TeacherController extends AbstractController
         //get questions and pass them to view NEED TO MAKE QUERY THAT GETS ALL QUESTIONS BY TEACHER
 
 
+        //get all questions to pass them to view later on
         $allQuestions = [];
 
         foreach ($cours as $cour) {

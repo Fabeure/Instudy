@@ -27,19 +27,19 @@
                     >
                         <br>
                         <!--if there's some submitted answer -->
-                        {% for homework in homeworks %}
+                        {% for content in contents %}
                             <a
                                     class="nav-link"
                                     id="password-tab"
                                     data-toggle="pill"
-                                    href="#{{ homework.homeworkName }}"
+                                    href="#{{ content.homework.homeworkName }}"
                                     role="tab"
                                     aria-controls="password"
                                     aria-selected="false"
                                     style="text-decoration: none; color:black;"
                             >
                                 <i class="fa fa-home text-center mr-1"></i>
-                                {{ homework.matiere }}
+                                {{ content.matiere }}
                             </a>
                             <br>
                         {% endfor %}
@@ -51,18 +51,18 @@
             <div class="col-sm-6 col-md-8">
                 <div class="shadow-sm p-3 mb-5 bg-body rounded">
                     <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
-                        {% for homework in homeworks %}
+                        {% for content in contents %}
 
-                            <!-- set url = vich_uploader_asset(homework.homeworkName, 'homeworkFile') -->
+                        {% set url = vich_uploader_asset(content.homework, 'homeworkFile') %}
                             <div
                                     class="tab-pane fade "
-                                    id="{{ homework.homeworkName }}"
+                                    id="{{ content.homework.homeworkName }}"
                                     role="tabpanel"
                                     aria-labelledby="password-tab"
                             >
                                 <!--the content of your answer  -->
                                 <div>
-                                    <object data="{{ asset('assets/files/course_files/exam2021-64586a58bcef6741189300.pdf') }}"
+                                    <object data="{{ asset(url) }}"
                                             type="application/pdf" width="100%" height="500px">
                                         <p>It appears your Web browser is not configured to display PDF files.
                                             No worries, just <a href="{{ asset('assets/pdf/test.pdf') }}">click here to
@@ -73,17 +73,17 @@
                                 </div>
                                 <br><br>
 
-                                {% if (homework.grade != null) %}
+                                {% if (content.homework.grade) %}
                                     <h6> your grade : </h6>
-                                    {{ homework.grade }}
+                                    {{ content.homework.grade }}
                                 {% else %}
                                     no grade accorded to this homework yet
                                 {% endif %}
                                 <br>
 
-                                {% if (homework.commentaire != null) %}
+                                {% if (content.homework.commentaire) %}
                                     <h6> teacher comments : </h6>
-                                    {{ homework.commentaire }}
+                                    {{ content.homework.commentaire }}
                                     <br>
                                 {% endif %}
 

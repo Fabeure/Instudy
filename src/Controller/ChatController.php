@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Conversation;
 use App\Entity\Message;
 use App\Entity\User;
+use App\Utils\Utils;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +31,8 @@ class ChatController extends AbstractController
             $this->addFlash('error', 'You cannot view this page.');
 
             //return to profile
-            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
+            return $this->redirectToRoute('app_profile',
+                ['username' => $this->getUser()->getUsername()]);
         }
 
         //check if I am a participant in this chat by the id, else reroute to profile
@@ -48,7 +50,8 @@ class ChatController extends AbstractController
              $this->addFlash('error', 'Conversation does not exist.');
 
              //return to profile
-             return $this->redirectToRoute('app_profile', ['username'=>($this->getUser()->getUsername())]);
+             return $this->redirectToRoute('app_profile',
+                 ['username'=>($this->getUser()->getUsername())]);
     }
 
 
@@ -58,12 +61,14 @@ class ChatController extends AbstractController
             $this->addFlash('error', 'You cannot view this conversation.');
 
             //return to profile
-            return $this->redirectToRoute('app_profile', ['username'=>($this->getUser()->getUsername())]);
+            return $this->redirectToRoute('app_profile',
+                ['username'=>($this->getUser()->getUsername())]);
         }
 
 
         //get the id that ISN'T mine
-        $other_id = ($my_id == $participant_ids[0]['id']) ? $participant_ids[1]['id'] : $participant_ids[0]['id'];
+        $other_id =
+            ($my_id == $participant_ids[0]['id']) ? $participant_ids[1]['id'] : $participant_ids[0]['id'];
 
 
         //fetch the other user from the database
@@ -75,7 +80,8 @@ class ChatController extends AbstractController
 
 
         //fetch past messages
-        $messages = $entityManager->getRepository(Message::class)->findBy(['conversation'=>$conversation], limit:20, orderBy: ['id' => 'DESC']);
+        $messages = $entityManager->getRepository(Message::class)
+            ->findBy(['conversation'=>$conversation], limit:20, orderBy: ['id' => 'DESC']);
 
 
         //put past messages in an array to pass to the front end; //NEED TO MAKE IT MAX 10 OR 15 MESSAGES
@@ -95,6 +101,8 @@ class ChatController extends AbstractController
         ]);
     }
 
+
+    //publishing real time messages
     #[Route('/sendChat', name: 'app_sendChat')]
     public function publish(Request $request, HubInterface $hub): Response
     {
@@ -118,18 +126,8 @@ class ChatController extends AbstractController
         $topic = ''.$convo_id;
 
 
-        //create the new update that will be passed to the mercure HUB
-        $update = new Update(
-            $topic,
-            json_encode(['message' => $content,
-                'author'=> $author])
-        );
-
-
-        //publish update to the mercure HUB
-        $hub->publish($update);
-
-        //success message for debugging
-        return new Response('published!');
+        //push data to clients in real time
+        Utils::Realtime($topic,['message' => $content, 'author'=> $author], $hub );
+        return new Response('success');
     }
 }
