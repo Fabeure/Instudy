@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Notification;
 use App\Entity\User;
+use App\Utils\Utils;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Mercure\HubInterface;
@@ -34,17 +35,33 @@ class NotificationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-    public function addNotification(Notification $entity, ?User $sender, ?User $recipient, string $content, $hub){
+    public function addNotification(string $url,Notification $entity, ?User $sender, ?User $recipient, string $content, $hub){
         $entity->setContent($content." from:  ".$sender->getUsername());
         $entity->setNotifSender($sender);
         $entity->setUpdatedAt(new \DateTimeImmutable());
+        $entity->setUrl($url);
         $entity->setNotifRecipient($recipient);
+        $entity->setIdentifier(Utils::generateUniqueNumber());
 
         //create the new update that will be passed to the mercure HUB
-        $update = new Update(
-            $recipient->getUserIdentifier(),
-            json_encode(['content' => $entity->getContent()] )
-        );
+
+        if (!$recipient){
+            $update = new Update(
+                'PUBLIC',
+                json_encode(['content' => $entity->getContent(),
+                    'url' => $entity->getUrl(),
+                    'id' => $entity->getIdentifier()])
+            );
+        }
+        else{
+            $update = new Update(
+                $recipient->getUserIdentifier(),
+                json_encode(['content' => $entity->getContent(),
+                    'url' => $entity->getUrl(),
+                    'id' => $entity->getIdentifier()])
+            );
+        }
+
 
 
         //publish update to the mercure HUB

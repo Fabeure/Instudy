@@ -59,13 +59,13 @@
                     <li><a href="{{ path('app_hub') }}">Hub</a></li>
                     {% if not(app.user == '') %}
                         <li>  <a href="{{ path('app_profile',{'username':app.user.username}) }}"> {{ app.user.username }} </a> </li>
-                        <li><a type="button" class="icon-button">
+                        <li><a class="icon-button">
                                 <span class="material-icons">notifications</span>
                                 <span class="icon-button__badge" id="NotifCount">{{ app.request.attributes.get('_notifications')|length }}</span>
                                 <div class="notification-menu" id="notifMenu">
                                     {% for notification in app.request.attributes.get('_notifications')  %}
                                     <div class="notification-menu-item">
-                                        <p>{{ notification.content }}</p>
+                                        <p id="NotificationClick"  onclick="deleteNotif({{ notification.id }}); window.location.href='{{ notification.url }}'">{{ notification.content }}</p>
                                     </div>
                                     {% endfor %}
                                 </div>
@@ -125,12 +125,12 @@
 {% if app.user %}
     <script src="{{ asset('assets/js/Base.js') }}"></script>
     <script>
-    const NotifEventSource = new EventSource("{{ mercure(app.user.userIdentifier)|escape('js') }}");
+    const NotifEventSource = new EventSource("{{ mercure([app.user.userIdentifier, 'PUBLIC'])|escape('js') }}");
     NotifEventSource.onmessage = event => {
         // Will be called every time an update is published by the server
         const data = JSON.parse(event.data);
 
-        addNotif(data['content']);
+        addNotif(data['content'], data['url'], data['id']);
     }
 </script>
 {% endif %}

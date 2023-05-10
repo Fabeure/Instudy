@@ -47,10 +47,15 @@ class TeacherController extends AbstractController
             $course->setTeacher($this->getUser());
             $course->setMatiere($matiere);
 
+            $entityManager->getRepository(Cours::class)->save($course, true);
+
             //create new notification
             $notif = new Notification();
+
+            //make notification url
+            $url = "/course/".$course->getCourseName();
             //add notification
-            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), null, "New Course", $hub);
+            $entityManager->getRepository(Notification::class)->addNotification($url,$notif, $this->getUser(), null, "New Course", $hub);
 
             //perisst everything to database
             $entityManager->getRepository(Cours::class)->save($course, true);
