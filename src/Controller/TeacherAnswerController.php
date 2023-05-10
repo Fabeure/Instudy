@@ -24,8 +24,8 @@ class TeacherAnswerController extends AbstractController
             //add error flash message
             $this->addFlash('error', 'Only teachers can access this page.');
 
-            //return to home
-            return $this->redirectToRoute('app_home');
+            //return to profile
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
         }
 
         //fetch all homeworks that were sent to me

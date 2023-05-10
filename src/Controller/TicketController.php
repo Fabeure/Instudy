@@ -17,6 +17,18 @@ class TicketController extends AbstractController
     #[Route('/ticket', name: 'app_ticket')]
     public function index(Request $request, EntityManagerInterface $entityManager)
     {
+
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'Login to access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_home');
+        }
+
+
         $form = $this->createForm(TicketFormType::class);
 
         $form->handleRequest($request);

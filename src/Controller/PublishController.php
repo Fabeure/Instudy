@@ -14,6 +14,15 @@ class PublishController extends AbstractController
     #[Route('/publish', name: 'app_publish')]
     public function publish(Request $request, HubInterface $hub): Response
     {
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')) {
+
+            //add error message for unauthorised access
+            $this->addFlash('error', 'Login to access this page.');
+
+            //return to home
+            return $this->redirectToRoute('app_home');
+        }
 
         //get contents of the publish request
         $content = $request->request->get('value');
