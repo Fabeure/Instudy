@@ -18,7 +18,8 @@ class CourseFormType extends AbstractType
                 'attr' => ['class' => 'form-control'],
             ])
             ->add('courseFile', VichFileType::class,[
-                'label' => 'Course'
+                'label' => 'Course',
+                'attr' => ['class' => 'form-control']
             ])
         ;
     }
