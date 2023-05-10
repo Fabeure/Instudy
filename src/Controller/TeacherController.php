@@ -19,7 +19,7 @@ class TeacherController extends AbstractController
     #[Route('/teacher', name: 'app_teacher')]
     public function index(Request $request, EntityManagerInterface $entityManager, HubInterface $hub): Response
     {
-        //handle access control
+       /* //handle access control
        if(!$this->isGranted('ROLE_TEACHER')){
 
             //add error flash message
@@ -32,7 +32,7 @@ class TeacherController extends AbstractController
             //return to profile
             return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
 
-
+*/
         //create a new course
         $course = new Cours();
 
@@ -79,8 +79,6 @@ class TeacherController extends AbstractController
             $questions = $entityManager->getRepository(Question::class)->findBy(['cours' => $cour]);
             $allQuestions = array_merge($allQuestions, $questions);
         }
-
-
 
         //get my courses and pass them to view
         $courses = $entityManager->getRepository(Cours::class)->findBy(['teacher'=>$this->getUser()]);

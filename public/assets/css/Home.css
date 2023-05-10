@@ -32,7 +32,7 @@ p {
   position: absolute;
   width: 80%;
   left: 50%;
-  top: 95%;
+  top: 10%;
   transform: translate(-50%, -50%);
 }
 
@@ -41,17 +41,25 @@ p {
   font-weight: 1000;
   text-align: left;
   position: absolute;
-  max-width: 1000px;
-  left: 40%;
-  top: 10%;
+  max-width: 100%;
+  left: 37%;
+  top: 25%;
   transform: translate(-50%, -50%);
 }
 .main-banner .top .important{
   line-height: 1.1;
   color: #e12a2a;
   font-size : 60px;
-  width: 1000px;
+  width: 500px;
+
 }
+.main-banner .top .important em{
+  font-style: normal;
+  color: white;
+  font-weight: 900;
+  line-height: 1.5;
+}
+
 .main-banner .top .content{
   line-height: 1.5;
   max-width: 1000px;
@@ -128,3 +136,13 @@ p {
     font-size: 36px;
   }
 }
+
+
+.fade-row {
+  transition: opacity 0.5s ease;
+}
+
+.fade-row.fade-in {
+  opacity: 1;
+}
+
