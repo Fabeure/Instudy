@@ -57,14 +57,3 @@
   font-size: 102%;
   color:#e12a2a;
 }
-
-@media screen and (max-width: 1180px) {
-  .main-banner .caption h2 {
-    font-size: 58px;
-  }
-}
-@media screen and (max-width: 767px) {
-  .main-banner .caption h2 {
-    font-size: 36px;
-  }
-}
