@@ -20,14 +20,15 @@ class TeacherController extends AbstractController
     public function index(Request $request, EntityManagerInterface $entityManager, HubInterface $hub): Response
     {
         //handle access control
-        if(!$this->isGranted('ROLE_TEACHER')){
+       if(!$this->isGranted('ROLE_TEACHER')) {
 
-            //add error flash message
-            $this->addFlash('error', 'Only teachers can access this page.');
+           //add error flash message
+           $this->addFlash('error', 'Only teachers can access this page.');
 
-            //return to profile
-            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
-        }
+           //return to profile
+           return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
+       }
+
         //create a new course
         $course = new Cours();
 
