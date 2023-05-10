@@ -32,7 +32,7 @@ function submitOnEnter(event) {
     if (event.keyCode === 13 && !event.shiftKey) { // 13 is the "Enter" key code
         event.preventDefault(); // prevent default behavior of creating a new line
         request1= $.ajax({
-            url: `/publish`,
+            url: `/sendChat`,
             type: 'POST',
             data:{
                 value: x.value,

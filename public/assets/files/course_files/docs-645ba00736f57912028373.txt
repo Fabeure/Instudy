@@ -1,0 +1,112 @@
+__________________________________________________________________________
+***check the info of a table columns:
+select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = 'Genre'
+
+EXEC sp_help Movie
+__________________________________________________________________________
+***View:
+create view viewName 
+as (
+query
+);
+__________________________________________________________________________
+***Roles:
+CREATE ROLE role_name;
+GRANT SELECT, INSERT, UPDATE ON view/table... TO role ?WITH GRANT OPTION;
+SELECT: Allows the user to select data from a table or view.
+INSERT: Allows the user to insert new rows into a table.
+UPDATE: Allows the user to modify existing rows in a table.
+DELETE: Allows the user to delete rows from a table.
+EXECUTE: Allows the user to execute stored procedures, functions, or triggers.
+REFERENCES: Allows the user to create a foreign key constraint that references a column in another table.
+VIEW DEFINITION: Allows the user to view the definition of a stored procedure, view, or user-defined function.
+CONTROL: Allows the user to take ownership of a database object or alter its permissions.
+__________________________________________________________________________
+***User:
+//to create a user
+CREATE LOGIN login_name WITH PASSWORD = 'password';
+CREATE USER user_name FOR LOGIN login_name;
+//to assigne a role to a user 
+EXEC sp_addrolemember 'role', 'user';
+//or
+grant Role to User
+__________________________________________________________________________
+***Procedure:
+CREATE PROCEDURE recursive_proc @param1 type , @result type OUTPUT 
+AS
+BEGIN
+    WITH recursive_cte (column1, column2, ..., columnN) AS (
+        -- Anchor member
+        SELECT column1, column2, ..., columnN
+        FROM table_name
+        WHERE condition
+
+        UNION ALL
+
+        -- Recursive member
+        SELECT column1, column2, ..., columnN
+        FROM table_name
+        Inner Join recursive_cte on condition
+        WHERE condition
+        
+    )
+    SELECT * FROM recursive_cte;
+END;
+//to execute
+EXEC procedure_name @param = X
+//or
+DECLARE @result type;
+EXEC calculate_factorial @number = 5, @factorial = @result OUTPUT;
+SELECT @result;
+//to exit the procedure use
+return;
+__________________________________________________________________________
+***Function:
+CREATE FUNCTION square (@number INT)
+RETURNS INT
+AS
+BEGIN
+    DECLARE @result INT;
+    SET @result = @number * @number;
+    RETURN @result;
+END;
+//to call function
+SELECT dbo.square(5);
+__________________________________________________________________________
+***Columns Name:
+SELECT name
+FROM sys.columns
+WHERE object_id = OBJECT_ID('my_table');
+__________________________________________________________________________
+***Cursor:
+DECLARE cursor_name CURSOR FOR
+SELECT column1, column2, ...
+FROM table_name
+WHERE <condition>;
+
+OPEN cursor_name;
+
+FETCH NEXT FROM cursor_name INTO @variable1, @variable2, ...;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+    -- Do something with @variable1, @variable2, ...
+    ...
+    
+    FETCH NEXT FROM cursor_name INTO @variable1, @variable2, ...;
+END;
+
+CLOSE cursor_name;
+DEALLOCATE cursor_name;
+__________________________________________________________________________
+***Triggers:
+CREATE TRIGGER trigger_name
+ON table_name
+AFTER/before/INSTEAD OF INSERT, UPDATE, DELETE
+AS
+BEGIN
+    -- SQL statements to execute when trigger is fired
+END;
+__________________________________________________________________________
+***THROW ERROR:
+THROW 50000, 'An error occurred', 1;

@@ -18,7 +18,8 @@ security:
                 max_attempts: 3
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\LoginFormAuthenticator
+            custom_authenticator:
+                - App\Security\LoginFormAuthenticator
             logout:
                 path: app_logout
                 target: /

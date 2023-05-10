@@ -25,8 +25,8 @@ class TeacherController extends AbstractController
             //add error flash message
             $this->addFlash('error', 'Only teachers can access this page.');
 
-            //return to home
-            return $this->redirectToRoute('app_home');
+            //return to profile
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
         }
         //create a new course
         $course = new Cours();
@@ -47,10 +47,15 @@ class TeacherController extends AbstractController
             $course->setTeacher($this->getUser());
             $course->setMatiere($matiere);
 
+            $entityManager->getRepository(Cours::class)->save($course, true);
+
             //create new notification
             $notif = new Notification();
+
+            //make notification url
+            $url = "/course/".$course->getCourseName();
             //add notification
-            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), null, "New Course", $hub);
+            $entityManager->getRepository(Notification::class)->addNotification($url,$notif, $this->getUser(), null, "New Course", $hub);
 
             //perisst everything to database
             $entityManager->getRepository(Cours::class)->save($course, true);

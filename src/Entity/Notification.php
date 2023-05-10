@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NotificationRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints\Date;
 
 #[ORM\Entity(repositoryClass: NotificationRepository::class)]
@@ -30,7 +31,11 @@ class Notification
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $updatedAt= null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $url=null;
 
+    #[ORM\Column(nullable: true, unique: true)]
+    private ?int $identifier=null;
 
     public function getId(): ?int
     {
@@ -77,6 +82,30 @@ class Notification
     public function setNotifSender(?User $notif_sender): self
     {
         $this->notif_sender = $notif_sender;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    public function getIdentifier(): ?int
+    {
+        return $this->identifier;
+    }
+
+    public function setIdentifier(?int $identifier): self
+    {
+        $this->identifier = $identifier;
 
         return $this;
     }

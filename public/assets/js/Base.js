@@ -1,24 +1,38 @@
+
+
 //get menu id
-let x= document.getElementById('notifMenu');
+let notifMenu= document.getElementById('notifMenu');
 
 
 // Get notification count id
 let spanElement = document.getElementById("NotifCount");
 
 let currenNumber=0;
-let nuewNumber=0;
-function addNotif(content){
+let newNumber=0;
+function addNotif(content, url, Notifid){
     // Get the current number value inside the span
    currentNumber = parseInt(spanElement.innerText);
 
 // Increase the number by 1
     newNumber = currentNumber + 1;
-
 // Update the span's text content with the new number
     spanElement.innerText = newNumber;
-    notif = "<div className=\"notification-menu-item\"> <p>"+content+"</p> </div>"
-    x.innerHTML += notif;
+    notif = "<div className=\"notification-menu-item\"> <p onclick=\"deleteNotif("+Notifid+"); window.location.href='"+url+"'\">"+content+"</p> </div>"
+    notifMenu.innerHTML += notif;
 }
+let NotificationClicker = document.getElementById('NotificationClick');
+function deleteNotif(notifID){
+    request1= $.ajax({
+        url: `/removeNotification`,
+        type: 'POST',
+        data:{
+            notificationID : notifID
+        }
+    })
+    Promise.all([request1]).then(r =>console.log("success"))
+    }
+
+
 
 //get the section element (important for choosing animation)
 let section = document.getElementById('hero')

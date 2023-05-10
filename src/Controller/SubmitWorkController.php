@@ -50,8 +50,12 @@ class SubmitWorkController extends AbstractController
             $notif = new Notification();
 
 
+            //create url for the notification
+            $url = "teacher/answer";
+
+
             //add new notification
-            $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $form->get('teacher')->getData(), "New Homework", $hub);
+            $entityManager->getRepository(Notification::class)->addNotification($url, $notif, $this->getUser(), $form->get('teacher')->getData(), "New Homework", $hub);
 
             //persist everything to database
             $entityManager->getRepository(Homework::class)->save($homework, true);

@@ -25,6 +25,15 @@ class MessageController extends AbstractController
     #[Route('/newMessage', name: 'app_newMessage')]
     public function newMessage(Request $request, EntityManagerInterface $entityManager, HubInterface $hub)
     {
+        //handle access control
+        if(!$this->isGranted('ROLE_USER')){
+
+            //add error flash message
+            $this->addFlash('error', 'Login to access this page.');
+
+            //return to profile
+            return $this->redirectToRoute('app_profile', ['username' => $this->getUser()->getUsername()]);
+        }
 
         //get my id
         $my_id = $this->getUser()->getId();
@@ -49,16 +58,19 @@ class MessageController extends AbstractController
         $conversation->addMessage($message);
         $conversation->setLastMessage($message);
 
-        //create new notification
-        $notif = new Notification();
 
         //fetch second user from conversation to send the notification to
         $participant_ids = $entityManager->getRepository(User::class)->getUserIdsForConversation($conversation_id);
         $other_id = ($my_id == $participant_ids[0]['id']) ? $participant_ids[1]['id'] : $participant_ids[0]['id'];
         $other_user = $entityManager->getRepository(User::class)->findOneBy(['id'=>$other_id]);
 
+
+        //create new notification
+        $notif = new Notification();
+        //create the url attached to the notification
+        $url = "/chat/".$conversation_id;
         //add notification
-        $entityManager->getRepository(Notification::class)->addNotification($notif, $this->getUser(), $other_user, "New Message", $hub);
+        $entityManager->getRepository(Notification::class)->addNotification($url, $notif, $this->getUser(), $other_user, "New Message", $hub);
 
 
         //persist everything to database
