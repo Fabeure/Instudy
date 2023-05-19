@@ -66,7 +66,7 @@ install and run the docker with mercure and mailer container
 
 ------
 
-with Love and Passion of the Team Developper
+with Love and Passion from
 
 * Saber AZOUZI 
 * Idris SADDI
