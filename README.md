@@ -15,12 +15,12 @@ This is a platform that aims to facilitate every problem faced by students durin
 
 This platform have been done in the context of Academic Project @ INSAT for 2nd year software pre-engineering Student in Web Development.
 
-The Team used <ins> Symfony FrameWork </ins> in order to developpe this project
+Powered By <ins> Symfony FrameWork </ins>
 
 
 <h3>To Run The Project</h3>
 
-first you need to clone the project
+clone the project
 
 ```
     git clone https://github.com/Fabeure/Projet-Techno-Web.git
@@ -33,32 +33,35 @@ install all the dependencies
     npm install
 ```
 
+create the database and make all the migrations update its schema <br> then run the symfony server
+
+```
+    php bin/console doctrine:database:create
+    
+    php bin/console make:migration
+    
+    php bin/console doctrine:migrations:migrate
+
+    symfony serve
+```
 install and run the docker with mercure and mailer container
 
 ```
     docker-compose up
 ```
 
-create the database and make all the migrations update its schema <br> then run the symfony server
 
-```
-    php bin/console doctrine:database:create
-        // make the entities 
-    php bin/console make:migration
-    php bin/console doctrine:migrations:migrate
-    symfony serve
-```
 
 
 <h3> Diagrams </h3>
 
 * Use Cases
 
-![usecase](https://github.com/Fabeure/Projet-Techno-Web/assets/47497916/2c4c43e9-b67b-4db8-87f8-5bf5f1accb56)
+![usecase](https://github.com/Fabeure/Instudy/assets/47497916/2c4c43e9-b67b-4db8-87f8-5bf5f1accb56)
 
 * Class Diagram
 
-![Capture d'écran 2023-05-10 213141](https://github.com/Fabeure/Projet-Techno-Web/assets/47497916/98935396-7276-4c95-b99c-87932626aa97)
+![Capture d'écran 2023-05-10 213141](https://github.com/Fabeure/Instudy/assets/47497916/98935396-7276-4c95-b99c-87932626aa97)
 
 
 ------
